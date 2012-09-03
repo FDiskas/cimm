@@ -103,7 +103,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module helper **/
 	public function helper($helper = array()) {
-		
+
 		if (is_array($helper)) return $this->helpers($helper);
 		
 		if (isset($this->_ci_helpers[$helper]))	return;

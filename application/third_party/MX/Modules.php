@@ -138,8 +138,8 @@ class Modules
 		
 		$file = str_replace(EXT, '', $file);		
 		$location = $path.$file.EXT;
-		
-		if ($type === 'other') {			
+
+		if ($type === 'other') {
 			if (class_exists($file, FALSE))	{
 				log_message('debug', "File already loaded: {$location}");				
 				return $result;
