@@ -1,0 +1,11 @@
+.DS_Store
+.buildpath
+.project
+.settings
+.idea
+application/cache/smarty/cached/
+application/cache/smarty/compiled/
+nbproject/
+uploads/*
+help/*
+backup_archive/*
