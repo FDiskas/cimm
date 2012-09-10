@@ -1,4 +1,4 @@
-# Used tihird party libraries #
+# Used third party libraries #
 
 ----------
 
