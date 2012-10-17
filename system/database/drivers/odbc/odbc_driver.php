@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -8,28 +9,64 @@
  * @author		ExpressionEngine Dev Team
  * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
+=======
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
+<<<<<<< HEAD
 // ------------------------------------------------------------------------
 
+=======
+>>>>>>> codeigniter/develop
 /**
  * ODBC Database Adapter Class
  *
  * Note: _DB is an extender class that the app controller
+<<<<<<< HEAD
  * creates dynamically based on whether the active record
+=======
+ * creates dynamically based on whether the query builder
+>>>>>>> codeigniter/develop
  * class is being used or not.
  *
  * @package		CodeIgniter
  * @subpackage	Drivers
  * @category	Database
+<<<<<<< HEAD
  * @author		ExpressionEngine Dev Team
+=======
+ * @author		EllisLab Dev Team
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_odbc_driver extends CI_DB {
 
+<<<<<<< HEAD
 	var $dbdriver = 'odbc';
 
 	// the character used to excape - not necessary for ODBC
@@ -49,21 +86,50 @@ class CI_DB_odbc_driver extends CI_DB {
 
 
 	function __construct($params)
+=======
+	public $dbdriver = 'odbc';
+
+	// the character used to excape - not necessary for ODBC
+	protected $_escape_char = '';
+
+	protected $_like_escape_str = " {escape '%s'} ";
+
+	protected $_random_keyword;
+
+	public function __construct($params)
+>>>>>>> codeigniter/develop
 	{
 		parent::__construct($params);
 
 		$this->_random_keyword = ' RND('.time().')'; // database specific random keyword
+<<<<<<< HEAD
+=======
+
+		// Legacy support for DSN in the hostname field
+		if (empty($this->dsn))
+		{
+			$this->dsn = $this->hostname;
+		}
+>>>>>>> codeigniter/develop
 	}
 
 	/**
 	 * Non-persistent database connection
 	 *
+<<<<<<< HEAD
 	 * @access	private called by the base class
 	 * @return	resource
 	 */
 	function db_connect()
 	{
 		return @odbc_connect($this->hostname, $this->username, $this->password);
+=======
+	 * @return	resource
+	 */
+	public function db_connect()
+	{
+		return @odbc_connect($this->dsn, $this->username, $this->password);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -71,6 +137,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Persistent database connection
 	 *
+<<<<<<< HEAD
 	 * @access	private called by the base class
 	 * @return	resource
 	 */
@@ -136,6 +203,13 @@ class CI_DB_odbc_driver extends CI_DB {
 	function _version()
 	{
 		return "SELECT version() AS ver";
+=======
+	 * @return	resource
+	 */
+	public function db_pconnect()
+	{
+		return @odbc_pconnect($this->dsn, $this->username, $this->password);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -143,6 +217,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Execute the query
 	 *
+<<<<<<< HEAD
 	 * @access	private called by the base class
 	 * @param	string	an SQL query
 	 * @return	resource
@@ -150,12 +225,20 @@ class CI_DB_odbc_driver extends CI_DB {
 	function _execute($sql)
 	{
 		$sql = $this->_prep_query($sql);
+=======
+	 * @param	string	an SQL query
+	 * @return	resource
+	 */
+	protected function _execute($sql)
+	{
+>>>>>>> codeigniter/develop
 		return @odbc_exec($this->conn_id, $sql);
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Prep the query
 	 *
 	 * If needed, each database adapter can prep the query string
@@ -186,6 +269,16 @@ class CI_DB_odbc_driver extends CI_DB {
 
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
+=======
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	public function trans_begin($test_mode = FALSE)
+	{
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		if ( ! $this->trans_enabled OR $this->_trans_depth > 0)
+>>>>>>> codeigniter/develop
 		{
 			return TRUE;
 		}
@@ -193,7 +286,11 @@ class CI_DB_odbc_driver extends CI_DB {
 		// Reset the transaction failure flag.
 		// If the $test_mode flag is set to TRUE transactions will be rolled back
 		// even if the queries produce a successful result.
+<<<<<<< HEAD
 		$this->_trans_failure = ($test_mode === TRUE) ? TRUE : FALSE;
+=======
+		$this->_trans_failure = ($test_mode === TRUE);
+>>>>>>> codeigniter/develop
 
 		return odbc_autocommit($this->conn_id, FALSE);
 	}
@@ -203,6 +300,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Commit Transaction
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @return	bool
 	 */
@@ -215,6 +313,14 @@ class CI_DB_odbc_driver extends CI_DB {
 
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
+=======
+	 * @return	bool
+	 */
+	public function trans_commit()
+	{
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		if ( ! $this->trans_enabled OR $this->_trans_depth > 0)
+>>>>>>> codeigniter/develop
 		{
 			return TRUE;
 		}
@@ -229,6 +335,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Rollback Transaction
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @return	bool
 	 */
@@ -241,6 +348,14 @@ class CI_DB_odbc_driver extends CI_DB {
 
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
+=======
+	 * @return	bool
+	 */
+	public function trans_rollback()
+	{
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		if ( ! $this->trans_enabled OR $this->_trans_depth > 0)
+>>>>>>> codeigniter/develop
 		{
 			return TRUE;
 		}
@@ -255,12 +370,19 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Escape String
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @param	string
 	 * @param	bool	whether or not the string will be used in a LIKE condition
 	 * @return	string
 	 */
+<<<<<<< HEAD
 	function escape_str($str, $like = FALSE)
+=======
+	public function escape_str($str, $like = FALSE)
+>>>>>>> codeigniter/develop
 	{
 		if (is_array($str))
 		{
@@ -272,15 +394,24 @@ class CI_DB_odbc_driver extends CI_DB {
 			return $str;
 		}
 
+<<<<<<< HEAD
 		// ODBC doesn't require escaping
+=======
+>>>>>>> codeigniter/develop
 		$str = remove_invisible_characters($str);
 
 		// escape LIKE condition wildcards
 		if ($like === TRUE)
 		{
+<<<<<<< HEAD
 			$str = str_replace(	array('%', '_', $this->_like_escape_chr),
 								array($this->_like_escape_chr.'%', $this->_like_escape_chr.'_', $this->_like_escape_chr.$this->_like_escape_chr),
 								$str);
+=======
+			return str_replace(array($this->_like_escape_chr, '%', '_'),
+						array($this->_like_escape_chr.$this->_like_escape_chr, $this->_like_escape_chr.'%', $this->_like_escape_chr.'_'),
+						$str);
+>>>>>>> codeigniter/develop
 		}
 
 		return $str;
@@ -291,10 +422,16 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Affected Rows
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @return	integer
 	 */
 	function affected_rows()
+=======
+	 * @return	int
+	 */
+	public function affected_rows()
+>>>>>>> codeigniter/develop
 	{
 		return @odbc_num_rows($this->conn_id);
 	}
@@ -304,6 +441,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Insert ID
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @return	integer
 	 */
@@ -341,6 +479,13 @@ class CI_DB_odbc_driver extends CI_DB {
 		$row = $query->row();
 		$this->_reset_select();
 		return (int) $row->numrows;
+=======
+	 * @return	bool
+	 */
+	public function insert_id()
+	{
+		return ($this->db->db_debug) ? $this->db->display_error('db_unsuported_feature') : FALSE;
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -350,6 +495,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific query string so that the table names can be fetched
 	 *
+<<<<<<< HEAD
 	 * @access	private
 	 * @param	boolean
 	 * @return	string
@@ -359,6 +505,16 @@ class CI_DB_odbc_driver extends CI_DB {
 		$sql = "SHOW TABLES FROM `".$this->database."`";
 
 		if ($prefix_limit !== FALSE AND $this->dbprefix != '')
+=======
+	 * @param	bool
+	 * @return	string
+	 */
+	protected function _list_tables($prefix_limit = FALSE)
+	{
+		$sql = 'SHOW TABLES FROM '.$this->database;
+
+		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
+>>>>>>> codeigniter/develop
 		{
 			//$sql .= " LIKE '".$this->escape_like_str($this->dbprefix)."%' ".sprintf($this->_like_escape_str, $this->_like_escape_chr);
 			return FALSE; // not currently supported
@@ -374,6 +530,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific query string so that the column names can be fetched
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @param	string	the table name
 	 * @return	string
@@ -381,6 +538,14 @@ class CI_DB_odbc_driver extends CI_DB {
 	function _list_columns($table = '')
 	{
 		return "SHOW COLUMNS FROM ".$table;
+=======
+	 * @param	string	the table name
+	 * @return	string
+	 */
+	protected function _list_columns($table = '')
+	{
+		return 'SHOW COLUMNS FROM '.$table;
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -390,6 +555,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific query so that the column data can be retrieved
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @param	string	the table name
 	 * @return	object
@@ -505,11 +671,20 @@ class CI_DB_odbc_driver extends CI_DB {
 	function _insert($table, $keys, $values)
 	{
 		return "INSERT INTO ".$table." (".implode(', ', $keys).") VALUES (".implode(', ', $values).")";
+=======
+	 * @param	string	the table name
+	 * @return	string
+	 */
+	protected function _field_data($table)
+	{
+		return 'SELECT TOP 1 FROM '.$table;
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Update statement
 	 *
 	 * Generates a platform-specific update string from the supplied data
@@ -543,12 +718,27 @@ class CI_DB_odbc_driver extends CI_DB {
 	}
 
 
+=======
+	 * Error
+	 *
+	 * Returns an array containing code and message of the last
+	 * database error that has occured.
+	 *
+	 * @return	array
+	 */
+	public function error()
+	{
+		return array('code' => odbc_error($this->conn_id), 'message' => odbc_errormsg($this->conn_id));
+	}
+
+>>>>>>> codeigniter/develop
 	// --------------------------------------------------------------------
 
 	/**
 	 * Truncate statement
 	 *
 	 * Generates a platform-specific truncate string from the supplied data
+<<<<<<< HEAD
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
@@ -612,6 +802,18 @@ class CI_DB_odbc_driver extends CI_DB {
 	{
 		// Does ODBC doesn't use the LIMIT clause?
 		return $sql;
+=======
+	 *
+	 * If the database does not support the truncate() command,
+	 * then this method maps to 'DELETE FROM table'
+	 *
+	 * @param	string	the table name
+	 * @return	string
+	 */
+	protected function _truncate($table)
+	{
+		return 'DELETE FROM '.$table;
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -619,6 +821,7 @@ class CI_DB_odbc_driver extends CI_DB {
 	/**
 	 * Close DB Connection
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @param	resource
 	 * @return	void
@@ -633,5 +836,16 @@ class CI_DB_odbc_driver extends CI_DB {
 
 
 
+=======
+	 * @return	void
+	 */
+	protected function _close()
+	{
+		@odbc_close($this->conn_id);
+	}
+
+}
+
+>>>>>>> codeigniter/develop
 /* End of file odbc_driver.php */
 /* Location: ./system/database/drivers/odbc/odbc_driver.php */

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -15,6 +16,35 @@
 
 // ------------------------------------------------------------------------
 
+=======
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2006 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @link		http://codeigniter.com
+ * @since		Version 3.0
+ * @filesource
+ */
+
+>>>>>>> codeigniter/develop
 /**
  * Migration Class
  *
@@ -29,12 +59,63 @@
  */
 class CI_Migration {
 
+<<<<<<< HEAD
 	protected $_migration_enabled = FALSE;
 	protected $_migration_path = NULL;
 	protected $_migration_version = 0;
 
 	protected $_error_string = '';
 
+=======
+	/**
+	 * Whether the library is enabled
+	 *
+	 * @var bool
+	 */
+	protected $_migration_enabled = FALSE;
+
+	/**
+	 * Path to migration classes
+	 *
+	 * @var string
+	 */
+	protected $_migration_path = NULL;
+
+	/**
+	 * Current migration version
+	 *
+	 * @var mixed
+	 */
+	protected $_migration_version = 0;
+
+	/**
+	 * Database table with migration info
+	 *
+	 * @var string
+	 */
+	protected $_migration_table = 'migrations';
+
+	/**
+	 * Whether to automatically run migrations
+	 *
+	 * @var bool
+	 */
+	protected $_migration_auto_latest = FALSE;
+
+	/**
+	 * Error message
+	 *
+	 * @var string
+	 */
+	protected $_error_string = '';
+
+	/**
+	 * Initialize Migration Class
+	 *
+	 * @param	array
+	 * @return	void
+	 */
+>>>>>>> codeigniter/develop
 	public function __construct($config = array())
 	{
 		# Only run this constructor on main library load
@@ -45,7 +126,11 @@ class CI_Migration {
 
 		foreach ($config as $key => $val)
 		{
+<<<<<<< HEAD
 			$this->{'_' . $key} = $val;
+=======
+			$this->{'_'.$key} = $val;
+>>>>>>> codeigniter/develop
 		}
 
 		log_message('debug', 'Migrations class initialized');
@@ -57,7 +142,11 @@ class CI_Migration {
 		}
 
 		// If not set, set it
+<<<<<<< HEAD
 		$this->_migration_path == '' OR $this->_migration_path = APPPATH . 'migrations/';
+=======
+		$this->_migration_path !== '' OR $this->_migration_path = APPPATH.'migrations/';
+>>>>>>> codeigniter/develop
 
 		// Add trailing slash if not set
 		$this->_migration_path = rtrim($this->_migration_path, '/').'/';
@@ -68,16 +157,39 @@ class CI_Migration {
 		// They'll probably be using dbforge
 		$this->load->dbforge();
 
+<<<<<<< HEAD
 		// If the migrations table is missing, make it
 		if ( ! $this->db->table_exists('migrations'))
+=======
+		// Make sure the migration table name was set.
+		if (empty($this->_migration_table))
+		{
+			show_error('Migrations configuration file (migration.php) must have "migration_table" set.');
+		}
+
+		// If the migrations table is missing, make it
+		if ( ! $this->db->table_exists($this->_migration_table))
+>>>>>>> codeigniter/develop
 		{
 			$this->dbforge->add_field(array(
 				'version' => array('type' => 'INT', 'constraint' => 3),
 			));
 
+<<<<<<< HEAD
 			$this->dbforge->create_table('migrations', TRUE);
 
 			$this->db->insert('migrations', array('version' => 0));
+=======
+			$this->dbforge->create_table($this->_migration_table, TRUE);
+
+			$this->db->insert($this->_migration_table, array('version' => 0));
+		}
+
+		// Do we auto migrate to the latest migration?
+		if ($this->_migration_auto_latest === TRUE && ! $this->latest())
+		{
+			show_error($this->error_string());
+>>>>>>> codeigniter/develop
 		}
 	}
 
@@ -89,8 +201,12 @@ class CI_Migration {
 	 * Calls each migration step required to get to the schema version of
 	 * choice
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @param $version integer	Target schema version
+=======
+	 * @param	int	Target schema version
+>>>>>>> codeigniter/develop
 	 * @return	mixed	TRUE if already latest, FALSE if failed, int if upgraded
 	 */
 	public function version($target_version)
@@ -105,13 +221,20 @@ class CI_Migration {
 			++$stop;
 			$step = 1;
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> codeigniter/develop
 		else
 		{
 			// Moving Down
 			$step = -1;
 		}
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> codeigniter/develop
 		$method = $step === 1 ? 'up' : 'down';
 		$migrations = array();
 
@@ -119,7 +242,11 @@ class CI_Migration {
 		// But first let's make sure that everything is the way it should be
 		for ($i = $start; $i != $stop; $i += $step)
 		{
+<<<<<<< HEAD
 			$f = glob(sprintf($this->_migration_path . '%03d_*.php', $i));
+=======
+			$f = glob(sprintf($this->_migration_path.'%03d_*.php', $i));
+>>>>>>> codeigniter/develop
 
 			// Only one migration per step is permitted
 			if (count($f) > 1)
@@ -129,11 +256,19 @@ class CI_Migration {
 			}
 
 			// Migration step not found
+<<<<<<< HEAD
 			if (count($f) == 0)
 			{
 				// If trying to migrate up to a version greater than the last
 				// existing one, migrate to the last one.
 				if ($step == 1)
+=======
+			if (count($f) === 0)
+			{
+				// If trying to migrate up to a version greater than the last
+				// existing one, migrate to the last one.
+				if ($step === 1)
+>>>>>>> codeigniter/develop
 				{
 					break;
 				}
@@ -160,7 +295,11 @@ class CI_Migration {
 				}
 
 				include $f[0];
+<<<<<<< HEAD
 				$class = 'Migration_' . ucfirst($match[1]);
+=======
+				$class = 'Migration_'.ucfirst($match[1]);
+>>>>>>> codeigniter/develop
 
 				if ( ! class_exists($class))
 				{
@@ -183,9 +322,15 @@ class CI_Migration {
 			}
 		}
 
+<<<<<<< HEAD
 		log_message('debug', 'Current migration: ' . $current_version);
 
 		$version = $i + ($step == 1 ? -1 : 0);
+=======
+		log_message('debug', 'Current migration: '.$current_version);
+
+		$version = $i + ($step === 1 ? -1 : 0);
+>>>>>>> codeigniter/develop
 
 		// If there is nothing to do so quit
 		if ($migrations === array())
@@ -193,13 +338,21 @@ class CI_Migration {
 			return TRUE;
 		}
 
+<<<<<<< HEAD
 		log_message('debug', 'Migrating from ' . $method . ' to version ' . $version);
+=======
+		log_message('debug', 'Migrating from '.$method.' to version '.$version);
+>>>>>>> codeigniter/develop
 
 		// Loop through the migrations
 		foreach ($migrations AS $migration)
 		{
 			// Run the migration class
+<<<<<<< HEAD
 			$class = 'Migration_' . ucfirst(strtolower($migration));
+=======
+			$class = 'Migration_'.ucfirst(strtolower($migration));
+>>>>>>> codeigniter/develop
 			call_user_func(array(new $class, $method));
 
 			$current_version += $step;
@@ -216,13 +369,17 @@ class CI_Migration {
 	/**
 	 * Set's the schema to the latest migration
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @return	mixed	true if already latest, false if failed, int if upgraded
 	 */
 	public function latest()
 	{
 		if ( ! $migrations = $this->find_migrations())
 		{
+<<<<<<< HEAD
 			$this->_error_string = $this->line->lang('migration_none_found');
 			return false;
 		}
@@ -232,6 +389,17 @@ class CI_Migration {
 		// Calculate the last migration step from existing migration
 		// filenames and procceed to the standard version migration
 		return $this->version((int) substr($last_migration, 0, 3));
+=======
+			$this->_error_string = $this->lang->line('migration_none_found');
+			return FALSE;
+		}
+
+		$last_migration = basename(end($migrations));
+
+		// Calculate the last migration step from existing migration
+		// filenames and procceed to the standard version migration
+		return $this->version((int) $last_migration);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -239,7 +407,10 @@ class CI_Migration {
 	/**
 	 * Set's the schema to the migration version set in config
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @return	mixed	true if already current, false if failed, int if upgraded
 	 */
 	public function current()
@@ -252,7 +423,10 @@ class CI_Migration {
 	/**
 	 * Error string
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @return	string	Error message returned as a string
 	 */
 	public function error_string()
@@ -263,14 +437,21 @@ class CI_Migration {
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Set's the schema to the latest migration
 	 *
 	 * @access	protected
 	 * @return	mixed	true if already latest, false if failed, int if upgraded
+=======
+	 * Retrieves list of available migration scripts
+	 *
+	 * @return	array	list of migration file paths sorted by version
+>>>>>>> codeigniter/develop
 	 */
 	protected function find_migrations()
 	{
 		// Load all *_*.php files in the migrations path
+<<<<<<< HEAD
 		$files = glob($this->_migration_path . '*_*.php');
 		$file_count = count($files);
 		
@@ -279,13 +460,26 @@ class CI_Migration {
 			// Mark wrongly formatted files as false for later filtering
 			$name = basename($files[$i], '.php');
 			if ( ! preg_match('/^\d{3}_(\w+)$/', $name))
+=======
+		$files = glob($this->_migration_path.'*_*.php');
+
+		for ($i = 0, $c = count($files); $i < $c; $i++)
+		{
+			// Mark wrongly formatted files as false for later filtering
+			if ( ! preg_match('/^\d{3}_(\w+)$/', basename($files[$i], '.php')))
+>>>>>>> codeigniter/develop
 			{
 				$files[$i] = FALSE;
 			}
 		}
+<<<<<<< HEAD
 		
 		sort($files);
 
+=======
+
+		sort($files);
+>>>>>>> codeigniter/develop
 		return $files;
 	}
 
@@ -294,12 +488,20 @@ class CI_Migration {
 	/**
 	 * Retrieves current schema version
 	 *
+<<<<<<< HEAD
 	 * @access	protected
 	 * @return	integer	Current Migration
 	 */
 	protected function _get_version()
 	{
 		$row = $this->db->get('migrations')->row();
+=======
+	 * @return	int	Current Migration
+	 */
+	protected function _get_version()
+	{
+		$row = $this->db->select('version')->get($this->_migration_table)->row();
+>>>>>>> codeigniter/develop
 		return $row ? $row->version : 0;
 	}
 
@@ -308,6 +510,7 @@ class CI_Migration {
 	/**
 	 * Stores the current schema version
 	 *
+<<<<<<< HEAD
 	 * @access	protected
 	 * @param $migrations integer	Migration reached
 	 * @return	void					Outputs a report of the migration
@@ -315,6 +518,14 @@ class CI_Migration {
 	protected function _update_version($migrations)
 	{
 		return $this->db->update('migrations', array(
+=======
+	 * @param	int	Migration reached
+	 * @return	void	Outputs a report of the migration
+	 */
+	protected function _update_version($migrations)
+	{
+		return $this->db->update($this->_migration_table, array(
+>>>>>>> codeigniter/develop
 			'version' => $migrations
 		));
 	}
@@ -324,14 +535,22 @@ class CI_Migration {
 	/**
 	 * Enable the use of CI super-global
 	 *
+<<<<<<< HEAD
 	 * @access	public
 	 * @param $var
+=======
+	 * @param	$var
+>>>>>>> codeigniter/develop
 	 * @return	mixed
 	 */
 	public function __get($var)
 	{
 		return get_instance()->$var;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> codeigniter/develop
 }
 
 /* End of file Migration.php */

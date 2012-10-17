@@ -2,26 +2,54 @@
 /**
  * CodeIgniter
  *
+<<<<<<< HEAD
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
  * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
+=======
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
+<<<<<<< HEAD
 // ------------------------------------------------------------------------
 
+=======
+>>>>>>> codeigniter/develop
 /**
  * Security Class
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Security
+<<<<<<< HEAD
  * @author		ExpressionEngine Dev Team
+=======
+ * @author		EllisLab Dev Team
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/libraries/security.html
  */
 class CI_Security {
@@ -30,45 +58,80 @@ class CI_Security {
 	 * Random Hash for protecting URLs
 	 *
 	 * @var string
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_xss_hash			= '';
+=======
+	 */
+	protected $_xss_hash =	'';
+
+>>>>>>> codeigniter/develop
 	/**
 	 * Random Hash for Cross Site Request Forgery Protection Cookie
 	 *
 	 * @var string
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_csrf_hash			= '';
+=======
+	 */
+	protected $_csrf_hash =	'';
+
+>>>>>>> codeigniter/develop
 	/**
 	 * Expiration time for Cross Site Request Forgery Protection Cookie
 	 * Defaults to two hours (in seconds)
 	 *
 	 * @var int
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_csrf_expire			= 7200;
+=======
+	 */
+	protected $_csrf_expire =	7200;
+
+>>>>>>> codeigniter/develop
 	/**
 	 * Token name for Cross Site Request Forgery Protection Cookie
 	 *
 	 * @var string
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_csrf_token_name		= 'ci_csrf_token';
+=======
+	 */
+	protected $_csrf_token_name =	'ci_csrf_token';
+
+>>>>>>> codeigniter/develop
 	/**
 	 * Cookie name for Cross Site Request Forgery Protection Cookie
 	 *
 	 * @var string
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_csrf_cookie_name	= 'ci_csrf_token';
+=======
+	 */
+	protected $_csrf_cookie_name =	'ci_csrf_token';
+
+>>>>>>> codeigniter/develop
 	/**
 	 * List of never allowed strings
 	 *
 	 * @var array
+<<<<<<< HEAD
 	 * @access protected
 	 */
 	protected $_never_allowed_str = array(
+=======
+	 */
+	protected $_never_allowed_str =	array(
+>>>>>>> codeigniter/develop
 		'document.cookie'	=> '[removed]',
 		'document.write'	=> '[removed]',
 		'.parentNode'		=> '[removed]',
@@ -81,12 +144,18 @@ class CI_Security {
 		'<comment>'			=> '&lt;comment&gt;'
 	);
 
+<<<<<<< HEAD
 	/* never allowed, regex replacement */
+=======
+>>>>>>> codeigniter/develop
 	/**
 	 * List of never allowed regex replacement
 	 *
 	 * @var array
+<<<<<<< HEAD
 	 * @access protected
+=======
+>>>>>>> codeigniter/develop
 	 */
 	protected $_never_allowed_regex = array(
 		'javascript\s*:',
@@ -97,6 +166,7 @@ class CI_Security {
 	);
 
 	/**
+<<<<<<< HEAD
 	 * Constructor
 	 */
 	public function __construct()
@@ -120,6 +190,37 @@ class CI_Security {
 		$this->_csrf_set_hash();
 
 		log_message('debug', "Security Class Initialized");
+=======
+	 * Initialize security class
+	 *
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		// Is CSRF protection enabled?
+		if (config_item('csrf_protection') === TRUE)
+		{
+			// CSRF config
+			foreach (array('csrf_expire', 'csrf_token_name', 'csrf_cookie_name') as $key)
+			{
+				if (FALSE !== ($val = config_item($key)))
+				{
+					$this->{'_'.$key} = $val;
+				}
+			}
+
+			// Append application specific cookie prefix
+			if (config_item('cookie_prefix'))
+			{
+				$this->_csrf_cookie_name = config_item('cookie_prefix').$this->_csrf_cookie_name;
+			}
+
+			// Set the CSRF hash
+			$this->_csrf_set_hash();
+		}
+
+		log_message('debug', 'Security Class Initialized');
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -131,12 +232,18 @@ class CI_Security {
 	 */
 	public function csrf_verify()
 	{
+<<<<<<< HEAD
 		// If no POST data exists we will set the CSRF cookie
 		if (count($_POST) == 0)
+=======
+		// If it's not a POST request we will set the CSRF cookie
+		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
+>>>>>>> codeigniter/develop
 		{
 			return $this->csrf_set_cookie();
 		}
 
+<<<<<<< HEAD
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
 		if ( ! isset($_POST[$this->_csrf_token_name]) OR
 			 ! isset($_COOKIE[$this->_csrf_cookie_name]))
@@ -146,10 +253,26 @@ class CI_Security {
 
 		// Do the tokens match?
 		if ($_POST[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name])
+=======
+		// Check if URI has been whitelisted from CSRF checks
+		if ($exclude_uris = config_item('csrf_exclude_uris'))
+		{
+			$uri = load_class('URI', 'core');
+			if (in_array($uri->uri_string(), $exclude_uris))
+			{
+				return $this;
+			}
+		}
+
+		// Do the tokens exist in both the _POST and _COOKIE arrays?
+		if ( ! isset($_POST[$this->_csrf_token_name]) OR ! isset($_COOKIE[$this->_csrf_cookie_name])
+			OR $_POST[$this->_csrf_token_name] !== $_COOKIE[$this->_csrf_cookie_name]) // Do the tokens match?
+>>>>>>> codeigniter/develop
 		{
 			$this->csrf_show_error();
 		}
 
+<<<<<<< HEAD
 		// We kill this since we're done and we don't want to
 		// polute the _POST array
 		unset($_POST[$this->_csrf_token_name]);
@@ -161,6 +284,23 @@ class CI_Security {
 
 		log_message('debug', "CSRF token verified ");
 
+=======
+		// We kill this since we're done and we don't want to polute the _POST array
+		unset($_POST[$this->_csrf_token_name]);
+
+		// Regenerate on every submission?
+		if (config_item('csrf_regenerate'))
+		{
+			// Nothing should last forever
+			unset($_COOKIE[$this->_csrf_cookie_name]);
+			$this->_csrf_hash = '';
+		}
+
+		$this->_csrf_set_hash();
+		$this->csrf_set_cookie();
+
+		log_message('debug', 'CSRF token verified');
+>>>>>>> codeigniter/develop
 		return $this;
 	}
 
@@ -170,10 +310,15 @@ class CI_Security {
 	 * Set Cross Site Request Forgery Protection Cookie
 	 *
 	 * @return	object
+<<<<<<< HEAD
+=======
+	 * @codeCoverageIgnore
+>>>>>>> codeigniter/develop
 	 */
 	public function csrf_set_cookie()
 	{
 		$expire = time() + $this->_csrf_expire;
+<<<<<<< HEAD
 		$secure_cookie = (config_item('cookie_secure') === TRUE) ? 1 : 0;
 
 		if ($secure_cookie)
@@ -189,6 +334,25 @@ class CI_Security {
 		setcookie($this->_csrf_cookie_name, $this->_csrf_hash, $expire, config_item('cookie_path'), config_item('cookie_domain'), $secure_cookie);
 
 		log_message('debug', "CRSF cookie Set");
+=======
+		$secure_cookie = (bool) config_item('cookie_secure');
+
+		if ($secure_cookie && (empty($_SERVER['HTTPS']) OR strtolower($_SERVER['HTTPS']) === 'off'))
+		{
+			return FALSE;
+		}
+
+		setcookie(
+			$this->_csrf_cookie_name,
+			$this->_csrf_hash,
+			$expire,
+			config_item('cookie_path'),
+			config_item('cookie_domain'),
+			$secure_cookie,
+			config_item('cookie_httponly')
+		);
+		log_message('debug', 'CRSF cookie Set');
+>>>>>>> codeigniter/develop
 
 		return $this;
 	}
@@ -226,7 +390,11 @@ class CI_Security {
 	 *
 	 * Getter Method
 	 *
+<<<<<<< HEAD
 	 * @return 	string 	self::csrf_token_name
+=======
+	 * @return 	string 	self::_csrf_token_name
+>>>>>>> codeigniter/develop
 	 */
 	public function get_csrf_token_name()
 	{
@@ -246,7 +414,11 @@ class CI_Security {
 	 * the filter.
 	 *
 	 * Note: This function should only be used to deal with data
+<<<<<<< HEAD
 	 * upon submission.  It's not something that should
+=======
+	 * upon submission. It's not something that should
+>>>>>>> codeigniter/develop
 	 * be used for general runtime processing.
 	 *
 	 * This function was based in part on some code and ideas I
@@ -263,10 +435,14 @@ class CI_Security {
 	 */
 	public function xss_clean($str, $is_image = FALSE)
 	{
+<<<<<<< HEAD
 		/*
 		 * Is the string an array?
 		 *
 		 */
+=======
+		// Is the string an array?
+>>>>>>> codeigniter/develop
 		if (is_array($str))
 		{
 			while (list($key) = each($str))
@@ -277,6 +453,7 @@ class CI_Security {
 			return $str;
 		}
 
+<<<<<<< HEAD
 		/*
 		 * Remove Invisible Characters
 		 */
@@ -284,6 +461,10 @@ class CI_Security {
 
 		// Validate Entities in URLs
 		$str = $this->_validate_entities($str);
+=======
+		// Remove Invisible Characters and validate entities in URLs
+		$str = $this->_validate_entities(remove_invisible_characters($str));
+>>>>>>> codeigniter/develop
 
 		/*
 		 * URL Decode
@@ -293,7 +474,10 @@ class CI_Security {
 		 * <a href="http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D">Google</a>
 		 *
 		 * Note: Use rawurldecode() so it does not remove plus signs
+<<<<<<< HEAD
 		 *
+=======
+>>>>>>> codeigniter/develop
 		 */
 		$str = rawurldecode($str);
 
@@ -303,6 +487,7 @@ class CI_Security {
 		 * This permits our tests below to work reliably.
 		 * We only convert entities that are within tags since
 		 * these are the ones that will pose security problems.
+<<<<<<< HEAD
 		 *
 		 */
 
@@ -313,6 +498,13 @@ class CI_Security {
 		/*
 		 * Remove Invisible Characters Again!
 		 */
+=======
+		 */
+		$str = preg_replace_callback("/[a-z]+=([\'\"]).*?\\1/si", array($this, '_convert_attribute'), $str);
+		$str = preg_replace_callback('/<\w+.*?(?=>|<|$)/si', array($this, '_decode_entity'), $str);
+
+		// Remove Invisible Characters Again!
+>>>>>>> codeigniter/develop
 		$str = remove_invisible_characters($str);
 
 		/*
@@ -323,6 +515,7 @@ class CI_Security {
 		 * NOTE: preg_replace was found to be amazingly slow here on
 		 * large blocks of data, so we use str_replace.
 		 */
+<<<<<<< HEAD
 
 		if (strpos($str, "\t") !== FALSE)
 		{
@@ -332,6 +525,11 @@ class CI_Security {
 		/*
 		 * Capture converted string for later comparison
 		 */
+=======
+		$str = str_replace("\t", ' ', $str);
+
+		// Capture converted string for later comparison
+>>>>>>> codeigniter/develop
 		$converted_string = $str;
 
 		// Remove Strings that are never allowed
@@ -351,7 +549,11 @@ class CI_Security {
 			// Images have a tendency to have the PHP short opening and
 			// closing tags every so often so we skip those and only
 			// do the long opening tags.
+<<<<<<< HEAD
 			$str = preg_replace('/<\?(php)/i', "&lt;?\\1", $str);
+=======
+			$str = preg_replace('/<\?(php)/i', '&lt;?\\1', $str);
+>>>>>>> codeigniter/develop
 		}
 		else
 		{
@@ -369,6 +571,7 @@ class CI_Security {
 			'applet', 'alert', 'document', 'write', 'cookie', 'window'
 		);
 
+<<<<<<< HEAD
 		foreach ($words as $word)
 		{
 			$temp = '';
@@ -381,6 +584,16 @@ class CI_Security {
 			// We only want to do this when it is followed by a non-word character
 			// That way valid stuff like "dealer to" does not become "dealerto"
 			$str = preg_replace_callback('#('.substr($temp, 0, -3).')(\W)#is', array($this, '_compact_exploded_words'), $str);
+=======
+
+		foreach ($words as $word)
+		{
+			$word = implode('\s*', str_split($word)).'\s*';
+
+			// We only want to do this when it is followed by a non-word character
+			// That way valid stuff like "dealer to" does not become "dealerto"
+			$str = preg_replace_callback('#('.substr($word, 0, -3).')(\W)#is', array($this, '_compact_exploded_words'), $str);
+>>>>>>> codeigniter/develop
 		}
 
 		/*
@@ -393,6 +606,7 @@ class CI_Security {
 		{
 			$original = $str;
 
+<<<<<<< HEAD
 			if (preg_match("/<a/i", $str))
 			{
 				$str = preg_replace_callback("#<a\s+([^>]*?)(>|$)#si", array($this, '_js_link_removal'), $str);
@@ -409,6 +623,24 @@ class CI_Security {
 			}
 		}
 		while($original != $str);
+=======
+			if (preg_match('/<a/i', $str))
+			{
+				$str = preg_replace_callback('#<a\s+([^>]*?)(?:>|$)#si', array($this, '_js_link_removal'), $str);
+			}
+
+			if (preg_match('/<img/i', $str))
+			{
+				$str = preg_replace_callback('#<img\s+([^>]*?)(?:\s?/?>|$)#si', array($this, '_js_img_removal'), $str);
+			}
+
+			if (preg_match('/script|xss/i', $str))
+			{
+				$str = preg_replace('#</*(?:script|xss).*?>#si', '[removed]', $str);
+			}
+		}
+		while ($original !== $str);
+>>>>>>> codeigniter/develop
 
 		unset($original);
 
@@ -432,15 +664,27 @@ class CI_Security {
 		 *
 		 * Similar to above, only instead of looking for
 		 * tags it looks for PHP and JavaScript commands
+<<<<<<< HEAD
 		 * that are disallowed.  Rather than removing the
+=======
+		 * that are disallowed. Rather than removing the
+>>>>>>> codeigniter/develop
 		 * code, it simply converts the parenthesis to entities
 		 * rendering the code un-executable.
 		 *
 		 * For example:	eval('some code')
+<<<<<<< HEAD
 		 * Becomes:		eval&#40;'some code'&#41;
 		 */
 		$str = preg_replace('#(alert|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si', "\\1\\2&#40;\\3&#41;", $str);
 
+=======
+		 * Becomes:	eval&#40;'some code'&#41;
+		 */
+		$str = preg_replace('#(alert|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si',
+					'\\1\\2&#40;\\3&#41;',
+					$str);
+>>>>>>> codeigniter/develop
 
 		// Final clean up
 		// This adds a bit of extra precaution in case
@@ -456,6 +700,7 @@ class CI_Security {
 		 * string post-removal of XSS, then it fails, as there was unwanted XSS
 		 * code found and removed/changed during processing.
 		 */
+<<<<<<< HEAD
 
 		if ($is_image === TRUE)
 		{
@@ -463,6 +708,14 @@ class CI_Security {
 		}
 
 		log_message('debug', "XSS Filtering completed");
+=======
+		if ($is_image === TRUE)
+		{
+			return ($str === $converted_string);
+		}
+
+		log_message('debug', 'XSS Filtering completed');
+>>>>>>> codeigniter/develop
 		return $str;
 	}
 
@@ -475,7 +728,11 @@ class CI_Security {
 	 */
 	public function xss_hash()
 	{
+<<<<<<< HEAD
 		if ($this->_xss_hash == '')
+=======
+		if ($this->_xss_hash === '')
+>>>>>>> codeigniter/develop
 		{
 			mt_srand();
 			$this->_xss_hash = md5(time() + mt_rand(0, 1999999999));
@@ -494,20 +751,38 @@ class CI_Security {
 	 * The reason we are not using html_entity_decode() by itself is because
 	 * while it is not technically correct to leave out the semicolon
 	 * at the end of an entity most browsers will still interpret the entity
+<<<<<<< HEAD
 	 * correctly.  html_entity_decode() does not convert entities without
+=======
+	 * correctly. html_entity_decode() does not convert entities without
+>>>>>>> codeigniter/develop
 	 * semicolons, so we are left with our own little solution here. Bummer.
 	 *
 	 * @param	string
 	 * @param	string
 	 * @return	string
 	 */
+<<<<<<< HEAD
 	public function entity_decode($str, $charset='UTF-8')
 	{
 		if (stristr($str, '&') === FALSE)
+=======
+	public function entity_decode($str, $charset = NULL)
+	{
+		if (strpos($str, '&') === FALSE)
+>>>>>>> codeigniter/develop
 		{
 			return $str;
 		}
 
+<<<<<<< HEAD
+=======
+		if (empty($charset))
+		{
+			$charset = config_item('charset');
+		}
+
+>>>>>>> codeigniter/develop
 		$str = html_entity_decode($str, ENT_COMPAT, $charset);
 		$str = preg_replace('~&#x(0*[0-9a-f]{2,5})~ei', 'chr(hexdec("\\1"))', $str);
 		return preg_replace('~&#([0-9]{2,4})~e', 'chr(\\1)', $str);
@@ -525,6 +800,7 @@ class CI_Security {
 	public function sanitize_filename($str, $relative_path = FALSE)
 	{
 		$bad = array(
+<<<<<<< HEAD
 			"../",
 			"<!--",
 			"-->",
@@ -556,6 +832,24 @@ class CI_Security {
 			"%3f",		// ?
 			"%3b",		// ;
 			"%3d"		// =
+=======
+			'../', '<!--', '-->', '<', '>',
+			"'", '"', '&', '$', '#',
+			'{', '}', '[', ']', '=',
+			';', '?', '%20', '%22',
+			'%3c',		// <
+			'%253c',	// <
+			'%3e',		// >
+			'%0e',		// >
+			'%28',		// (
+			'%29',		// )
+			'%2528',	// (
+			'%26',		// &
+			'%24',		// $
+			'%3f',		// ?
+			'%3b',		// ;
+			'%3d'		// =
+>>>>>>> codeigniter/develop
 		);
 
 		if ( ! $relative_path)
@@ -571,13 +865,34 @@ class CI_Security {
 	// ----------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Strip Image Tags
+	 *
+	 * @param	string
+	 * @return	string
+	 */
+	public function strip_image_tags($str)
+	{
+		return preg_replace(array('#<img\s+.*?src\s*=\s*["\'](.+?)["\'].*?\>#', '#<img\s+.*?src\s*=\s*(.+?).*?\>#'), '\\1', $str);
+	}
+
+	// ----------------------------------------------------------------
+
+	/**
+>>>>>>> codeigniter/develop
 	 * Compact Exploded Words
 	 *
 	 * Callback function for xss_clean() to remove whitespace from
 	 * things like j a v a s c r i p t
 	 *
+<<<<<<< HEAD
 	 * @param	type
 	 * @return	type
+=======
+	 * @param	array
+	 * @return	string
+>>>>>>> codeigniter/develop
 	 */
 	protected function _compact_exploded_words($matches)
 	{
@@ -586,8 +901,13 @@ class CI_Security {
 
 	// --------------------------------------------------------------------
 
+<<<<<<< HEAD
 	/*
 	 * Remove Evil HTML Attributes (like evenhandlers and style)
+=======
+	/**
+	 * Remove Evil HTML Attributes (like event handlers and style)
+>>>>>>> codeigniter/develop
 	 *
 	 * It removes the evil attribute and either:
 	 * 	- Everything up until a space
@@ -609,7 +929,11 @@ class CI_Security {
 		if ($is_image === TRUE)
 		{
 			/*
+<<<<<<< HEAD
 			 * Adobe Photoshop puts XML metadata into JFIF images, 
+=======
+			 * Adobe Photoshop puts XML metadata into JFIF images,
+>>>>>>> codeigniter/develop
 			 * including namespacing, so we have to allow this for images.
 			 */
 			unset($evil_attributes[array_search('xmlns', $evil_attributes)]);
@@ -629,7 +953,11 @@ class CI_Security {
 			}
 
 			// find occurrences of illegal attribute strings with quotes (042 and 047 are octal quotes)
+<<<<<<< HEAD
 			preg_match_all("/(".implode('|', $evil_attributes).")\s*=\s*(\042|\047)([^\\2]*?)(\\2)/is",  $str, $matches, PREG_SET_ORDER);
+=======
+			preg_match_all('/('.implode('|', $evil_attributes).')\s*=\s*(\042|\047)([^\\2]*?)(\\2)/is', $str, $matches, PREG_SET_ORDER);
+>>>>>>> codeigniter/develop
 
 			foreach ($matches as $attr)
 			{
@@ -639,7 +967,11 @@ class CI_Security {
 			// replace illegal attribute strings that are inside an html tag
 			if (count($attribs) > 0)
 			{
+<<<<<<< HEAD
 				$str = preg_replace("/<(\/?[^><]+?)([^A-Za-z<>\-])(.*?)(".implode('|', $attribs).")(.*?)([\s><])([><]*)/i", '<$1 $3$5$6$7', $str, -1, $count);
+=======
+				$str = preg_replace('/<(\/?[^><]+?)([^A-Za-z<>\-])(.*?)('.implode('|', $attribs).')(.*?)([\s><])([><]*)/i', '<$1 $3$5$6$7', $str, -1, $count);
+>>>>>>> codeigniter/develop
 			}
 
 		} while ($count);
@@ -659,6 +991,7 @@ class CI_Security {
 	 */
 	protected function _sanitize_naughty_html($matches)
 	{
+<<<<<<< HEAD
 		// encode opening brace
 		$str = '&lt;'.$matches[1].$matches[2].$matches[3];
 
@@ -667,6 +1000,11 @@ class CI_Security {
 							$matches[4]);
 
 		return $str;
+=======
+		return '&lt;'.$matches[1].$matches[2].$matches[3] // encode opening brace
+			// encode captured opening or closing brace to prevent recursive vectors:
+			.str_replace(array('>', '<'), array('&gt;', '&lt;'), $matches[4]);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -684,6 +1022,7 @@ class CI_Security {
 	 */
 	protected function _js_link_removal($match)
 	{
+<<<<<<< HEAD
 		return str_replace(
 			$match[1],
 			preg_replace(
@@ -693,6 +1032,14 @@ class CI_Security {
 			),
 			$match[0]
 		);
+=======
+		return str_replace($match[1],
+					preg_replace('#href=.*?(?:alert\(|alert&\#40;|javascript:|livescript:|mocha:|charset=|window\.|document\.|\.cookie|<script|<xss|data\s*:)#si',
+							'',
+							$this->_filter_attributes(str_replace(array('<', '>'), '', $match[1]))
+					),
+					$match[0]);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -710,6 +1057,7 @@ class CI_Security {
 	 */
 	protected function _js_img_removal($match)
 	{
+<<<<<<< HEAD
 		return str_replace(
 			$match[1],
 			preg_replace(
@@ -719,6 +1067,14 @@ class CI_Security {
 			),
 			$match[0]
 		);
+=======
+		return str_replace($match[1],
+					preg_replace('#src=.*?(?:alert\(|alert&\#40;|javascript:|livescript:|mocha:|charset=|window\.|document\.|\.cookie|<script|<xss|base64\s*,)#si',
+							'',
+							$this->_filter_attributes(str_replace(array('<', '>'), '', $match[1]))
+					),
+					$match[0]);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -749,12 +1105,19 @@ class CI_Security {
 	protected function _filter_attributes($str)
 	{
 		$out = '';
+<<<<<<< HEAD
 
+=======
+>>>>>>> codeigniter/develop
 		if (preg_match_all('#\s*[a-z\-]+\s*=\s*(\042|\047)([^\\1]*?)\\1#is', $str, $matches))
 		{
 			foreach ($matches[0] as $match)
 			{
+<<<<<<< HEAD
 				$out .= preg_replace("#/\*.*?\*/#s", '', $match);
+=======
+				$out .= preg_replace('#/\*.*?\*/#s', '', $match);
+>>>>>>> codeigniter/develop
 			}
 		}
 
@@ -792,33 +1155,52 @@ class CI_Security {
 		 * Protect GET variables in URLs
 		 */
 
+<<<<<<< HEAD
 		 // 901119URL5918AMP18930PROTECT8198
 
 		$str = preg_replace('|\&([a-z\_0-9\-]+)\=([a-z\_0-9\-]+)|i', $this->xss_hash()."\\1=\\2", $str);
+=======
+		// 901119URL5918AMP18930PROTECT8198
+		$str = preg_replace('|\&([a-z\_0-9\-]+)\=([a-z\_0-9\-]+)|i', $this->xss_hash().'\\1=\\2', $str);
+>>>>>>> codeigniter/develop
 
 		/*
 		 * Validate standard character entities
 		 *
 		 * Add a semicolon if missing.  We do this to enable
 		 * the conversion of entities to ASCII later.
+<<<<<<< HEAD
 		 *
 		 */
 		$str = preg_replace('#(&\#?[0-9a-z]{2,})([\x00-\x20])*;?#i', "\\1;\\2", $str);
+=======
+		 */
+		$str = preg_replace('#(&\#?[0-9a-z]{2,})([\x00-\x20])*;?#i', '\\1;\\2', $str);
+>>>>>>> codeigniter/develop
 
 		/*
 		 * Validate UTF16 two byte encoding (x00)
 		 *
 		 * Just as above, adds a semicolon if missing.
+<<<<<<< HEAD
 		 *
 		 */
 		$str = preg_replace('#(&\#x?)([0-9A-F]+);?#i',"\\1\\2;",$str);
+=======
+		 */
+		$str = preg_replace('#(&\#x?)([0-9A-F]+);?#i', '\\1\\2;', $str);
+>>>>>>> codeigniter/develop
 
 		/*
 		 * Un-Protect GET variables in URLs
 		 */
+<<<<<<< HEAD
 		$str = str_replace($this->xss_hash(), '&', $str);
 
 		return $str;
+=======
+		return str_replace($this->xss_hash(), '&', $str);
+>>>>>>> codeigniter/develop
 	}
 
 	// ----------------------------------------------------------------------
@@ -852,7 +1234,11 @@ class CI_Security {
 	 */
 	protected function _csrf_set_hash()
 	{
+<<<<<<< HEAD
 		if ($this->_csrf_hash == '')
+=======
+		if ($this->_csrf_hash === '')
+>>>>>>> codeigniter/develop
 		{
 			// If the cookie exists we will use it's value.
 			// We don't necessarily want to regenerate it with
@@ -864,14 +1250,25 @@ class CI_Security {
 				return $this->_csrf_hash = $_COOKIE[$this->_csrf_cookie_name];
 			}
 
+<<<<<<< HEAD
 			return $this->_csrf_hash = md5(uniqid(rand(), TRUE));
+=======
+			$this->_csrf_hash = md5(uniqid(rand(), TRUE));
+			$this->csrf_set_cookie();
+>>>>>>> codeigniter/develop
 		}
 
 		return $this->_csrf_hash;
 	}
 
 }
+<<<<<<< HEAD
 // END Security Class
 
 /* End of file Security.php */
 /* Location: ./system/libraries/Security.php */
+=======
+
+/* End of file Security.php */
+/* Location: ./system/core/Security.php */
+>>>>>>> codeigniter/develop

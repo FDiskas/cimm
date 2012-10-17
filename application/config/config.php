@@ -1,4 +1,33 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+=======
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Academic Free License version 3.0
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0) that is
+ * bundled with this package in the files license_afl.txt / license_afl.rst.
+ * It is also available through the world wide web at this URL:
+ * http://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/AFL-3.0 Academic Free License (AFL 3.0)
+ * @link		http://codeigniter.com
+ * @since		Version 1.0
+ * @filesource
+ */
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +55,11 @@ $config['base_url']	= '';
 | variable so that it is blank.
 |
 */
+<<<<<<< HEAD
 $config['index_page'] = '';
+=======
+$config['index_page'] = 'index.php';
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
@@ -71,10 +104,13 @@ $config['url_suffix'] = '';
 */
 $config['language']	= 'english';
 
+<<<<<<< HEAD
 $config['modules_locations'] = array(
 	APPPATH.'modules/' => '../modules/',
 );
 
+=======
+>>>>>>> codeigniter/develop
 /*
 |--------------------------------------------------------------------------
 | Default Character Set
@@ -83,6 +119,11 @@ $config['modules_locations'] = array(
 | This determines which character set is used by default in various methods
 | that require a character set to be provided.
 |
+<<<<<<< HEAD
+=======
+| See http://php.net/htmlspecialchars for a list of supported charsets.
+|
+>>>>>>> codeigniter/develop
 */
 $config['charset'] = 'UTF-8';
 
@@ -180,11 +221,22 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 |	3 = Informational Messages
 |	4 = All Messages
 |
+<<<<<<< HEAD
+=======
+| You can also pass in a array with threshold levels to show individual error types
+|
+| 	array(2) = Debug Messages, without Error Messages
+|
+>>>>>>> codeigniter/develop
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
 | your log files will fill up very fast.
 |
 */
+<<<<<<< HEAD
 $config['log_threshold'] = 1;
+=======
+$config['log_threshold'] = 0;
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
@@ -227,14 +279,28 @@ $config['cache_path'] = '';
 | If you use the Encryption class or the Session class you
 | MUST set an encryption key.  See the user guide for info.
 |
+<<<<<<< HEAD
 */
 $config['encryption_key'] = 'randomkey';
+=======
+| http://codeigniter.com/user_guide/libraries/encryption.html
+| http://codeigniter.com/user_guide/libraries/sessions.html
+|
+*/
+$config['encryption_key'] = '';
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
 | Session Variables
 |--------------------------------------------------------------------------
 |
+<<<<<<< HEAD
+=======
+| 'sess_driver'				= the driver to load: cookie (Classic), native (PHP sessions),
+|	or your custom driver name
+| 'sess_valid_drivers'		= additional valid drivers which may be loaded
+>>>>>>> codeigniter/develop
 | 'sess_cookie_name'		= the name you want for the cookie
 | 'sess_expiration'			= the number of SECONDS you want the session to last.
 |   by default sessions last 7200 seconds (two hours).  Set to zero for no expiration.
@@ -248,6 +314,11 @@ $config['encryption_key'] = 'randomkey';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
+<<<<<<< HEAD
+=======
+$config['sess_driver']			= 'cookie';
+$config['sess_valid_drivers']	= array();
+>>>>>>> codeigniter/develop
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 7200;
 $config['sess_expire_on_close']	= FALSE;
@@ -267,12 +338,23 @@ $config['sess_time_to_update']	= 300;
 | 'cookie_domain' = Set to .your-domain.com for site-wide cookies
 | 'cookie_path'   =  Typically will be a forward slash
 | 'cookie_secure' =  Cookies will only be set if a secure HTTPS connection exists.
+<<<<<<< HEAD
 |
 */
 $config['cookie_prefix']	= "";
 $config['cookie_domain']	= "";
 $config['cookie_path']		= "/";
 $config['cookie_secure']	= FALSE;
+=======
+| 'cookie_httponly' = Cookie will only be accessible via HTTP(S) (no javascript)
+|
+*/
+$config['cookie_prefix']	= '';
+$config['cookie_domain']	= '';
+$config['cookie_path']		= '/';
+$config['cookie_secure']	= FALSE;
+$config['cookie_httponly'] 	= FALSE;
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
@@ -296,11 +378,21 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_token_name' = The token name
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
+<<<<<<< HEAD
+=======
+| 'csrf_regenerate' = Regenerate token on every submission
+| 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
+>>>>>>> codeigniter/develop
 */
 $config['csrf_protection'] = FALSE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
+<<<<<<< HEAD
+=======
+$config['csrf_regenerate'] = TRUE;
+$config['csrf_exclude_uris'] = array();
+>>>>>>> codeigniter/develop
 
 /*
 |--------------------------------------------------------------------------
@@ -323,6 +415,7 @@ $config['compress_output'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
+<<<<<<< HEAD
 | Master Time Reference
 |--------------------------------------------------------------------------
 |
@@ -330,6 +423,27 @@ $config['compress_output'] = FALSE;
 | your server's local time as the master 'now' reference, or convert it to
 | GMT.  See the 'date helper' page of the user guide for information
 | regarding date handling.
+=======
+| Minify
+|--------------------------------------------------------------------------
+|
+| Removes extra characters (usually unnecessary spaces) from your
+| output for faster page load speeds.  Makes your outputted HTML source
+| code less readable.
+|
+*/
+$config['minify_output'] = FALSE;
+
+/*
+|--------------------------------------------------------------------------
+| Master Time Reference
+|--------------------------------------------------------------------------
+|
+| Options are 'local' or any PHP supported timezone. This preference tells
+| the system whether to use your server's local time as the master 'now'
+| reference, or convert it to the configured one timezone. See the 'date
+| helper' page of the user guide for information regarding date handling.
+>>>>>>> codeigniter/develop
 |
 */
 $config['time_reference'] = 'local';
@@ -353,14 +467,31 @@ $config['rewrite_short_tags'] = FALSE;
 | Reverse Proxy IPs
 |--------------------------------------------------------------------------
 |
+<<<<<<< HEAD
 | If your server is behind a reverse proxy, you must whitelist the proxy IP
 | addresses from which CodeIgniter should trust the HTTP_X_FORWARDED_FOR
 | header in order to properly identify the visitor's IP address.
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
+=======
+| If your server is behind a reverse proxy, you must whitelist the proxy
+| IP addresses from which CodeIgniter should trust headers such as
+| HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify
+| the visitor's IP address.
+|
+| You can use both an array or a comma-separated list of proxy addresses,
+| as well as specifying whole subnets. Here are a few examples:
+|
+| Comma-separated:	'10.0.1.200,192.168.5.0/24'
+| Array:		array('10.0.1.200', '192.168.5.0/24')
+>>>>>>> codeigniter/develop
 */
 $config['proxy_ips'] = '';
 
 
 /* End of file config.php */
+<<<<<<< HEAD
 /* Location: ./application/config/config.php */
+=======
+/* Location: ./application/config/config.php */
+>>>>>>> codeigniter/develop

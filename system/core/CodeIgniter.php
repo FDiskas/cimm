@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -8,28 +9,62 @@
  * @author		ExpressionEngine Dev Team
  * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
+=======
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
+<<<<<<< HEAD
 // ------------------------------------------------------------------------
 
+=======
+>>>>>>> codeigniter/develop
 /**
  * System Initialization File
  *
  * Loads the base classes and executes the request.
  *
  * @package		CodeIgniter
+<<<<<<< HEAD
  * @subpackage	codeigniter
  * @category	Front-controller
  * @author		ExpressionEngine Dev Team
+=======
+ * @subpackage	CodeIgniter
+ * @category	Front-controller
+ * @author		EllisLab Dev Team
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/
  */
 
 /**
  * CodeIgniter Version
  *
+<<<<<<< HEAD
  * @var string
  *
  */
@@ -42,20 +77,34 @@
  *
  */
 	define('CI_CORE', FALSE);
+=======
+ * @var	string
+ *
+ */
+	define('CI_VERSION', '3.0-dev');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
  *  Load the global functions
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	require(BASEPATH.'core/Common.php');
+=======
+	require_once(BASEPATH.'core/Common.php');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
  *  Load the framework constants
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	if (defined('ENVIRONMENT') AND file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
+=======
+	if (defined('ENVIRONMENT') && file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
+>>>>>>> codeigniter/develop
 	{
 		require(APPPATH.'config/'.ENVIRONMENT.'/constants.php');
 	}
@@ -71,9 +120,15 @@
  */
 	set_error_handler('_exception_handler');
 
+<<<<<<< HEAD
 	if ( ! is_php('5.3'))
 	{
 		@set_magic_quotes_runtime(0); // Kill magic quotes
+=======
+	if ( ! is_php('5.4'))
+	{
+		@ini_set('magic_quotes_runtime', 0); // Kill magic quotes
+>>>>>>> codeigniter/develop
 	}
 
 /*
@@ -87,18 +142,27 @@
  * "libraries" folder. Since CI allows config items to be
  * overriden via data set in the main index. php file,
  * before proceeding we need to know if a subclass_prefix
+<<<<<<< HEAD
  * override exists.  If so, we will set this value now,
+=======
+ * override exists. If so, we will set this value now,
+>>>>>>> codeigniter/develop
  * before any classes are loaded
  * Note: Since the config file data is cached it doesn't
  * hurt to load it here.
  */
+<<<<<<< HEAD
 	if (isset($assign_to_config['subclass_prefix']) AND $assign_to_config['subclass_prefix'] != '')
+=======
+	if ( ! empty($assign_to_config['subclass_prefix']))
+>>>>>>> codeigniter/develop
 	{
 		get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
 	}
 
 /*
  * ------------------------------------------------------
+<<<<<<< HEAD
  *  Set a liberal script execution time limit
  * ------------------------------------------------------
  */
@@ -109,6 +173,8 @@
 
 /*
  * ------------------------------------------------------
+=======
+>>>>>>> codeigniter/develop
  *  Start the timer... tick tock tick tock...
  * ------------------------------------------------------
  */
@@ -128,7 +194,11 @@
  *  Is there a "pre_system" hook?
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	$EXT->_call_hook('pre_system');
+=======
+	$EXT->call_hook('pre_system');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
@@ -150,11 +220,18 @@
  *
  * Note: Order here is rather important as the UTF-8
  * class needs to be used very early on, but it cannot
+<<<<<<< HEAD
  * properly determine if UTf-8 can be supported until
  * after the Config class is instantiated.
  *
  */
 
+=======
+ * properly determine if UTF-8 can be supported until
+ * after the Config class is instantiated.
+ *
+ */
+>>>>>>> codeigniter/develop
 	$UNI =& load_class('Utf8', 'core');
 
 /*
@@ -187,6 +264,7 @@
 
 /*
  * ------------------------------------------------------
+<<<<<<< HEAD
  *	Is there a valid cache file?  If so, we're done...
  * ------------------------------------------------------
  */
@@ -196,6 +274,15 @@
 		{
 			exit;
 		}
+=======
+ *	Is there a valid cache file? If so, we're done...
+ * ------------------------------------------------------
+ */
+	if ($EXT->call_hook('cache_override') === FALSE
+		&& $OUT->_display_cache($CFG, $URI) === TRUE)
+	{
+		exit;
+>>>>>>> codeigniter/develop
 	}
 
 /*
@@ -228,6 +315,16 @@
 	// Load the base controller class
 	require BASEPATH.'core/Controller.php';
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Reference to the CI_Controller method.
+	 *
+	 * Returns current CI instance object
+	 *
+	 * @return object
+	 */
+>>>>>>> codeigniter/develop
 	function &get_instance()
 	{
 		return CI_Controller::get_instance();
@@ -265,20 +362,34 @@
 	$method = $RTR->fetch_method();
 
 	if ( ! class_exists($class)
+<<<<<<< HEAD
 		OR strncmp($method, '_', 1) == 0
+=======
+		OR strpos($method, '_') === 0
+>>>>>>> codeigniter/develop
 		OR in_array(strtolower($method), array_map('strtolower', get_class_methods('CI_Controller')))
 		)
 	{
 		if ( ! empty($RTR->routes['404_override']))
 		{
+<<<<<<< HEAD
 			$x = explode('/', $RTR->routes['404_override']);
 			$class = $x[0];
 			$method = (isset($x[1]) ? $x[1] : 'index');
+=======
+			$x = explode('/', $RTR->routes['404_override'], 2);
+			$class = $x[0];
+			$method = isset($x[1]) ? $x[1] : 'index';
+>>>>>>> codeigniter/develop
 			if ( ! class_exists($class))
 			{
 				if ( ! file_exists(APPPATH.'controllers/'.$class.'.php'))
 				{
+<<<<<<< HEAD
 					show_404("{$class}/{$method}");
+=======
+					show_404($class.'/'.$method);
+>>>>>>> codeigniter/develop
 				}
 
 				include_once(APPPATH.'controllers/'.$class.'.php');
@@ -286,7 +397,11 @@
 		}
 		else
 		{
+<<<<<<< HEAD
 			show_404("{$class}/{$method}");
+=======
+			show_404($class.'/'.$method);
+>>>>>>> codeigniter/develop
 		}
 	}
 
@@ -295,7 +410,11 @@
  *  Is there a "pre_controller" hook?
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	$EXT->_call_hook('pre_controller');
+=======
+	$EXT->call_hook('pre_controller');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
@@ -312,7 +431,11 @@
  *  Is there a "post_controller_constructor" hook?
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	$EXT->_call_hook('post_controller_constructor');
+=======
+	$EXT->call_hook('post_controller_constructor');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
@@ -333,14 +456,24 @@
 			// Check and see if we are using a 404 override and use it.
 			if ( ! empty($RTR->routes['404_override']))
 			{
+<<<<<<< HEAD
 				$x = explode('/', $RTR->routes['404_override']);
 				$class = $x[0];
 				$method = (isset($x[1]) ? $x[1] : 'index');
+=======
+				$x = explode('/', $RTR->routes['404_override'], 2);
+				$class = $x[0];
+				$method = isset($x[1]) ? $x[1] : 'index';
+>>>>>>> codeigniter/develop
 				if ( ! class_exists($class))
 				{
 					if ( ! file_exists(APPPATH.'controllers/'.$class.'.php'))
 					{
+<<<<<<< HEAD
 						show_404("{$class}/{$method}");
+=======
+						show_404($class.'/'.$method);
+>>>>>>> codeigniter/develop
 					}
 
 					include_once(APPPATH.'controllers/'.$class.'.php');
@@ -350,7 +483,11 @@
 			}
 			else
 			{
+<<<<<<< HEAD
 				show_404("{$class}/{$method}");
+=======
+				show_404($class.'/'.$method);
+>>>>>>> codeigniter/develop
 			}
 		}
 
@@ -359,7 +496,10 @@
 		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> codeigniter/develop
 	// Mark a benchmark end point
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
 
@@ -368,14 +508,22 @@
  *  Is there a "post_controller" hook?
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	$EXT->_call_hook('post_controller');
+=======
+	$EXT->call_hook('post_controller');
+>>>>>>> codeigniter/develop
 
 /*
  * ------------------------------------------------------
  *  Send the final rendered output to the browser
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	if ($EXT->_call_hook('display_override') === FALSE)
+=======
+	if ($EXT->call_hook('display_override') === FALSE)
+>>>>>>> codeigniter/develop
 	{
 		$OUT->_display();
 	}
@@ -385,6 +533,7 @@
  *  Is there a "post_system" hook?
  * ------------------------------------------------------
  */
+<<<<<<< HEAD
 	$EXT->_call_hook('post_system');
 
 /*
@@ -397,6 +546,9 @@
 		$CI->db->close();
 	}
 
+=======
+	$EXT->call_hook('post_system');
+>>>>>>> codeigniter/develop
 
 /* End of file CodeIgniter.php */
 /* Location: ./system/core/CodeIgniter.php */

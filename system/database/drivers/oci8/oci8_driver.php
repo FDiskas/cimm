@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -8,24 +9,59 @@
  * @author		ExpressionEngine Dev Team
  * @copyright   Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
+=======
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Open Software License version 3.0
+ *
+ * This source file is subject to the Open Software License (OSL 3.0) that is
+ * bundled with this package in the files license.txt / license.rst.  It is
+ * also available through the world wide web at this URL:
+ * http://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright   Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
+<<<<<<< HEAD
 // ------------------------------------------------------------------------
 
+=======
+>>>>>>> codeigniter/develop
 /**
  * oci8 Database Adapter Class
  *
  * Note: _DB is an extender class that the app controller
+<<<<<<< HEAD
  * creates dynamically based on whether the active record
+=======
+ * creates dynamically based on whether the query builder
+>>>>>>> codeigniter/develop
  * class is being used or not.
  *
  * @package		CodeIgniter
  * @subpackage  Drivers
  * @category	Database
+<<<<<<< HEAD
  * @author		ExpressionEngine Dev Team
+=======
+ * @author		EllisLab Dev Team
+>>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/database/
  */
 
@@ -36,6 +72,7 @@
  * permit access to oracle databases
  *
  * @author	  Kelly McArdle
+<<<<<<< HEAD
  *
  */
 
@@ -49,12 +86,22 @@ class CI_DB_oci8_driver extends CI_DB {
 	// clause and character used for LIKE escape sequences
 	var $_like_escape_str = " escape '%s' ";
 	var $_like_escape_chr = '!';
+=======
+ */
+class CI_DB_oci8_driver extends CI_DB {
+
+	public $dbdriver = 'oci8';
+
+	// The character used for excaping
+	protected $_escape_char = '"';
+>>>>>>> codeigniter/develop
 
 	/**
 	 * The syntax to count rows is slightly different across different
 	 * database engines, so this string appears in each driver and is
 	 * used for the count_all() and count_all_results() functions.
 	 */
+<<<<<<< HEAD
 	var $_count_string = "SELECT COUNT(1) AS ";
 	var $_random_keyword = ' ASC'; // not currently supported
 
@@ -108,11 +155,107 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		// not implemented in oracle
 		return;
+=======
+	protected $_count_string = 'SELECT COUNT(1) AS ';
+	protected $_random_keyword = ' ASC'; // not currently supported
+
+	protected $_reserved_identifiers = array('*', 'rownum');
+
+	// Set "auto commit" by default
+	public $commit_mode = OCI_COMMIT_ON_SUCCESS;
+
+	// need to track statement id and cursor id
+	public $stmt_id;
+	public $curs_id;
+
+	// if we use a limit, we will add a field that will
+	// throw off num_fields later
+	public $limit_used;
+
+	public function __construct($params)
+	{
+		parent::__construct($params);
+
+		$valid_dsns = array(
+					'tns'	=> '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
+					// Easy Connect string (Oracle 10g+)
+					'ec'	=> '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
+					'in'	=> '/^[a-z0-9$_]+$/i' // Instance name (defined in tnsnames.ora)
+				);
+
+		/* Space characters don't have any effect when actually
+		 * connecting, but can be a hassle while validating the DSN.
+		 */
+		$this->dsn = str_replace(array("\n", "\r", "\t", ' '), '', $this->dsn);
+
+		if ($this->dsn !== '')
+		{
+			foreach ($valid_dsns as $regexp)
+			{
+				if (preg_match($regexp, $this->dsn))
+				{
+					return;
+				}
+			}
+		}
+
+		// Legacy support for TNS in the hostname configuration field
+		$this->hostname = str_replace(array("\n", "\r", "\t", ' '), '', $this->hostname);
+		if (preg_match($valid_dsns['tns'], $this->hostname))
+		{
+			$this->dsn = $this->hostname;
+			return;
+		}
+		elseif ($this->hostname !== '' && strpos($this->hostname, '/') === FALSE && strpos($this->hostname, ':') === FALSE
+			&& (( ! empty($this->port) && ctype_digit($this->port)) OR $this->database !== ''))
+		{
+			/* If the hostname field isn't empty, doesn't contain
+			 * ':' and/or '/' and if port and/or database aren't
+			 * empty, then the hostname field is most likely indeed
+			 * just a hostname. Therefore we'll try and build an
+			 * Easy Connect string from these 3 settings, assuming
+			 * that the database field is a service name.
+			 */
+			$this->dsn = $this->hostname
+					.(( ! empty($this->port) && ctype_digit($this->port)) ? ':'.$this->port : '')
+					.($this->database !== '' ? '/'.ltrim($this->database, '/') : '');
+
+			if (preg_match($valid_dsns['ec'], $this->dsn))
+			{
+				return;
+			}
+		}
+
+		/* At this point, we can only try and validate the hostname and
+		 * database fields separately as DSNs.
+		 */
+		if (preg_match($valid_dsns['ec'], $this->hostname) OR preg_match($valid_dsns['in'], $this->hostname))
+		{
+			$this->dsn = $this->hostname;
+			return;
+		}
+
+		$this->database = str_replace(array("\n", "\r", "\t", ' '), '', $this->database);
+		foreach ($valid_dsns as $regexp)
+		{
+			if (preg_match($regexp, $this->database))
+			{
+				return;
+			}
+		}
+
+		/* Well - OK, an empty string should work as well.
+		 * PHP will try to use environment variables to
+		 * determine which Oracle instance to connect to.
+		 */
+		$this->dsn = '';
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Select the database
 	 *
 	 * @access  private called by the base class
@@ -122,11 +265,23 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		// Not in Oracle - schemas are actually usernames
 		return TRUE;
+=======
+	 * Non-persistent database connection
+	 *
+	 * @return	resource
+	 */
+	public function db_connect()
+	{
+		return ( ! empty($this->char_set))
+			? @oci_connect($this->username, $this->password, $this->dsn, $this->char_set)
+			: @oci_connect($this->username, $this->password, $this->dsn);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Set client character set
 	 *
 	 * @access	public
@@ -138,11 +293,23 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		// @todo - add support if needed
 		return TRUE;
+=======
+	 * Persistent database connection
+	 *
+	 * @return	resource
+	 */
+	public function db_pconnect()
+	{
+		return empty($this->char_set)
+			? @oci_pconnect($this->username, $this->password, $this->dsn)
+			: @oci_pconnect($this->username, $this->password, $this->dsn, $this->char_set);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Version number query string
 	 *
 	 * @access  protected
@@ -151,6 +318,17 @@ class CI_DB_oci8_driver extends CI_DB {
 	protected function _version()
 	{
 		return oci_server_version($this->conn_id);
+=======
+	 * Database version number
+	 *
+	 * @return	string
+	 */
+	public function version()
+	{
+		return isset($this->data_cache['version'])
+			? $this->data_cache['version']
+			: $this->data_cache['version'] = oci_server_version($this->conn_id);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -158,6 +336,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Execute the query
 	 *
+<<<<<<< HEAD
 	 * @access  protected  called by the base class
 	 * @param   string  an SQL query
 	 * @return  resource
@@ -184,12 +363,42 @@ class CI_DB_oci8_driver extends CI_DB {
 		if ( ! is_resource($this->stmt_id))
 		{
 			$this->stmt_id = oci_parse($this->conn_id, $this->_prep_query($sql));
+=======
+	 * @param	string	an SQL query
+	 * @return	resource
+	 */
+	protected function _execute($sql)
+	{
+		/* Oracle must parse the query before it is run. All of the actions with
+		 * the query are based on the statement id returned by oci_parse().
+		 */
+		$this->stmt_id = FALSE;
+		$this->_set_stmt_id($sql);
+		oci_set_prefetch($this->stmt_id, 1000);
+		return @oci_execute($this->stmt_id, $this->commit_mode);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Generate a statement ID
+	 *
+	 * @param	string	an SQL query
+	 * @return	void
+	 */
+	protected function _set_stmt_id($sql)
+	{
+		if ( ! is_resource($this->stmt_id))
+		{
+			$this->stmt_id = oci_parse($this->conn_id, $sql);
+>>>>>>> codeigniter/develop
 		}
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * Prep the query
 	 *
 	 * If needed, each database adapter can prep the query string
@@ -215,6 +424,15 @@ class CI_DB_oci8_driver extends CI_DB {
 	{
 		$this->curs_id = oci_new_cursor($this->conn_id);
 		return $this->curs_id;
+=======
+	 * Get cursor. Returns a cursor from the database
+	 *
+	 * @return	resource
+	 */
+	public function get_cursor()
+	{
+		return $this->curs_id = oci_new_cursor($this->conn_id);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -222,15 +440,23 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Stored Procedure.  Executes a stored procedure
 	 *
+<<<<<<< HEAD
 	 * @access  public
 	 * @param   package	 package stored procedure is in
 	 * @param   procedure   stored procedure to execute
 	 * @param   params	  array of parameters
 	 * @return  array
+=======
+	 * @param	string	package name in which the stored procedure is in
+	 * @param	string	stored procedure name to execute
+	 * @param	array	parameters
+	 * @return	mixed
+>>>>>>> codeigniter/develop
 	 *
 	 * params array keys
 	 *
 	 * KEY	  OPTIONAL	NOTES
+<<<<<<< HEAD
 	 * name		no		the name of the parameter should be in :<param_name> format
 	 * value	no		the value of the parameter.  If this is an OUT or IN OUT parameter,
 	 *					this should be a reference to a variable
@@ -240,6 +466,17 @@ class CI_DB_oci8_driver extends CI_DB {
 	public function stored_procedure($package, $procedure, $params)
 	{
 		if ($package == '' OR $procedure == '' OR ! is_array($params))
+=======
+	 * name		no	the name of the parameter should be in :<param_name> format
+	 * value	no	the value of the parameter.  If this is an OUT or IN OUT parameter,
+	 *				this should be a reference to a variable
+	 * type		yes	the type of the parameter
+	 * length	yes	the max size of the parameter
+	 */
+	public function stored_procedure($package, $procedure, $params)
+	{
+		if ($package === '' OR $procedure === '' OR ! is_array($params))
+>>>>>>> codeigniter/develop
 		{
 			if ($this->db_debug)
 			{
@@ -250,24 +487,42 @@ class CI_DB_oci8_driver extends CI_DB {
 		}
 
 		// build the query string
+<<<<<<< HEAD
 		$sql = "begin $package.$procedure(";
+=======
+		$sql = 'BEGIN '.$package.'.'.$procedure.'(';
+>>>>>>> codeigniter/develop
 
 		$have_cursor = FALSE;
 		foreach ($params as $param)
 		{
+<<<<<<< HEAD
 			$sql .= $param['name'] . ",";
 
 			if (array_key_exists('type', $param) && ($param['type'] === OCI_B_CURSOR))
+=======
+			$sql .= $param['name'].',';
+
+			if (isset($param['type']) && $param['type'] === OCI_B_CURSOR)
+>>>>>>> codeigniter/develop
 			{
 				$have_cursor = TRUE;
 			}
 		}
+<<<<<<< HEAD
 		$sql = trim($sql, ",") . "); end;";
+=======
+		$sql = trim($sql, ',') . '); END;';
+>>>>>>> codeigniter/develop
 
 		$this->stmt_id = FALSE;
 		$this->_set_stmt_id($sql);
 		$this->_bind_params($params);
+<<<<<<< HEAD
 		$this->query($sql, FALSE, $have_cursor);
+=======
+		return $this->query($sql, FALSE, $have_cursor);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -275,10 +530,17 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Bind parameters
 	 *
+<<<<<<< HEAD
 	 * @access  private
 	 * @return  none
 	 */
 	private function _bind_params($params)
+=======
+	 * @param	array
+	 * @return	void
+	 */
+	protected function _bind_params($params)
+>>>>>>> codeigniter/develop
 	{
 		if ( ! is_array($params) OR ! is_resource($this->stmt_id))
 		{
@@ -304,7 +566,11 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Begin Transaction
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+	 * @param	bool
+>>>>>>> codeigniter/develop
 	 * @return	bool
 	 */
 	public function trans_begin($test_mode = FALSE)
@@ -325,7 +591,11 @@ class CI_DB_oci8_driver extends CI_DB {
 		// even if the queries produce a successful result.
 		$this->_trans_failure = ($test_mode === TRUE) ? TRUE : FALSE;
 
+<<<<<<< HEAD
 		$this->_commit = OCI_DEFAULT;
+=======
+		$this->commit_mode = (is_php('5.3.2')) ? OCI_NO_AUTO_COMMIT : OCI_DEFAULT;
+>>>>>>> codeigniter/develop
 		return TRUE;
 	}
 
@@ -334,7 +604,10 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Commit Transaction
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @return	bool
 	 */
 	public function trans_commit()
@@ -350,9 +623,14 @@ class CI_DB_oci8_driver extends CI_DB {
 			return TRUE;
 		}
 
+<<<<<<< HEAD
 		$ret = oci_commit($this->conn_id);
 		$this->_commit = OCI_COMMIT_ON_SUCCESS;
 		return $ret;
+=======
+		$this->commit_mode = OCI_COMMIT_ON_SUCCESS;
+		return oci_commit($this->conn_id);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -360,11 +638,15 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Rollback Transaction
 	 *
+<<<<<<< HEAD
 	 * @access	public
+=======
+>>>>>>> codeigniter/develop
 	 * @return	bool
 	 */
 	public function trans_rollback()
 	{
+<<<<<<< HEAD
 		if ( ! $this->trans_enabled)
 		{
 			return TRUE;
@@ -372,13 +654,22 @@ class CI_DB_oci8_driver extends CI_DB {
 
 		// When transactions are nested we only begin/commit/rollback the outermost ones
 		if ($this->_trans_depth > 0)
+=======
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		if ( ! $this->trans_enabled OR $this->_trans_depth > 0)
+>>>>>>> codeigniter/develop
 		{
 			return TRUE;
 		}
 
+<<<<<<< HEAD
 		$ret = oci_rollback($this->conn_id);
 		$this->_commit = OCI_COMMIT_ON_SUCCESS;
 		return $ret;
+=======
+		$this->commit_mode = OCI_COMMIT_ON_SUCCESS;
+		return oci_rollback($this->conn_id);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -386,10 +677,16 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Escape String
 	 *
+<<<<<<< HEAD
 	 * @access  public
 	 * @param   string
 	 * @param	bool	whether or not the string will be used in a LIKE condition
 	 * @return  string
+=======
+	 * @param	string
+	 * @param	bool	whether or not the string will be used in a LIKE condition
+	 * @return	string
+>>>>>>> codeigniter/develop
 	 */
 	public function escape_str($str, $like = FALSE)
 	{
@@ -403,14 +700,24 @@ class CI_DB_oci8_driver extends CI_DB {
 			return $str;
 		}
 
+<<<<<<< HEAD
 		$str = remove_invisible_characters($str);
+=======
+		$str = str_replace("'", "''", remove_invisible_characters($str));
+>>>>>>> codeigniter/develop
 
 		// escape LIKE condition wildcards
 		if ($like === TRUE)
 		{
+<<<<<<< HEAD
 			$str = str_replace(	array('%', '_', $this->_like_escape_chr),
 								array($this->_like_escape_chr.'%', $this->_like_escape_chr.'_', $this->_like_escape_chr.$this->_like_escape_chr),
 								$str);
+=======
+			return str_replace(array($this->_like_escape_chr, '%', '_'),
+						array($this->_like_escape_chr.$this->_like_escape_chr, $this->_like_escape_chr.'%', $this->_like_escape_chr.'_'),
+						$str);
+>>>>>>> codeigniter/develop
 		}
 
 		return $str;
@@ -421,8 +728,12 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Affected Rows
 	 *
+<<<<<<< HEAD
 	 * @access  public
 	 * @return  integer
+=======
+	 * @return	int
+>>>>>>> codeigniter/develop
 	 */
 	public function affected_rows()
 	{
@@ -434,8 +745,12 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Insert ID
 	 *
+<<<<<<< HEAD
 	 * @access  public
 	 * @return  integer
+=======
+	 * @return	int
+>>>>>>> codeigniter/develop
 	 */
 	public function insert_id()
 	{
@@ -446,6 +761,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * "Count All" query
 	 *
 	 * Generates a platform-specific query string that counts all records in
@@ -477,21 +793,36 @@ class CI_DB_oci8_driver extends CI_DB {
 	// --------------------------------------------------------------------
 
 	/**
+=======
+>>>>>>> codeigniter/develop
 	 * Show table query
 	 *
 	 * Generates a platform-specific query string so that the table names can be fetched
 	 *
+<<<<<<< HEAD
 	 * @access	protected
 	 * @param	boolean
+=======
+	 * @param	bool
+>>>>>>> codeigniter/develop
 	 * @return	string
 	 */
 	protected function _list_tables($prefix_limit = FALSE)
 	{
+<<<<<<< HEAD
 		$sql = "SELECT TABLE_NAME FROM ALL_TABLES";
 
 		if ($prefix_limit !== FALSE AND $this->dbprefix != '')
 		{
 			$sql .= " WHERE TABLE_NAME LIKE '".$this->escape_like_str($this->dbprefix)."%' ".sprintf($this->_like_escape_str, $this->_like_escape_chr);
+=======
+		$sql = 'SELECT "TABLE_NAME" FROM "ALL_TABLES"';
+
+		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
+		{
+			return $sql.' WHERE "TABLE_NAME" LIKE \''.$this->escape_like_str($this->dbprefix)."%' "
+				.sprintf($this->_like_escape_str, $this->_like_escape_chr);
+>>>>>>> codeigniter/develop
 		}
 
 		return $sql;
@@ -504,6 +835,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific query string so that the column names can be fetched
 	 *
+<<<<<<< HEAD
 	 * @access  protected
 	 * @param   string  the table name
 	 * @return  string
@@ -511,6 +843,14 @@ class CI_DB_oci8_driver extends CI_DB {
 	protected function _list_columns($table = '')
 	{
 		return "SELECT COLUMN_NAME FROM all_tab_columns WHERE table_name = '$table'";
+=======
+	 * @param	string	the table name
+	 * @return	string
+	 */
+	protected function _list_columns($table = '')
+	{
+		return 'SELECT "COLUMN_NAME" FROM "all_tab_columns" WHERE "TABLE_NAME" = '.$this->escape($table);
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -520,6 +860,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific query so that the column data can be retrieved
 	 *
+<<<<<<< HEAD
 	 * @access  public
 	 * @param   string  the table name
 	 * @return  object
@@ -527,11 +868,20 @@ class CI_DB_oci8_driver extends CI_DB {
 	protected function _field_data($table)
 	{
 		return "SELECT * FROM ".$table." where rownum = 1";
+=======
+	 * @param	string	the table name
+	 * @return	string
+	 */
+	protected function _field_data($table)
+	{
+		return 'SELECT * FROM '.$this->protect_identifiers($table).' WHERE rownum = 1';
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
+<<<<<<< HEAD
 	 * The error message string
 	 *
 	 * @access  protected
@@ -639,6 +989,34 @@ class CI_DB_oci8_driver extends CI_DB {
 	protected function _insert($table, $keys, $values)
 	{
 		return "INSERT INTO ".$table." (".implode(', ', $keys).") VALUES (".implode(', ', $values).")";
+=======
+	 * Error
+	 *
+	 * Returns an array containing code and message of the last
+	 * database error that has occured.
+	 *
+	 * @return	array
+	 */
+	public function error()
+	{
+		/* oci_error() returns an array that already contains the
+		 * 'code' and 'message' keys, so we can just return it.
+		 */
+		if (is_resource($this->curs_id))
+		{
+			return oci_error($this->curs_id);
+		}
+		elseif (is_resource($this->stmt_id))
+		{
+			return oci_error($this->stmt_id);
+		}
+		elseif (is_resource($this->conn_id))
+		{
+			return oci_error($this->conn_id);
+		}
+
+		return oci_error();
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -648,11 +1026,18 @@ class CI_DB_oci8_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific insert string from the supplied data
 	 *
+<<<<<<< HEAD
 	 * @access      protected
 	 * @param       string  the table name
 	 * @param       array   the insert keys
 	 * @param       array   the insert values
 	 * @return      string
+=======
+	 * @param	string	the table name
+	 * @param	array	the insert keys
+	 * @param 	array	the insert values
+	 * @return	string
+>>>>>>> codeigniter/develop
 	 */
 	protected function _insert_batch($table, $keys, $values)
 	{
@@ -661,6 +1046,7 @@ class CI_DB_oci8_driver extends CI_DB {
 
 		for ($i = 0, $c = count($values); $i < $c; $i++)
 		{
+<<<<<<< HEAD
 			$sql .= '	INTO ' . $table . ' (' . $keys . ') VALUES ' . $values[$i] . "\n";
 		}
 
@@ -702,6 +1088,12 @@ class CI_DB_oci8_driver extends CI_DB {
 		$sql .= $orderby.$limit;
 
 		return $sql;
+=======
+			$sql .= '	INTO '.$table.' ('.$keys.') VALUES '.$values[$i]."\n";
+		}
+
+		return $sql.'SELECT * FROM dual';
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -710,16 +1102,27 @@ class CI_DB_oci8_driver extends CI_DB {
 	 * Truncate statement
 	 *
 	 * Generates a platform-specific truncate string from the supplied data
+<<<<<<< HEAD
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
 	 * @access	protected
+=======
+	 *
+	 * If the database does not support the truncate() command,
+	 * then this method maps to 'DELETE FROM table'
+	 *
+>>>>>>> codeigniter/develop
 	 * @param	string	the table name
 	 * @return	string
 	 */
 	protected function _truncate($table)
 	{
+<<<<<<< HEAD
 		return "TRUNCATE TABLE ".$table;
+=======
+		return 'TRUNCATE TABLE '.$table;
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -729,14 +1132,21 @@ class CI_DB_oci8_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific delete string from the supplied data
 	 *
+<<<<<<< HEAD
 	 * @access	protected
 	 * @param	string	the table name
 	 * @param	array	the where clause
+=======
+	 * @param	string	the table name
+	 * @param	array	the where clause
+	 * @param	array	the like clause
+>>>>>>> codeigniter/develop
 	 * @param	string	the limit clause
 	 * @return	string
 	 */
 	protected function _delete($table, $where = array(), $like = array(), $limit = FALSE)
 	{
+<<<<<<< HEAD
 		$conditions = '';
 
 		if (count($where) > 0 OR count($like) > 0)
@@ -754,6 +1164,15 @@ class CI_DB_oci8_driver extends CI_DB {
 		$limit = ( ! $limit) ? '' : ' LIMIT '.$limit;
 
 		return "DELETE FROM ".$table.$conditions.$limit;
+=======
+		$conditions = array();
+
+		empty($where) OR $conditions[] = implode(' ', $where);
+		empty($like) OR $conditions[] = implode(' ', $like);
+		empty($limit) OR $conditions[] = 'rownum <= '.$limit;
+
+		return 'DELETE FROM '.$table.(count($conditions) > 0 ? ' WHERE '.implode(' AND ', $conditions) : '');
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -763,6 +1182,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 *
 	 * Generates a platform-specific LIMIT clause
 	 *
+<<<<<<< HEAD
 	 * @access  protected
 	 * @param   string  the sql query string
 	 * @param   integer the number of rows to limit the query to
@@ -783,6 +1203,18 @@ class CI_DB_oci8_driver extends CI_DB {
 		$this->limit_used = TRUE;
 
 		return $newsql;
+=======
+	 * @param	string	the sql query string
+	 * @param	int	the number of rows to limit the query to
+	 * @param	int	the offset value
+	 * @return	string
+	 */
+	protected function _limit($sql, $limit, $offset)
+	{
+		$this->limit_used = TRUE;
+		return 'SELECT * FROM (SELECT inner_query.*, rownum rnum FROM ('.$sql.') inner_query WHERE rownum < '.($offset + $limit + 1).')'
+			.($offset ? ' WHERE rnum >= '.($offset + 1): '');
+>>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -790,6 +1222,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	/**
 	 * Close DB Connection
 	 *
+<<<<<<< HEAD
 	 * @access  protected
 	 * @param   resource
 	 * @return  void
@@ -806,3 +1239,16 @@ class CI_DB_oci8_driver extends CI_DB {
 
 /* End of file oci8_driver.php */
 /* Location: ./system/database/drivers/oci8/oci8_driver.php */
+=======
+	 * @return	void
+	 */
+	protected function _close()
+	{
+		@oci_close($this->conn_id);
+	}
+
+}
+
+/* End of file oci8_driver.php */
+/* Location: ./system/database/drivers/oci8/oci8_driver.php */
+>>>>>>> codeigniter/develop
