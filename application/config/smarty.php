@@ -44,4 +44,4 @@ $config['template_ext'] = 'tpl';
 $config['template_error_reporting'] = E_ALL & ~E_NOTICE;
 
 // Debug mode turned on or off (TRUE / FALSE)
-$config['smarty_debug'] = FALSE;
+$config['smarty_debug'] = TRUE;

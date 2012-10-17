@@ -1,13 +1,14 @@
 <html>
 <head>
-    <title>{$title}</title>
+    <title>{$m.demo.title}</title>
 </head>
 <body>
 {anchor('music','Shania Twain')}
 
 {form_open()}
-{css('file.css')}, {js('file.js')}, {lang('demo_welcome',$body)}
-   Demo: {$body}
+{*{css('file.css')}, {js('file.js')}, {lang('demo_welcome',$m.demo.body)}*}
+
+   Demo: {$m.demo.body}
    {$this->lang->line('about.gender')}
 	<a href="{$this->lang->switch_uri('fr')}">FR</a>
 	<br/>

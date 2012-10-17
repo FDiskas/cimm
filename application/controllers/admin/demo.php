@@ -22,7 +22,7 @@ class Demo extends MX_Controller
 
 	public function index()
 	{
-		$this->parser->parse('admin/main');
+		$this->parser->parse('admin/main','labas');
 	}
 }
 

@@ -180,8 +180,15 @@ class MY_Parser extends CI_Parser
 
 	public function setVar( $data, $value = FALSE ) {
 
+		// TODO: add prefix for modules and class
+		// Check if this is a module
+		$path = pathinfo($this->CI->router->fetch_directory());
 		$sClass = $this->CI->router->fetch_class();
 		$aVars  = $this->CI->smarty->getTemplateVars( $sClass );
+
+		if ( dirname( $path['dirname'] ) == '../modules' ) {
+			$sClass = 'm' . $sClass;
+		}
 
 		// If passed data is array of values
 		if ( !empty( $data ) && is_array( $data ) ) {
