@@ -702,7 +702,7 @@ class CodeIgniter {
 		$this->benchmark->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
 		// Load the controller, but don't call the method yet
-		if ($this->load->controller($route, '', FALSE) == FALSE)
+        if ($this->load->controller($route, '', FALSE) === FALSE)
 		{
 			show_404($class.'/'.$method);
 		}
