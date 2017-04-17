@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,87 +20,39 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * Exceptions Class
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Exceptions
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/libraries/exceptions.html
- */
-class CI_Exceptions {
-	var $action;
-	var $severity;
-	var $message;
-	var $filename;
-	var $line;
-=======
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/exceptions.html
  */
 class CI_Exceptions {
->>>>>>> codeigniter/develop
 
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
-<<<<<<< HEAD
-	 * @var int
-	 * @access public
-	 */
-	var $ob_level;
-=======
 	 * @var	int
 	 */
 	public $ob_level;
->>>>>>> codeigniter/develop
 
 	/**
 	 * List if available error levels
 	 *
-<<<<<<< HEAD
-	 * @var array
-	 * @access public
-	 */
-	var $levels = array(
-						E_ERROR				=>	'Error',
-						E_WARNING			=>	'Warning',
-						E_PARSE				=>	'Parsing Error',
-						E_NOTICE			=>	'Notice',
-						E_CORE_ERROR		=>	'Core Error',
-						E_CORE_WARNING		=>	'Core Warning',
-						E_COMPILE_ERROR		=>	'Compile Error',
-						E_COMPILE_WARNING	=>	'Compile Warning',
-						E_USER_ERROR		=>	'User Error',
-						E_USER_WARNING		=>	'User Warning',
-						E_USER_NOTICE		=>	'User Notice',
-						E_STRICT			=>	'Runtime Notice'
-					);
-
-
-	/**
-	 * Constructor
-=======
 	 * @var	array
 	 */
 	public $levels = array(
-		E_ERROR			=>	'Error',
-		E_WARNING		=>	'Warning',
-		E_PARSE			=>	'Parsing Error',
-		E_NOTICE		=>	'Notice',
+		E_ERROR				=>	'Error',
+		E_WARNING			=>	'Warning',
+		E_PARSE				=>	'Parsing Error',
+		E_NOTICE			=>	'Notice',
 		E_CORE_ERROR		=>	'Core Error',
 		E_CORE_WARNING		=>	'Core Warning',
 		E_COMPILE_ERROR		=>	'Compile Error',
@@ -120,23 +60,18 @@ class CI_Exceptions {
 		E_USER_ERROR		=>	'User Error',
 		E_USER_WARNING		=>	'User Warning',
 		E_USER_NOTICE		=>	'User Notice',
-		E_STRICT		=>	'Runtime Notice'
+		E_STRICT			=>	'Runtime Notice'
 	);
 
 	/**
 	 * Initialize execption class
 	 *
 	 * @return	void
->>>>>>> codeigniter/develop
 	 */
 	public function __construct()
 	{
 		$this->ob_level = ob_get_level();
-<<<<<<< HEAD
-		// Note:  Do not log messages from this constructor.
-=======
 		// Note: Do not log messages from this constructor.
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -146,28 +81,15 @@ class CI_Exceptions {
 	 *
 	 * This function logs PHP generated error messages
 	 *
-<<<<<<< HEAD
-	 * @access	private
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the error severity
 	 * @param	string	the error string
 	 * @param	string	the error filepath
 	 * @param	string	the error line number
-<<<<<<< HEAD
-	 * @return	string
-	 */
-	function log_exception($severity, $message, $filepath, $line)
-	{
-		$severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
-
-=======
 	 * @return	void
 	 */
 	public function log_exception($severity, $message, $filepath, $line)
 	{
 		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
->>>>>>> codeigniter/develop
 		log_message('error', 'Severity: '.$severity.'  --> '.$message. ' '.$filepath.' '.$line, TRUE);
 	}
 
@@ -176,33 +98,30 @@ class CI_Exceptions {
 	/**
 	 * 404 Page Not Found Handler
 	 *
-<<<<<<< HEAD
-	 * @access	private
-=======
->>>>>>> codeigniter/develop
+	 * Calls the 404 override method if configured, or displays a generic 404 error.
+	 *
 	 * @param	string	the page
 	 * @param 	bool	log error yes/no
 	 * @return	string
 	 */
-<<<<<<< HEAD
-	function show_404($page = '', $log_error = TRUE)
-	{
-		$heading = "404 Page Not Found";
-		$message = "The page you requested was not found.";
-=======
 	public function show_404($page = '', $log_error = TRUE)
 	{
-		$heading = '404 Page Not Found';
-		$message = 'The page you requested was not found.';
->>>>>>> codeigniter/develop
-
 		// By default we log this, but allow a dev to skip it
+		$heading = '404 Page Not Found';
 		if ($log_error)
 		{
-			log_message('error', '404 Page Not Found --> '.$page);
+			log_message('error', $heading.' --> '.$page);
 		}
 
-		echo $this->show_error($heading, $message, 'error_404', 404);
+		// Set status header
+		set_status_header(404);
+
+		// Route the error to a controller or 404 template and exit
+		$args = array(
+			'heading' => $heading,
+			'message' => 'The page you requested was not found.'
+		);
+		$this->_route_error('404_override', 'error_404', $args);
 		exit;
 	}
 
@@ -211,50 +130,31 @@ class CI_Exceptions {
 	/**
 	 * General Error Page
 	 *
-	 * This function takes an error message as input
-	 * (either as a string or an array) and displays
-	 * it using the specified template.
+	 * This function takes an error message as input and passes it to the error
+	 * override method if configured, or displays it using the specified template.
+	 * The override method will get the heading and message(s) as its first arguments,
+	 * followed by any trailing segments of the override route. So, if the override
+	 * route was "errclass/method/one/two", the effect would be to call:
+	 *	errclass->method($heading, $message, "one", "two");
 	 *
-<<<<<<< HEAD
-	 * @access	private
 	 * @param	string	the heading
-	 * @param	string	the message
-	 * @param	string	the template name
-	 * @param 	int		the status code
-	 * @return	string
-	 */
-	function show_error($heading, $message, $template = 'error_general', $status_code = 500)
-	{
-		set_status_header($status_code);
-
-		$message = '<p>'.implode('</p><p>', ( ! is_array($message)) ? array($message) : $message).'</p>';
-=======
-	 * @param	string	the heading
-	 * @param	string	the message
+	 * @param	mixed	the message string or array of strings
 	 * @param	string	the template name
 	 * @param 	int	the status code
 	 * @return	string
 	 */
 	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
 	{
-		set_status_header($status_code);
+		// Set status header
+		set_status_header(500);
 
-		$message = '<p>'.implode('</p><p>', is_array($message) ? $message : array($message)).'</p>';
->>>>>>> codeigniter/develop
-
-		if (ob_get_level() > $this->ob_level + 1)
-		{
-			ob_end_flush();
-		}
-		ob_start();
-<<<<<<< HEAD
-		include(APPPATH.'errors/'.$template.'.php');
-=======
-		include(VIEWPATH.'errors/'.$template.'.php');
->>>>>>> codeigniter/develop
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		return $buffer;
+		// Route the error to a controller or error template and exit
+		$args = array(
+			'heading' => $heading,
+			'message' => $message
+		);
+		$this->_route_error('error_override', 'error_general', $args);
+		exit;
 	}
 
 	// --------------------------------------------------------------------
@@ -262,28 +162,16 @@ class CI_Exceptions {
 	/**
 	 * Native PHP error handler
 	 *
-<<<<<<< HEAD
-	 * @access	private
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the error severity
 	 * @param	string	the error string
 	 * @param	string	the error filepath
 	 * @param	string	the error line number
 	 * @return	string
 	 */
-<<<<<<< HEAD
-	function show_php_error($severity, $message, $filepath, $line)
-	{
-		$severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
-
-		$filepath = str_replace("\\", "/", $filepath);
-=======
 	public function show_php_error($severity, $message, $filepath, $line)
 	{
 		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
 		$filepath = str_replace('\\', '/', $filepath);
->>>>>>> codeigniter/develop
 
 		// For safety reasons we do not show the full file path
 		if (FALSE !== strpos($filepath, '/'))
@@ -292,28 +180,90 @@ class CI_Exceptions {
 			$filepath = $x[count($x)-2].'/'.end($x);
 		}
 
+		// Route the error to a controller or exception template
+		$args = array(
+			'severity'	=> $severity,
+			'message'	=> $message,
+			'filepath'	=> $filepath,
+			'line'		=> $line
+		);
+		$this->_route_error('exception_override', 'error_php', $args);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Route error to an override controller or a template
+	 *
+	 * @param	string	Override route name
+	 * @param	string	Template name
+	 * @param	array	Route/template arguments
+	 * @return	void
+	 */
+	protected function _route_error($route, $template, $args = NULL)
+	{
+		// Clear any output buffering
 		if (ob_get_level() > $this->ob_level + 1)
 		{
 			ob_end_flush();
 		}
+
+		// Check Router for an override
+		$CI =& get_instance();
+		if (isset($CI->router))
+		{
+			$stack = $CI->router->get_error_route($route);
+			if ($stack !== FALSE)
+			{
+				// Check for arguments
+				if ( ! empty($args))
+				{
+					// Insert or append arguments
+					if (count($stack) > CI_Router::SEG_ARGS)
+					{
+						// Insert args after path, subdir, class, and method and before other args
+						$stack = array_merge(
+							array_slice($stack, 0, CI_Router::SEG_ARGS),
+							$args,
+							array_slice($stack, CI_Router::SEG_ARGS)
+						);
+					}
+					else
+					{
+						// Just append args to the end
+						$stack = array_merge($stack, $args);
+					}
+				}
+
+				// Ensure "routed" is not set
+				if (isset($CI->routed))
+				{
+					unset($CI->routed);
+				}
+
+				// Load the error Controller as "routed" and call the method
+				if ($CI->load->controller($stack, 'routed'))
+				{
+					// Display the output and return
+					$CI->output->_display();
+					return;
+				}
+			}
+		}
+
+		// If the override didn't exit above, just export the args and display the template
+		if (isset($args['message']))
+		{
+			// Wrap message(s) in P tags
+			$args['message'] = '<p>'.implode('</p><p>', (array) $args['message']).'</p>';
+		}
+		extract($args);
 		ob_start();
-<<<<<<< HEAD
-		include(APPPATH.'errors/error_php.php');
-=======
-		include(VIEWPATH.'errors/error_php.php');
->>>>>>> codeigniter/develop
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		echo $buffer;
+		include(VIEWPATH.'errors/'.$template.'.php');
+		echo ob_get_clean();
 	}
 
-<<<<<<< HEAD
-
 }
-// END Exceptions Class
-=======
-}
->>>>>>> codeigniter/develop
 
 /* End of file Exceptions.php */
 /* Location: ./system/core/Exceptions.php */

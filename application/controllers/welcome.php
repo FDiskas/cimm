@@ -7,17 +7,10 @@ class Welcome extends CI_Controller {
 	 *
 	 * Maps to the following URL
 	 * 		http://example.com/index.php/welcome
-<<<<<<< HEAD
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-=======
 	 *	- or -
 	 * 		http://example.com/index.php/welcome/index
 	 *	- or -
 	 * Since this controller is set as the default controller in
->>>>>>> codeigniter/develop
 	 * config/routes.php, it's displayed at http://example.com/
 	 *
 	 * So any other public methods not prefixed with an underscore will

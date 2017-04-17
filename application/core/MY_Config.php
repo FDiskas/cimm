@@ -8,7 +8,7 @@
 
 require APPPATH . "third_party/MX/Config.php";
 
-class MY_Config extends MX_Config
+class MY_Config extends CI_Config
 {
 
 	function site_url( $uri = '' ) {

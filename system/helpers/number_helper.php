@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,44 +20,23 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * CodeIgniter Number Helpers
  *
  * @package		CodeIgniter
  * @subpackage	Helpers
  * @category	Helpers
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/helpers/number_helper.html
  */
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Formats a numbers as bytes, based on size, and adds the appropriate suffix
- *
- * @access	public
- * @param	mixed	// will be cast as int
- * @return	string
- */
-if ( ! function_exists('byte_format'))
-{
-=======
 if ( ! function_exists('byte_format'))
 {
 	/**
@@ -79,7 +46,6 @@ if ( ! function_exists('byte_format'))
 	 * @param	int
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function byte_format($num, $precision = 1)
 	{
 		$CI =& get_instance();
@@ -115,9 +81,5 @@ if ( ! function_exists('byte_format'))
 	}
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 /* End of file number_helper.php */
 /* Location: ./system/helpers/number_helper.php */

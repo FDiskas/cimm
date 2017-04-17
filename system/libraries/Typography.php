@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,44 +20,11 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-/**
- * Typography Class
- *
- *
- * @access		private
- * @category	Helpers
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/helpers/
- */
-class CI_Typography {
-
-	// Block level elements that should not be wrapped inside <p> tags
-	var $block_elements = 'address|blockquote|div|dl|fieldset|form|h\d|hr|noscript|object|ol|p|pre|script|table|ul';
-
-	// Elements that should not have <p> and <br /> tags within them.
-	var $skip_elements	= 'p|pre|ol|ul|dl|object|table|h\d';
-
-	// Tags we want the parser to completely ignore when splitting the string.
-	var $inline_elements = 'a|abbr|acronym|b|bdo|big|br|button|cite|code|del|dfn|em|i|img|ins|input|label|map|kbd|q|samp|select|small|span|strong|sub|sup|textarea|tt|var';
-
-	// array of block level elements that require inner content to be within another block level element
-	var $inner_block_required = array('blockquote');
-
-	// the last block element parsed
-	var $last_block_element = '';
-
-	// whether or not to protect quotes within { curly braces }
-	var $protect_braced_quotes = FALSE;
-=======
 /**
  * Typography Class
  *
@@ -122,7 +77,6 @@ class CI_Typography {
 	 * @var bool
 	 */
 	public $protect_braced_quotes = FALSE;
->>>>>>> codeigniter/develop
 
 	/**
 	 * Auto Typography
@@ -135,23 +89,13 @@ class CI_Typography {
 	 *	- Converts double dashes into em-dashes.
 	 *  - Converts two spaces into entities
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string
 	 * @param	bool	whether to reduce more then two consecutive newlines to two
 	 * @return	string
 	 */
-<<<<<<< HEAD
-	function auto_typography($str, $reduce_linebreaks = FALSE)
-	{
-		if ($str == '')
-=======
 	public function auto_typography($str, $reduce_linebreaks = FALSE)
 	{
 		if ($str === '')
->>>>>>> codeigniter/develop
 		{
 			return '';
 		}
@@ -171,24 +115,12 @@ class CI_Typography {
 
 		// HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
 		$html_comments = array();
-<<<<<<< HEAD
-		if (strpos($str, '<!--') !== FALSE)
-		{
-			if (preg_match_all("#(<!\-\-.*?\-\->)#s", $str, $matches))
-			{
-				for ($i = 0, $total = count($matches[0]); $i < $total; $i++)
-				{
-					$html_comments[] = $matches[0][$i];
-					$str = str_replace($matches[0][$i], '{@HC'.$i.'}', $str);
-				}
-=======
 		if (strpos($str, '<!--') !== FALSE && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
 			for ($i = 0, $total = count($matches[0]); $i < $total; $i++)
 			{
 				$html_comments[] = $matches[0][$i];
 				$str = str_replace($matches[0][$i], '{@HC'.$i.'}', $str);
->>>>>>> codeigniter/develop
 			}
 		}
 
@@ -196,46 +128,21 @@ class CI_Typography {
 		// not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
 		if (strpos($str, '<pre') !== FALSE)
 		{
-<<<<<<< HEAD
-			$str = preg_replace_callback("#<pre.*?>.*?</pre>#si", array($this, '_protect_characters'), $str);
-		}
-
-		// Convert quotes within tags to temporary markers.
-		$str = preg_replace_callback("#<.+?>#si", array($this, '_protect_characters'), $str);
-=======
 			$str = preg_replace_callback('#<pre.*?>.*?</pre>#si', array($this, '_protect_characters'), $str);
 		}
 
 		// Convert quotes within tags to temporary markers.
 		$str = preg_replace_callback('#<.+?>#si', array($this, '_protect_characters'), $str);
->>>>>>> codeigniter/develop
 
 		// Do the same with braces if necessary
 		if ($this->protect_braced_quotes === TRUE)
 		{
-<<<<<<< HEAD
-			$str = preg_replace_callback("#\{.+?\}#si", array($this, '_protect_characters'), $str);
-=======
 			$str = preg_replace_callback('#\{.+?\}#si', array($this, '_protect_characters'), $str);
->>>>>>> codeigniter/develop
 		}
 
 		// Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
 		// it encounters.  Certain inline tags, like image tags, links, span tags, etc. will be
 		// adversely affected if they are split out so we'll convert the opening bracket < temporarily to: {@TAG}
-<<<<<<< HEAD
-		$str = preg_replace("#<(/*)(".$this->inline_elements.")([ >])#i", "{@TAG}\\1\\2\\3", $str);
-
-		// Split the string at every tag.  This expression creates an array with this prototype:
-		//
-		//	[array]
-		//	{
-		//		[0] = <opening tag>
-		//		[1] = Content...
-		//		[2] = <closing tag>
-		//		Etc...
-		//	}
-=======
 		$str = preg_replace('#<(/*)('.$this->inline_elements.')([ >])#i', '{@TAG}\\1\\2\\3', $str);
 
 		/* Split the string at every tag. This expression creates an array with this prototype:
@@ -248,32 +155,12 @@ class CI_Typography {
 		 *		Etc...
 		 *	}
 		 */
->>>>>>> codeigniter/develop
 		$chunks = preg_split('/(<(?:[^<>]+(?:"[^"]*"|\'[^\']*\')?)+>)/', $str, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 
 		// Build our finalized string.  We cycle through the array, skipping tags, and processing the contained text
 		$str = '';
 		$process = TRUE;
 		$paragraph = FALSE;
-<<<<<<< HEAD
-		$current_chunk = 0;
-		$total_chunks = count($chunks);
-
-		foreach ($chunks as $chunk)
-		{
-			$current_chunk++;
-
-			// Are we dealing with a tag? If so, we'll skip the processing for this cycle.
-			// Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
-			if (preg_match("#<(/*)(".$this->block_elements.").*?>#", $chunk, $match))
-			{
-				if (preg_match("#".$this->skip_elements."#", $match[2]))
-				{
-					$process =  ($match[1] == '/') ? TRUE : FALSE;
-				}
-
-				if ($match[1] == '')
-=======
 
 		for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i++)
 		{
@@ -287,20 +174,10 @@ class CI_Typography {
 				}
 
 				if ($match[1] === '')
->>>>>>> codeigniter/develop
 				{
 					$this->last_block_element = $match[2];
 				}
 
-<<<<<<< HEAD
-				$str .= $chunk;
-				continue;
-			}
-
-			if ($process == FALSE)
-			{
-				$str .= $chunk;
-=======
 				$str .= $chunks[$i];
 				continue;
 			}
@@ -308,26 +185,10 @@ class CI_Typography {
 			if ($process === FALSE)
 			{
 				$str .= $chunks[$i];
->>>>>>> codeigniter/develop
 				continue;
 			}
 
 			//  Force a newline to make sure end tags get processed by _format_newlines()
-<<<<<<< HEAD
-			if ($current_chunk == $total_chunks)
-			{
-				$chunk .= "\n";
-			}
-
-			//  Convert Newlines into <p> and <br /> tags
-			$str .= $this->_format_newlines($chunk);
-		}
-
-		// No opening block level tag?  Add it if needed.
-		if ( ! preg_match("/^\s*<(?:".$this->block_elements.")/i", $str))
-		{
-			$str = preg_replace("/^(.*?)<(".$this->block_elements.")/i", '<p>$1</p><$2', $str);
-=======
 			if ($i === $c)
 			{
 				$chunks[$i] .= "\n";
@@ -341,7 +202,6 @@ class CI_Typography {
 		if ( ! preg_match('/^\s*<(?:'.$this->block_elements.')/i', $str))
 		{
 			$str = preg_replace('/^(.*?)<('.$this->block_elements.')/i', '<p>$1</p><$2', $str);
->>>>>>> codeigniter/develop
 		}
 
 		// Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
@@ -388,11 +248,7 @@ class CI_Typography {
 
 						// Similarly, there might be cases where a closing </block> will follow
 						// a closing </p> tag, so we'll correct it by adding a newline in between
-<<<<<<< HEAD
-						"#</p></#"			=> "</p>\n</"
-=======
 						'#</p></#'			=> "</p>\n</"
->>>>>>> codeigniter/develop
 						);
 
 		// Do we need to reduce empty lines?
@@ -420,18 +276,10 @@ class CI_Typography {
 	 * to curly entities, but it also converts em-dashes,
 	 * double spaces, and ampersands
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	function format_characters($str)
-=======
 	 * @param	string
 	 * @return	string
 	 */
 	public function format_characters($str)
->>>>>>> codeigniter/develop
 	{
 		static $table;
 
@@ -491,27 +339,12 @@ class CI_Typography {
 	 *
 	 * Converts newline characters into either <p> tags or <br />
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	function _format_newlines($str)
-	{
-		if ($str == '')
-		{
-			return $str;
-		}
-
-		if (strpos($str, "\n") === FALSE  && ! in_array($this->last_block_element, $this->inner_block_required))
-=======
 	 * @param	string
 	 * @return	string
 	 */
 	protected function _format_newlines($str)
 	{
 		if ($str === '' OR (strpos($str, "\n") === FALSE && ! in_array($this->last_block_element, $this->inner_block_required)))
->>>>>>> codeigniter/develop
 		{
 			return $str;
 		}
@@ -520,17 +353,10 @@ class CI_Typography {
 		$str = str_replace("\n\n", "</p>\n\n<p>", $str);
 
 		// Convert single spaces to <br /> tags
-<<<<<<< HEAD
-		$str = preg_replace("/([^\n])(\n)([^\n])/", "\\1<br />\\2\\3", $str);
-
-		// Wrap the whole enchilada in enclosing paragraphs
-		if ($str != "\n")
-=======
 		$str = preg_replace("/([^\n])(\n)([^\n])/", '\\1<br />\\2\\3', $str);
 
 		// Wrap the whole enchilada in enclosing paragraphs
 		if ($str !== "\n")
->>>>>>> codeigniter/develop
 		{
 			// We trim off the right-side new line so that the closing </p> tag
 			// will be positioned immediately following the string, matching
@@ -540,13 +366,7 @@ class CI_Typography {
 
 		// Remove empty paragraphs if they are on the first line, as this
 		// is a potential unintended consequence of the previous code
-<<<<<<< HEAD
-		$str = preg_replace("/<p><\/p>(.*)/", "\\1", $str, 1);
-
-		return $str;
-=======
 		return preg_replace('/<p><\/p>(.*)/', '\\1', $str, 1);
->>>>>>> codeigniter/develop
 	}
 
 	// ------------------------------------------------------------------------
@@ -559,18 +379,10 @@ class CI_Typography {
 	 * and we don't want double dashes converted to emdash entities, so they are marked with {@DD}
 	 * likewise double spaces are converted to {@NBS} to prevent entity conversion
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	array
-	 * @return	string
-	 */
-	function _protect_characters($match)
-=======
 	 * @param	array
 	 * @return	string
 	 */
 	protected function _protect_characters($match)
->>>>>>> codeigniter/develop
 	{
 		return str_replace(array("'",'"','--','  '), array('{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'), $match[0]);
 	}
@@ -580,31 +392,6 @@ class CI_Typography {
 	/**
 	 * Convert newlines to HTML line breaks except within PRE tags
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	function nl2br_except_pre($str)
-	{
-		$ex = explode("pre>",$str);
-		$ct = count($ex);
-
-		$newstr = "";
-		for ($i = 0; $i < $ct; $i++)
-		{
-			if (($i % 2) == 0)
-			{
-				$newstr .= nl2br($ex[$i]);
-			}
-			else
-			{
-				$newstr .= $ex[$i];
-			}
-
-			if ($ct - 1 != $i)
-				$newstr .= "pre>";
-=======
 	 * @param	string
 	 * @return	string
 	 */
@@ -618,17 +405,12 @@ class CI_Typography {
 			{
 				$newstr .= 'pre>';
 			}
->>>>>>> codeigniter/develop
 		}
 
 		return $newstr;
 	}
 
 }
-<<<<<<< HEAD
-// END Typography Class
-=======
->>>>>>> codeigniter/develop
 
 /* End of file Typography.php */
 /* Location: ./system/libraries/Typography.php */

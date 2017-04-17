@@ -1,6 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
 /**
  * CodeIgniter
  *
@@ -26,7 +24,6 @@
  * @since		Version 1.0
  * @filesource
  */
->>>>>>> codeigniter/develop
 
 $lang['ut_test_name']		= 'Test Name';
 $lang['ut_test_datatype']	= 'Test Datatype';
@@ -48,9 +45,5 @@ $lang['ut_resource']		= 'Resource';
 $lang['ut_null']			= 'Null';
 $lang['ut_notes']			= 'Notes';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 /* End of file unit_test_lang.php */
 /* Location: ./system/language/english/unit_test_lang.php */

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * Code Igniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,38 +20,15 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * Database Utility Class
  *
  * @category	Database
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/database/
- */
-class CI_DB_utility extends CI_DB_forge {
-
-	var $db;
-	var $data_cache		= array();
-
-	/**
-	 * Constructor
-	 *
-	 * Grabs the CI super object instance so we can access it.
-	 *
-	 */
-	function __construct()
-=======
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
@@ -77,17 +42,11 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	protected $_repair_table	= FALSE;
 
 	public function __construct()
->>>>>>> codeigniter/develop
 	{
 		// Assign the main database object to $this->db
 		$CI =& get_instance();
 		$this->db =& $CI->db;
-<<<<<<< HEAD
-
-		log_message('debug', "Database Utility Class Initialized");
-=======
 		log_message('debug', 'Database Utility Class Initialized');
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -95,31 +54,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * List databases
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	bool
-	 */
-	function list_databases()
-	{
-		// Is there a cached result?
-		if (isset($this->data_cache['db_names']))
-		{
-			return $this->data_cache['db_names'];
-		}
-
-		$query = $this->db->query($this->_list_databases());
-		$dbs = array();
-		if ($query->num_rows() > 0)
-		{
-			foreach ($query->result_array() as $row)
-			{
-				$dbs[] = current($row);
-			}
-		}
-
-		$this->data_cache['db_names'] = $dbs;
-		return $this->data_cache['db_names'];
-=======
 	 * @return	array
 	 */
 	public function list_databases()
@@ -148,7 +82,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		}
 
 		return $this->db->data_cache['db_names'];
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -156,28 +89,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Determine if a particular database exists
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	boolean
-	 */
-	function database_exists($database_name)
-	{
-		// Some databases won't have access to the list_databases() function, so
-		// this is intended to allow them to override with their own functions as
-		// defined in $driver_utility.php
-		if (method_exists($this, '_database_exists'))
-		{
-			return $this->_database_exists($database_name);
-		}
-		else
-		{
-			return ( ! in_array($database_name, $this->list_databases())) ? FALSE : TRUE;
-		}
-	}
-
-
-=======
 	 * @param	string
 	 * @return	bool
 	 */
@@ -186,33 +97,11 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		return in_array($database_name, $this->list_databases());
 	}
 
->>>>>>> codeigniter/develop
 	// --------------------------------------------------------------------
 
 	/**
 	 * Optimize Table
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function optimize_table($table_name)
-	{
-		$sql = $this->_optimize_table($table_name);
-
-		if (is_bool($sql))
-		{
-				show_error('db_must_use_set');
-		}
-
-		$query = $this->db->query($sql);
-		$res = $query->result_array();
-
-		// Note: Due to a bug in current() that affects some versions
-		// of PHP we can not pass function call directly into it
-		return current($res);
-=======
 	 * @param	string	the table name
 	 * @return	mixed
 	 */
@@ -231,7 +120,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		}
 
 		return FALSE;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -239,29 +127,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Optimize Database
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	array
-	 */
-	function optimize_database()
-	{
-		$result = array();
-		foreach ($this->db->list_tables() as $table_name)
-		{
-			$sql = $this->_optimize_table($table_name);
-
-			if (is_bool($sql))
-			{
-				return $sql;
-			}
-
-			$query = $this->db->query($sql);
-
-			// Build the result array...
-			// Note: Due to a bug in current() that affects some versions
-			// of PHP we can not pass function call directly into it
-			$res = $query->result_array();
-=======
 	 * @return	mixed
 	 */
 	public function optimize_database()
@@ -282,7 +147,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 
 			// Build the result array...
 			$res = $res->result_array();
->>>>>>> codeigniter/develop
 			$res = current($res);
 			$key = str_replace($this->db->database.'.', '', current($res));
 			$keys = array_keys($res);
@@ -299,27 +163,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Repair Table
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function repair_table($table_name)
-	{
-		$sql = $this->_repair_table($table_name);
-
-		if (is_bool($sql))
-		{
-			return $sql;
-		}
-
-		$query = $this->db->query($sql);
-
-		// Note: Due to a bug in current() that affects some versions
-		// of PHP we can not pass function call directly into it
-		$res = $query->result_array();
-		return current($res);
-=======
 	 * @param	string	the table name
 	 * @return	mixed
 	 */
@@ -338,7 +181,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 
 		$query = $query->result_array();
 		return current($query);
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -346,21 +188,13 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Generate CSV from a query result object
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	object	The query result object
 	 * @param	string	The delimiter - comma by default
 	 * @param	string	The newline character - \n by default
 	 * @param	string	The enclosure - double quote by default
 	 * @return	string
 	 */
-<<<<<<< HEAD
-	function csv_from_result($query, $delim = ",", $newline = "\n", $enclosure = '"')
-=======
 	public function csv_from_result($query, $delim = ',', $newline = "\n", $enclosure = '"')
->>>>>>> codeigniter/develop
 	{
 		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
 		{
@@ -368,39 +202,22 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		}
 
 		$out = '';
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 		// First generate the headings from the table column names
 		foreach ($query->list_fields() as $name)
 		{
 			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
 		}
 
-<<<<<<< HEAD
-		$out = rtrim($out);
-		$out .= $newline;
-
-		// Next blast through the result array and build out the rows
-		foreach ($query->result_array() as $row)
-=======
 		$out = rtrim($out).$newline;
 
 		// Next blast through the result array and build out the rows
 		while ($row = $query->unbuffered_row('array'))
->>>>>>> codeigniter/develop
 		{
 			foreach ($row as $item)
 			{
 				$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure.$delim;
 			}
-<<<<<<< HEAD
-			$out = rtrim($out);
-			$out .= $newline;
-=======
 			$out = rtrim($out).$newline;
->>>>>>> codeigniter/develop
 		}
 
 		return $out;
@@ -411,19 +228,11 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Generate XML data from a query result object
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	object	The query result object
 	 * @param	array	Any preferences
 	 * @return	string
 	 */
-<<<<<<< HEAD
-	function xml_from_result($query, $params = array())
-=======
 	public function xml_from_result($query, $params = array())
->>>>>>> codeigniter/develop
 	{
 		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
 		{
@@ -447,22 +256,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		$CI->load->helper('xml');
 
 		// Generate the result
-<<<<<<< HEAD
-		$xml = "<{$root}>".$newline;
-		foreach ($query->result_array() as $row)
-		{
-			$xml .= $tab."<{$element}>".$newline;
-
-			foreach ($row as $key => $val)
-			{
-				$xml .= $tab.$tab."<{$key}>".xml_convert($val)."</{$key}>".$newline;
-			}
-			$xml .= $tab."</{$element}>".$newline;
-		}
-		$xml .= "</$root>".$newline;
-
-		return $xml;
-=======
 		$xml = '<'.$root.'>'.$newline;
 		while ($row = $query->unbuffered_row())
 		{
@@ -475,7 +268,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		}
 
 		return $xml.'</'.$root.'>'.$newline;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -483,16 +275,9 @@ abstract class CI_DB_utility extends CI_DB_forge {
 	/**
 	 * Database Backup
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	void
-	 */
-	function backup($params = array())
-=======
 	 * @return	void
 	 */
 	public function backup($params = array())
->>>>>>> codeigniter/develop
 	{
 		// If the parameters have not been submitted as an
 		// array then we know that it is simply the table
@@ -506,16 +291,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 
 		// Set up our default preferences
 		$prefs = array(
-<<<<<<< HEAD
-							'tables'		=> array(),
-							'ignore'		=> array(),
-							'filename'		=> '',
-							'format'		=> 'gzip', // gzip, zip, txt
-							'add_drop'		=> TRUE,
-							'add_insert'	=> TRUE,
-							'newline'		=> "\n"
-						);
-=======
 				'tables'		=> array(),
 				'ignore'		=> array(),
 				'filename'		=> '',
@@ -524,7 +299,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 				'add_insert'		=> TRUE,
 				'newline'		=> "\n"
 			);
->>>>>>> codeigniter/develop
 
 		// Did the user submit any preferences? If so set them....
 		if (count($params) > 0)
@@ -538,45 +312,23 @@ abstract class CI_DB_utility extends CI_DB_forge {
 			}
 		}
 
-<<<<<<< HEAD
-		// ------------------------------------------------------
-
-		// Are we backing up a complete database or individual tables?
-		// If no table names were submitted we'll fetch the entire table list
-		if (count($prefs['tables']) == 0)
-=======
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
 		if (count($prefs['tables']) === 0)
->>>>>>> codeigniter/develop
 		{
 			$prefs['tables'] = $this->db->list_tables();
 		}
 
-<<<<<<< HEAD
-		// ------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 		// Validate the format
 		if ( ! in_array($prefs['format'], array('gzip', 'zip', 'txt'), TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}
 
-<<<<<<< HEAD
-		// ------------------------------------------------------
-
-		// Is the encoder supported?  If not, we'll either issue an
-		// error or use plain text depending on the debug settings
-		if (($prefs['format'] == 'gzip' AND ! @function_exists('gzencode'))
-		OR ($prefs['format'] == 'zip'  AND ! @function_exists('gzcompress')))
-=======
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! @function_exists('gzencode'))
 			OR ($prefs['format'] === 'zip' && ! @function_exists('gzcompress')))
->>>>>>> codeigniter/develop
 		{
 			if ($this->db->db_debug)
 			{
@@ -586,52 +338,6 @@ abstract class CI_DB_utility extends CI_DB_forge {
 			$prefs['format'] = 'txt';
 		}
 
-<<<<<<< HEAD
-		// ------------------------------------------------------
-
-		// Set the filename if not provided - Only needed with Zip files
-		if ($prefs['filename'] == '' AND $prefs['format'] == 'zip')
-		{
-			$prefs['filename'] = (count($prefs['tables']) == 1) ? $prefs['tables'] : $this->db->database;
-			$prefs['filename'] .= '_'.date('Y-m-d_H-i', time());
-		}
-
-		// ------------------------------------------------------
-
-		// Was a Gzip file requested?
-		if ($prefs['format'] == 'gzip')
-		{
-			return gzencode($this->_backup($prefs));
-		}
-
-		// ------------------------------------------------------
-
-		// Was a text file requested?
-		if ($prefs['format'] == 'txt')
-		{
-			return $this->_backup($prefs);
-		}
-
-		// ------------------------------------------------------
-
-		// Was a Zip file requested?
-		if ($prefs['format'] == 'zip')
-		{
-			// If they included the .zip file extension we'll remove it
-			if (preg_match("|.+?\.zip$|", $prefs['filename']))
-			{
-				$prefs['filename'] = str_replace('.zip', '', $prefs['filename']);
-			}
-
-			// Tack on the ".sql" file extension if needed
-			if ( ! preg_match("|.+?\.sql$|", $prefs['filename']))
-			{
-				$prefs['filename'] .= '.sql';
-			}
-
-			// Load the Zip class and output it
-
-=======
 		// Was a Zip file requested?
 		if ($prefs['format'] === 'zip')
 		{
@@ -657,15 +363,11 @@ abstract class CI_DB_utility extends CI_DB_forge {
 			}
 
 			// Load the Zip class and output it
->>>>>>> codeigniter/develop
 			$CI =& get_instance();
 			$CI->load->library('zip');
 			$CI->zip->add_data($prefs['filename'], $this->_backup($prefs));
 			return $CI->zip->get_zip();
 		}
-<<<<<<< HEAD
-
-=======
 		elseif ($prefs['format'] === 'txt') // Was a text file requested?
 		{
 			return $this->_backup($prefs);
@@ -676,14 +378,9 @@ abstract class CI_DB_utility extends CI_DB_forge {
 		}
 
 		return;
->>>>>>> codeigniter/develop
 	}
 
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 /* End of file DB_utility.php */
 /* Location: ./system/database/DB_utility.php */

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,58 +20,17 @@
  * @author		EllisLab Dev Team
  * @copyright   Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * oci8 Result Class
  *
  * This class extends the parent result class: CI_DB_result
  *
  * @category	Database
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/database/
- */
-class CI_DB_oci8_result extends CI_DB_result {
-
-	var $stmt_id;
-	var $curs_id;
-	var $limit_used;
-
-	/**
-	 * Number of rows in the result set.
-	 *
-	 * Oracle doesn't have a graceful way to retun the number of rows
-	 * so we have to use what amounts to a hack.
-	 *
-	 *
-	 * @access  public
-	 * @return  integer
-	 */
-	public function num_rows()
-	{
-		if ($this->num_rows === 0 && count($this->result_array()) > 0)
-		{
-			$this->num_rows = count($this->result_array());
-			@oci_execute($this->stmt_id);
-
-			if ($this->curs_id)
-			{
-				@oci_execute($this->curs_id);
-			}
-		}
-
-		return $rowcount;
-=======
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  * @since	1.4.1
@@ -110,7 +57,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 		$this->limit_used = $driver_object->limit_used;
 		$this->commit_mode =& $driver_object->commit_mode;
 		$driver_object->stmt_id = FALSE;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -118,28 +64,14 @@ class CI_DB_oci8_result extends CI_DB_result {
 	/**
 	 * Number of fields in the result set
 	 *
-<<<<<<< HEAD
-	 * @access  public
-	 * @return  integer
-=======
 	 * @return	int
->>>>>>> codeigniter/develop
 	 */
 	public function num_fields()
 	{
 		$count = @oci_num_fields($this->stmt_id);
 
 		// if we used a limit we subtract it
-<<<<<<< HEAD
-		if ($this->limit_used)
-		{
-			$count = $count - 1;
-		}
-
-		return $count;
-=======
 		return ($this->limit_used) ? $count - 1 : $count;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -149,10 +81,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 	 *
 	 * Generates an array of column names
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @return	array
 	 */
 	public function list_fields()
@@ -172,29 +100,17 @@ class CI_DB_oci8_result extends CI_DB_result {
 	 *
 	 * Generates an array of objects containing field meta-data
 	 *
-<<<<<<< HEAD
-	 * @access  public
-	 * @return  array
-=======
 	 * @return	array
->>>>>>> codeigniter/develop
 	 */
 	public function field_data()
 	{
 		$retval = array();
 		for ($c = 1, $fieldCount = $this->num_fields(); $c <= $fieldCount; $c++)
 		{
-<<<<<<< HEAD
-			$F			= new stdClass();
-			$F->name		= oci_field_name($this->stmt_id, $c);
-			$F->type		= oci_field_type($this->stmt_id, $c);
-			$F->max_length		= oci_field_size($this->stmt_id, $c);
-=======
 			$F		= new stdClass();
 			$F->name	= oci_field_name($this->stmt_id, $c);
 			$F->type	= oci_field_type($this->stmt_id, $c);
 			$F->max_length	= oci_field_size($this->stmt_id, $c);
->>>>>>> codeigniter/develop
 
 			$retval[] = $F;
 		}
@@ -207,11 +123,7 @@ class CI_DB_oci8_result extends CI_DB_result {
 	/**
 	 * Free the result
 	 *
-<<<<<<< HEAD
-	 * @return	null
-=======
 	 * @return	void
->>>>>>> codeigniter/develop
 	 */
 	public function free_result()
 	{
@@ -220,8 +132,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 			oci_free_statement($this->result_id);
 			$this->result_id = FALSE;
 		}
-<<<<<<< HEAD
-=======
 
 		if (is_resource($this->stmt_id))
 		{
@@ -233,7 +143,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 			oci_cancel($this->curs_id);
 			$this->curs_id = NULL;
 		}
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -243,12 +152,7 @@ class CI_DB_oci8_result extends CI_DB_result {
 	 *
 	 * Returns the result set as an array
 	 *
-<<<<<<< HEAD
-	 * @access  protected
-	 * @return  array
-=======
 	 * @return	array
->>>>>>> codeigniter/develop
 	 */
 	protected function _fetch_assoc()
 	{
@@ -263,39 +167,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 	 *
 	 * Returns the result set as an object
 	 *
-<<<<<<< HEAD
-	 * @access  protected
-	 * @return  object
-	 */
-	protected function _fetch_object()
-	{
-		$id = ($this->curs_id) ? $this->curs_id : $this->stmt_id;
-		return @oci_fetch_object($id);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Query result.  "array" version.
-	 *
-	 * @access  public
-	 * @return  array
-	 */
-	public function result_array()
-	{
-		if (count($this->result_array) > 0)
-		{
-			return $this->result_array;
-		}
-
-		$row = NULL;
-		while ($row = $this->_fetch_assoc())
-		{
-			$this->result_array[] = $row;
-		}
-
-		return $this->result_array;
-=======
 	 * @param	string
 	 * @return	object
 	 */
@@ -317,7 +188,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 		}
 
 		return $class_name;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -325,18 +195,6 @@ class CI_DB_oci8_result extends CI_DB_result {
 	/**
 	 * Data Seek
 	 *
-<<<<<<< HEAD
-	 * Moves the internal pointer to the desired offset.  We call
-	 * this internally before fetching results to make sure the
-	 * result set starts at zero
-	 *
-	 * @access	protected
-	 * @return	array
-	 */
-	protected function _data_seek($n = 0)
-	{
-		return FALSE; // Not needed
-=======
 	 * Moves the internal pointer to the desired offset. We call
 	 * this internally before fetching results to make sure the
 	 * result set starts at zero.
@@ -387,16 +245,9 @@ class CI_DB_oci8_result extends CI_DB_result {
 		}
 
 		return $result;
->>>>>>> codeigniter/develop
 	}
 
 }
 
-<<<<<<< HEAD
-
 /* End of file oci8_result.php */
 /* Location: ./system/database/drivers/oci8/oci8_result.php */
-=======
-/* End of file oci8_result.php */
-/* Location: ./system/database/drivers/oci8/oci8_result.php */
->>>>>>> codeigniter/develop

@@ -13,7 +13,7 @@
  */
 
 
-class Demo extends MX_Controller
+class Demo extends CI_Controller
 {
 	public function __construct()
 	{

@@ -41,7 +41,6 @@
 class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 
 	public $subdriver = 'mysql';
-	public $compress = FALSE;
 
 	protected $_escape_char = '`';
 
@@ -80,7 +79,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	 *
 	 * @param	bool
 	 * @return	object
-	 * @todo	SSL support
 	 */
 	public function db_connect($persistent = FALSE)
 	{
@@ -93,11 +91,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 		{
 			$this->options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES '.$this->char_set
 				.(empty($this->dbcollat) ? '' : ' COLLATE '.$this->dbcollat);
-		}
-
-		if ($this->compress === TRUE)
-		{
-			$this->options[PDO::MYSQL_ATTR_COMPRESS] = TRUE;
 		}
 
 		return parent::db_connect($persistent);
@@ -212,26 +205,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 	protected function _truncate($table)
 	{
 		return 'TRUNCATE '.$table;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * FROM tables
-	 *
-	 * Groups tables in FROM clauses if needed, so there is no confusion
-	 * about operator precedence.
-	 *
-	 * @return	string
-	 */
-	protected function _from_tables()
-	{
-		if ( ! empty($this->qb_join) && count($this->qb_from) > 1)
-		{
-			return '('.implode(', ', $this->qb_from).')';
-		}
-
-		return implode(', ', $this->qb_from);
 	}
 
 }

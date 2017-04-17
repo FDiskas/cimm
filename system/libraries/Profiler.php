@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,17 +20,11 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * CodeIgniter Profiler Class
  *
@@ -55,36 +37,11 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Libraries
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/general/profiling.html
  */
 class CI_Profiler {
 
-<<<<<<< HEAD
-	protected $_available_sections = array(
-										'benchmarks',
-										'get',
-										'memory_usage',
-										'post',
-										'uri_string',
-										'controller_info',
-										'queries',
-										'http_headers',
-										'session_data',
-										'config'
-										);
-
-	protected $_query_toggle_count = 25;
-
-	protected $CI;
-
-	// --------------------------------------------------------------------
-
-=======
 	/**
 	 * List of profiler sections available to show
 	 *
@@ -124,7 +81,6 @@ class CI_Profiler {
 	 *
 	 * @param array $config
 	 */
->>>>>>> codeigniter/develop
 	public function __construct($config = array())
 	{
 		$this->CI =& get_instance();
@@ -160,24 +116,17 @@ class CI_Profiler {
 	 */
 	public function set_sections($config)
 	{
-<<<<<<< HEAD
-=======
 		if (isset($config['query_toggle_count']))
 		{
 			$this->_query_toggle_count = (int) $config['query_toggle_count'];
 			unset($config['query_toggle_count']);
 		}
 
->>>>>>> codeigniter/develop
 		foreach ($config as $method => $enable)
 		{
 			if (in_array($method, $this->_available_sections))
 			{
-<<<<<<< HEAD
-				$this->_compile_{$method} = ($enable !== FALSE) ? TRUE : FALSE;
-=======
 				$this->_compile_{$method} = ($enable !== FALSE);
->>>>>>> codeigniter/develop
 			}
 		}
 	}
@@ -201,34 +150,15 @@ class CI_Profiler {
 		{
 			// We match the "end" marker so that the list ends
 			// up in the order that it was defined
-<<<<<<< HEAD
-			if (preg_match("/(.+?)_end/i", $key, $match))
-			{
-				if (isset($this->CI->benchmark->marker[$match[1].'_end']) AND isset($this->CI->benchmark->marker[$match[1].'_start']))
-				{
-					$profile[$match[1]] = $this->CI->benchmark->elapsed_time($match[1].'_start', $key);
-				}
-=======
 			if (preg_match('/(.+?)_end/i', $key, $match)
 				&& isset($this->CI->benchmark->marker[$match[1].'_end'], $this->CI->benchmark->marker[$match[1].'_start']))
 			{
 				$profile[$match[1]] = $this->CI->benchmark->elapsed_time($match[1].'_start', $key);
->>>>>>> codeigniter/develop
 			}
 		}
 
 		// Build a table containing the profile data.
 		// Note: At some point we should turn this into a template that can
-<<<<<<< HEAD
-		// be modified.  We also might want to make this data available to be logged
-
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_benchmarks" style="border:1px solid #900;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#900;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_benchmarks').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-		$output .= "\n\n<table style='width:100%'>\n";
-=======
 		// be modified. We also might want to make this data available to be logged
 
 		$output = "\n\n"
@@ -236,27 +166,16 @@ class CI_Profiler {
 			."\n"
 			.'<legend style="color:#900;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_benchmarks')."&nbsp;&nbsp;</legend>"
 			."\n\n\n<table style=\"width:100%;\">\n";
->>>>>>> codeigniter/develop
 
 		foreach ($profile as $key => $val)
 		{
 			$key = ucwords(str_replace(array('_', '-'), ' ', $key));
-<<<<<<< HEAD
-			$output .= "<tr><td style='padding:5px;width:50%;color:#000;font-weight:bold;background-color:#ddd;'>".$key."&nbsp;&nbsp;</td><td style='padding:5px;width:50%;color:#900;font-weight:normal;background-color:#ddd;'>".$val."</td></tr>\n";
-		}
-
-		$output .= "</table>\n";
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 			$output .= '<tr><td style="padding:5px;width:50%;color:#000;font-weight:bold;background-color:#ddd;">'
 					.$key.'&nbsp;&nbsp;</td><td style="padding:5px;width:50%;color:#900;font-weight:normal;background-color:#ddd;">'
 					.$val."</td></tr>\n";
 		}
 
 		return $output."</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -273,31 +192,12 @@ class CI_Profiler {
 		// Let's determine which databases are currently connected to
 		foreach (get_object_vars($this->CI) as $CI_object)
 		{
-<<<<<<< HEAD
-			if (is_object($CI_object) && is_subclass_of(get_class($CI_object), 'CI_DB') )
-=======
 			if (is_object($CI_object) && is_subclass_of(get_class($CI_object), 'CI_DB'))
->>>>>>> codeigniter/develop
 			{
 				$dbs[] = $CI_object;
 			}
 		}
 
-<<<<<<< HEAD
-		if (count($dbs) == 0)
-		{
-			$output  = "\n\n";
-			$output .= '<fieldset id="ci_profiler_queries" style="border:1px solid #0000FF;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-			$output .= "\n";
-			$output .= '<legend style="color:#0000FF;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_queries').'&nbsp;&nbsp;</legend>';
-			$output .= "\n";
-			$output .= "\n\n<table style='border:none; width:100%;'>\n";
-			$output .="<tr><td style='width:100%;color:#0000FF;font-weight:normal;background-color:#eee;padding:5px'>".$this->CI->lang->line('profiler_no_db')."</td></tr>\n";
-			$output .= "</table>\n";
-			$output .= "</fieldset>";
-
-			return $output;
-=======
 		if (count($dbs) === 0)
 		{
 			return "\n\n"
@@ -308,7 +208,6 @@ class CI_Profiler {
 				.'<tr><td style="width:100%;color:#0000FF;font-weight:normal;background-color:#eee;padding:5px;">'
 				.$this->CI->lang->line('profiler_no_db')
 				."</td></tr>\n</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 		}
 
 		// Load the text helper so we can highlight the SQL
@@ -318,43 +217,19 @@ class CI_Profiler {
 		$highlight = array('SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY', 'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN', 'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')');
 
 		$output  = "\n\n";
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 		$count = 0;
 
 		foreach ($dbs as $db)
 		{
-<<<<<<< HEAD
-			$count++;
-
-=======
->>>>>>> codeigniter/develop
 			$hide_queries = (count($db->queries) > $this->_query_toggle_count) ? ' display:none' : '';
 
 			$show_hide_js = '(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_queries_db_'.$count.'\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_hide').'\'?\''.$this->CI->lang->line('profiler_section_show').'\':\''.$this->CI->lang->line('profiler_section_hide').'\';">'.$this->CI->lang->line('profiler_section_hide').'</span>)';
 
-<<<<<<< HEAD
-			if ($hide_queries != '')
-=======
 			if ($hide_queries !== '')
->>>>>>> codeigniter/develop
 			{
 				$show_hide_js = '(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_queries_db_'.$count.'\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)';
 			}
 
-<<<<<<< HEAD
-			$output .= '<fieldset style="border:1px solid #0000FF;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-			$output .= "\n";
-			$output .= '<legend style="color:#0000FF;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_database').':&nbsp; '.$db->database.'&nbsp;&nbsp;&nbsp;'.$this->CI->lang->line('profiler_queries').': '.count($db->queries).'&nbsp;&nbsp;'.$show_hide_js.'</legend>';
-			$output .= "\n";
-			$output .= "\n\n<table style='width:100%;{$hide_queries}' id='ci_profiler_queries_db_{$count}'>\n";
-
-			if (count($db->queries) == 0)
-			{
-				$output .= "<tr><td style='width:100%;color:#0000FF;font-weight:normal;background-color:#eee;padding:5px;'>".$this->CI->lang->line('profiler_no_queries')."</td></tr>\n";
-=======
 			$output .= '<fieldset style="border:1px solid #0000FF;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 				."\n"
 				.'<legend style="color:#0000FF;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_database')
@@ -366,17 +241,12 @@ class CI_Profiler {
 			{
 				$output .= '<tr><td style="width:100%;color:#0000FF;font-weight:normal;background-color:#eee;padding:5px;">'
 						.$this->CI->lang->line('profiler_no_queries')."</td></tr>\n";
->>>>>>> codeigniter/develop
 			}
 			else
 			{
 				foreach ($db->queries as $key => $val)
 				{
 					$time = number_format($db->query_times[$key], 4);
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 					$val = highlight_code($val, ENT_QUOTES);
 
 					foreach ($highlight as $bold)
@@ -384,15 +254,6 @@ class CI_Profiler {
 						$val = str_replace($bold, '<strong>'.$bold.'</strong>', $val);
 					}
 
-<<<<<<< HEAD
-					$output .= "<tr><td style='padding:5px; vertical-align: top;width:1%;color:#900;font-weight:normal;background-color:#ddd;'>".$time."&nbsp;&nbsp;</td><td style='padding:5px; color:#000;font-weight:normal;background-color:#ddd;'>".$val."</td></tr>\n";
-				}
-			}
-
-			$output .= "</table>\n";
-			$output .= "</fieldset>";
-
-=======
 					$output .= '<tr><td style="padding:5px;vertical-align:top;width:1%;color:#900;font-weight:normal;background-color:#ddd;">'
 							.$time.'&nbsp;&nbsp;</td><td style="padding:5px;color:#000;font-weight:normal;background-color:#ddd;">'
 							.$val."</td></tr>\n";
@@ -400,16 +261,11 @@ class CI_Profiler {
 			}
 
 			$output .= "</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 		}
 
 		return $output;
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 	// --------------------------------------------------------------------
 
 	/**
@@ -419,21 +275,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_get()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_get" style="border:1px solid #cd6e00;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#cd6e00;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_get_data').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-
-		if (count($_GET) == 0)
-		{
-			$output .= "<div style='color:#cd6e00;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->lang->line('profiler_no_get')."</div>";
-		}
-		else
-		{
-			$output .= "\n\n<table style='width:100%; border:none'>\n";
-=======
 		$output = "\n\n"
 			.'<fieldset id="ci_profiler_get" style="border:1px solid #cd6e00;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -446,7 +287,6 @@ class CI_Profiler {
 		else
 		{
 			$output .= "\n\n<table style=\"width:100%;border:none;\">\n";
->>>>>>> codeigniter/develop
 
 			foreach ($_GET as $key => $val)
 			{
@@ -455,35 +295,16 @@ class CI_Profiler {
 					$key = "'".$key."'";
 				}
 
-<<<<<<< HEAD
-				$output .= "<tr><td style='width:50%;color:#000;background-color:#ddd;padding:5px'>&#36;_GET[".$key."]&nbsp;&nbsp; </td><td style='width:50%;padding:5px;color:#cd6e00;font-weight:normal;background-color:#ddd;'>";
-				if (is_array($val))
-				{
-					$output .= "<pre>" . htmlspecialchars(stripslashes(print_r($val, true))) . "</pre>";
-				}
-				else
-				{
-					$output .= htmlspecialchars(stripslashes($val));
-				}
-				$output .= "</td></tr>\n";
-=======
 				$output .= '<tr><td style="width:50%;color:#000;background-color:#ddd;padding:5px;">&#36;_GET['
 					.$key.']&nbsp;&nbsp; </td><td style="width:50%;padding:5px;color:#cd6e00;font-weight:normal;background-color:#ddd;">'
 					.((is_array($val) OR is_object($val)) ? '<pre>'.htmlspecialchars(stripslashes(print_r($val, TRUE))).'</pre>' : htmlspecialchars(stripslashes($val)))
 					."</td></tr>\n";
->>>>>>> codeigniter/develop
 			}
 
 			$output .= "</table>\n";
 		}
-<<<<<<< HEAD
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 
 		return $output.'</fieldset>';
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -495,21 +316,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_post()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_post" style="border:1px solid #009900;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#009900;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_post_data').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-
-		if (count($_POST) == 0)
-		{
-			$output .= "<div style='color:#009900;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->lang->line('profiler_no_post')."</div>";
-		}
-		else
-		{
-			$output .= "\n\n<table style='width:100%'>\n";
-=======
 		$output = "\n\n"
 			.'<fieldset id="ci_profiler_post" style="border:1px solid #009900;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -522,7 +328,6 @@ class CI_Profiler {
 		else
 		{
 			$output .= "\n\n<table style=\"width:100%;\">\n";
->>>>>>> codeigniter/develop
 
 			foreach ($_POST as $key => $val)
 			{
@@ -531,41 +336,25 @@ class CI_Profiler {
 					$key = "'".$key."'";
 				}
 
-<<<<<<< HEAD
-				$output .= "<tr><td style='width:50%;padding:5px;color:#000;background-color:#ddd;'>&#36;_POST[".$key."]&nbsp;&nbsp; </td><td style='width:50%;padding:5px;color:#009900;font-weight:normal;background-color:#ddd;'>";
-				if (is_array($val))
-				{
-					$output .= "<pre>" . htmlspecialchars(stripslashes(print_r($val, TRUE))) . "</pre>";
-=======
 				$output .= '<tr><td style="width:50%;padding:5px;color:#000;background-color:#ddd;">&#36;_POST['
 					.$key.']&nbsp;&nbsp; </td><td style="width:50%;padding:5px;color:#009900;font-weight:normal;background-color:#ddd;">';
 
 				if (is_array($val) OR is_object($val))
 				{
 					$output .= '<pre>'.htmlspecialchars(stripslashes(print_r($val, TRUE))).'</pre>';
->>>>>>> codeigniter/develop
 				}
 				else
 				{
 					$output .= htmlspecialchars(stripslashes($val));
 				}
-<<<<<<< HEAD
-=======
 
->>>>>>> codeigniter/develop
 				$output .= "</td></tr>\n";
 			}
 
 			$output .= "</table>\n";
 		}
-<<<<<<< HEAD
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 
 		return $output.'</fieldset>';
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -577,26 +366,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_uri_string()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_uri_string" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#000;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_uri_string').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-
-		if ($this->CI->uri->uri_string == '')
-		{
-			$output .= "<div style='color:#000;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->lang->line('profiler_no_uri')."</div>";
-		}
-		else
-		{
-			$output .= "<div style='color:#000;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->uri->uri_string."</div>";
-		}
-
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 		return "\n\n"
 			.'<fieldset id="ci_profiler_uri_string" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -604,7 +373,6 @@ class CI_Profiler {
 			.'<div style="color:#000;font-weight:normal;padding:4px 0 4px 0;">'
 			.($this->CI->uri->uri_string === '' ? $this->CI->lang->line('profiler_no_uri') : $this->CI->uri->uri_string)
 			.'</div></fieldset>';
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -616,26 +384,12 @@ class CI_Profiler {
 	 */
 	protected function _compile_controller_info()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_controller_info" style="border:1px solid #995300;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#995300;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_controller_info').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-
-		$output .= "<div style='color:#995300;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->router->fetch_class()."/".$this->CI->router->fetch_method()."</div>";
-
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 		return "\n\n"
 			.'<fieldset id="ci_profiler_controller_info" style="border:1px solid #995300;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
 			.'<legend style="color:#995300;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_controller_info')."&nbsp;&nbsp;</legend>\n"
 			.'<div style="color:#995300;font-weight:normal;padding:4px 0 4px 0;">'.$this->CI->router->fetch_class().'/'.$this->CI->router->fetch_method()
 			.'</div></fieldset>';
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -649,26 +403,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_memory_usage()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_memory_usage" style="border:1px solid #5a0099;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#5a0099;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_memory_usage').'&nbsp;&nbsp;</legend>';
-		$output .= "\n";
-
-		if (function_exists('memory_get_usage') && ($usage = memory_get_usage()) != '')
-		{
-			$output .= "<div style='color:#5a0099;font-weight:normal;padding:4px 0 4px 0'>".number_format($usage).' bytes</div>';
-		}
-		else
-		{
-			$output .= "<div style='color:#5a0099;font-weight:normal;padding:4px 0 4px 0'>".$this->CI->lang->line('profiler_no_memory')."</div>";
-		}
-
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 		return "\n\n"
 			.'<fieldset id="ci_profiler_memory_usage" style="border:1px solid #5a0099;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -676,7 +410,6 @@ class CI_Profiler {
 			.'<div style="color:#5a0099;font-weight:normal;padding:4px 0 4px 0;">'
 			.(($usage = memory_get_usage()) != '' ? number_format($usage).' bytes' : $this->CI->lang->line('profiler_no_memory'))
 			.'</div></fieldset>';
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -690,26 +423,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_http_headers()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_http_headers" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#000;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_headers').'&nbsp;&nbsp;(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_httpheaders_table\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)</legend>';
-		$output .= "\n";
-
-		$output .= "\n\n<table style='width:100%;display:none' id='ci_profiler_httpheaders_table'>\n";
-
-		foreach (array('HTTP_ACCEPT', 'HTTP_USER_AGENT', 'HTTP_CONNECTION', 'SERVER_PORT', 'SERVER_NAME', 'REMOTE_ADDR', 'SERVER_SOFTWARE', 'HTTP_ACCEPT_LANGUAGE', 'SCRIPT_NAME', 'REQUEST_METHOD',' HTTP_HOST', 'REMOTE_HOST', 'CONTENT_TYPE', 'SERVER_PROTOCOL', 'QUERY_STRING', 'HTTP_ACCEPT_ENCODING', 'HTTP_X_FORWARDED_FOR') as $header)
-		{
-			$val = (isset($_SERVER[$header])) ? $_SERVER[$header] : '';
-			$output .= "<tr><td style='vertical-align: top;width:50%;padding:5px;color:#900;background-color:#ddd;'>".$header."&nbsp;&nbsp;</td><td style='width:50%;padding:5px;color:#000;background-color:#ddd;'>".$val."</td></tr>\n";
-		}
-
-		$output .= "</table>\n";
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 		$output = "\n\n"
 			.'<fieldset id="ci_profiler_http_headers" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -725,7 +438,6 @@ class CI_Profiler {
 		}
 
 		return $output."</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -739,19 +451,6 @@ class CI_Profiler {
 	 */
 	protected function _compile_config()
 	{
-<<<<<<< HEAD
-		$output  = "\n\n";
-		$output .= '<fieldset id="ci_profiler_config" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= "\n";
-		$output .= '<legend style="color:#000;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_config').'&nbsp;&nbsp;(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_config_table\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)</legend>';
-		$output .= "\n";
-
-		$output .= "\n\n<table style='width:100%; display:none' id='ci_profiler_config_table'>\n";
-
-		foreach ($this->CI->config->config as $config=>$val)
-		{
-			if (is_array($val))
-=======
 		$output = "\n\n"
 			.'<fieldset id="ci_profiler_config" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			."\n"
@@ -761,26 +460,15 @@ class CI_Profiler {
 		foreach ($this->CI->config->config as $config => $val)
 		{
 			if (is_array($val) OR is_object($val))
->>>>>>> codeigniter/develop
 			{
 				$val = print_r($val, TRUE);
 			}
 
-<<<<<<< HEAD
-			$output .= "<tr><td style='padding:5px; vertical-align: top;color:#900;background-color:#ddd;'>".$config."&nbsp;&nbsp;</td><td style='padding:5px; color:#000;background-color:#ddd;'>".htmlspecialchars($val)."</td></tr>\n";
-		}
-
-		$output .= "</table>\n";
-		$output .= "</fieldset>";
-
-		return $output;
-=======
 			$output .= '<tr><td style="padding:5px;vertical-align:top;color:#900;background-color:#ddd;">'
 				.$config.'&nbsp;&nbsp;</td><td style="padding:5px;color:#000;background-color:#ddd;">'.htmlspecialchars($val)."</td></tr>\n";
 		}
 
 		return $output."</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -790,26 +478,13 @@ class CI_Profiler {
 	 *
 	 * @return 	string
 	 */
-<<<<<<< HEAD
-	private function _compile_session_data()
-=======
 	protected function _compile_session_data()
->>>>>>> codeigniter/develop
 	{
 		if ( ! isset($this->CI->session))
 		{
 			return;
 		}
 
-<<<<<<< HEAD
-		$output = '<fieldset id="ci_profiler_csession" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee">';
-		$output .= '<legend style="color:#000;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_session_data').'&nbsp;&nbsp;(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_session_data\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)</legend>';
-		$output .= "<table style='width:100%;display:none' id='ci_profiler_session_data'>";
-
-		foreach ($this->CI->session->all_userdata() as $key => $val)
-		{
-			if (is_array($val))
-=======
 		$output = '<fieldset id="ci_profiler_csession" style="border:1px solid #000;padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#eee;">'
 			.'<legend style="color:#000;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_session_data').'&nbsp;&nbsp;(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_session_data\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)</legend>'
 			.'<table style="width:100%;display:none;" id="ci_profiler_session_data">';
@@ -817,25 +492,15 @@ class CI_Profiler {
 		foreach ($this->CI->session->all_userdata() as $key => $val)
 		{
 			if (is_array($val) OR is_object($val))
->>>>>>> codeigniter/develop
 			{
 				$val = print_r($val, TRUE);
 			}
 
-<<<<<<< HEAD
-			$output .= "<tr><td style='padding:5px; vertical-align: top;color:#900;background-color:#ddd;'>".$key."&nbsp;&nbsp;</td><td style='padding:5px; color:#000;background-color:#ddd;'>".htmlspecialchars($val)."</td></tr>\n";
-		}
-
-		$output .= '</table>';
-		$output .= "</fieldset>";
-		return $output;
-=======
 			$output .= '<tr><td style="padding:5px;vertical-align:top;color:#900;background-color:#ddd;">'
 				.$key.'&nbsp;&nbsp;</td><td style="padding:5px;color:#000;background-color:#ddd;">'.htmlspecialchars($val)."</td></tr>\n";
 		}
 
 		return $output."</table>\n</fieldset>";
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -847,41 +512,19 @@ class CI_Profiler {
 	 */
 	public function run()
 	{
-<<<<<<< HEAD
-		$output = "<div id='codeigniter_profiler' style='clear:both;background-color:#fff;padding:10px;'>";
-=======
 		$output = '<div id="codeigniter_profiler" style="clear:both;background-color:#fff;padding:10px;">';
->>>>>>> codeigniter/develop
 		$fields_displayed = 0;
 
 		foreach ($this->_available_sections as $section)
 		{
 			if ($this->_compile_{$section} !== FALSE)
 			{
-<<<<<<< HEAD
-				$func = "_compile_{$section}";
-=======
 				$func = '_compile_'.$section;
->>>>>>> codeigniter/develop
 				$output .= $this->{$func}();
 				$fields_displayed++;
 			}
 		}
 
-<<<<<<< HEAD
-		if ($fields_displayed == 0)
-		{
-			$output .= '<p style="border:1px solid #5a0099;padding:10px;margin:20px 0;background-color:#eee">'.$this->CI->lang->line('profiler_no_profiles').'</p>';
-		}
-
-		$output .= '</div>';
-
-		return $output;
-	}
-}
-
-// END CI_Profiler class
-=======
 		if ($fields_displayed === 0)
 		{
 			$output .= '<p style="border:1px solid #5a0099;padding:10px;margin:20px 0;background-color:#eee;">'
@@ -892,7 +535,6 @@ class CI_Profiler {
 	}
 
 }
->>>>>>> codeigniter/develop
 
 /* End of file Profiler.php */
 /* Location: ./system/libraries/Profiler.php */

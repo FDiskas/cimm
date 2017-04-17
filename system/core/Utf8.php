@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,17 +20,11 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 2.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * Utf8 Class
  *
@@ -51,11 +33,7 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	UTF-8
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/libraries/utf8.html
  */
 class CI_Utf8 {
@@ -65,24 +43,23 @@ class CI_Utf8 {
 	 *
 	 * Determines if UTF-8 support is to be enabled
 	 *
-<<<<<<< HEAD
+	 * @return	void
 	 */
-	function __construct()
+	public function __construct()
 	{
-		log_message('debug', "Utf8 Class Initialized");
+		log_message('debug', 'Utf8 Class Initialized');
 
-		global $CFG;
+		$CI =& get_instance();
 
 		if (
-			preg_match('/./u', 'é') === 1					// PCRE must support UTF-8
-			AND function_exists('iconv')					// iconv must be installed
-			AND ini_get('mbstring.func_overload') != 1		// Multibyte string function overloading cannot be enabled
-			AND $CFG->item('charset') == 'UTF-8'			// Application charset must be UTF-8
+			@preg_match('/./u', 'é') === 1		// PCRE must support UTF-8
+			&& function_exists('iconv')			// iconv must be installed
+			&& (bool) @ini_get('mbstring.func_overload') !== TRUE	// Multibyte string function overloading cannot be enabled
+			&& $CI->config->item('charset') == 'UTF-8'		// Application charset must be UTF-8
 			)
 		{
-			log_message('debug', "UTF-8 Support Enabled");
-
 			define('UTF8_ENABLED', TRUE);
+			log_message('debug', 'UTF-8 Support Enabled');
 
 			// set internal encoding for multibyte string functions if necessary
 			// and set a flag so we don't have to repeatedly use extension_loaded()
@@ -99,46 +76,8 @@ class CI_Utf8 {
 		}
 		else
 		{
-			log_message('debug', "UTF-8 Support Disabled");
-			define('UTF8_ENABLED', FALSE);
-=======
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		log_message('debug', 'Utf8 Class Initialized');
-
-		$charset = strtoupper(config_item('charset'));
-
-		// set internal encoding for multibyte string functions if necessary
-		// and set a flag so we don't have to repeatedly use extension_loaded()
-		// or function_exists()
-		if (extension_loaded('mbstring'))
-		{
-			define('MB_ENABLED', TRUE);
-			mb_internal_encoding($charset);
-		}
-		else
-		{
-			define('MB_ENABLED', FALSE);
-		}
-
-
-		if (
-			@preg_match('/./u', 'é') === 1	// PCRE must support UTF-8
-			&& function_exists('iconv')	// iconv must be installed
-			&& MB_ENABLED === TRUE		// mbstring must be enabled
-			&& $charset === 'UTF-8'		// Application charset must be UTF-8
-			)
-		{
-			define('UTF8_ENABLED', TRUE);
-			log_message('debug', 'UTF-8 Support Enabled');
-		}
-		else
-		{
 			define('UTF8_ENABLED', FALSE);
 			log_message('debug', 'UTF-8 Support Disabled');
->>>>>>> codeigniter/develop
 		}
 	}
 
@@ -149,18 +88,10 @@ class CI_Utf8 {
 	 *
 	 * Ensures strings are UTF-8
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	function clean_string($str)
-=======
 	 * @param	string
 	 * @return	string
 	 */
 	public function clean_string($str)
->>>>>>> codeigniter/develop
 	{
 		if ($this->_is_ascii($str) === FALSE)
 		{
@@ -179,18 +110,10 @@ class CI_Utf8 {
 	 * line feeds, and carriage returns, as all others can cause
 	 * problems in XML
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	function safe_ascii_for_xml($str)
-=======
 	 * @param	string
 	 * @return	string
 	 */
 	public function safe_ascii_for_xml($str)
->>>>>>> codeigniter/develop
 	{
 		return remove_invisible_characters($str, FALSE);
 	}
@@ -202,29 +125,6 @@ class CI_Utf8 {
 	 *
 	 * Attempts to convert a string to UTF-8
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @param	string	- input encoding
-	 * @return	string
-	 */
-	function convert_to_utf8($str, $encoding)
-	{
-		if (function_exists('iconv'))
-		{
-			$str = @iconv($encoding, 'UTF-8', $str);
-		}
-		elseif (function_exists('mb_convert_encoding'))
-		{
-			$str = @mb_convert_encoding($str, 'UTF-8', $encoding);
-		}
-		else
-		{
-			return FALSE;
-		}
-
-		return $str;
-=======
 	 * @param	string
 	 * @param	string	input encoding
 	 * @return	string
@@ -235,13 +135,12 @@ class CI_Utf8 {
 		{
 			return @iconv($encoding, 'UTF-8', $str);
 		}
-		elseif (MB_ENABLED === TRUE)
+		elseif (function_exists('mb_convert_encoding'))
 		{
 			return @mb_convert_encoding($str, 'UTF-8', $encoding);
 		}
 
 		return FALSE;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -251,21 +150,6 @@ class CI_Utf8 {
 	 *
 	 * Tests if a string is standard 7-bit ASCII or not
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string
-	 * @return	bool
-	 */
-	function _is_ascii($str)
-	{
-		return (preg_match('/[^\x00-\x7F]/S', $str) == 0);
-	}
-
-	// --------------------------------------------------------------------
-
-}
-// End Utf8 Class
-=======
 	 * @param	string
 	 * @return	bool
 	 */
@@ -275,7 +159,6 @@ class CI_Utf8 {
 	}
 
 }
->>>>>>> codeigniter/develop
 
 /* End of file Utf8.php */
 /* Location: ./system/core/Utf8.php */

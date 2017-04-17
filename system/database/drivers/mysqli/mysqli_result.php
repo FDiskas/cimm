@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,45 +20,26 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * MySQLi Result Class
  *
  * This class extends the parent result class: CI_DB_result
  *
  * @category	Database
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/database/
-=======
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  * @since	1.3
->>>>>>> codeigniter/develop
  */
 class CI_DB_mysqli_result extends CI_DB_result {
 
 	/**
 	 * Number of rows in the result set
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	integer
-	 */
-	function num_rows()
-	{
-		return @mysqli_num_rows($this->result_id);
-=======
 	 * @return	int
 	 */
 	public function num_rows()
@@ -78,7 +47,6 @@ class CI_DB_mysqli_result extends CI_DB_result {
 		return is_int($this->num_rows)
 			? $this->num_rows
 			: $this->num_rows = $this->result_id->num_rows;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -86,20 +54,11 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	/**
 	 * Number of fields in the result set
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	integer
-	 */
-	function num_fields()
-	{
-		return @mysqli_num_fields($this->result_id);
-=======
 	 * @return	int
 	 */
 	public function num_fields()
 	{
 		return $this->result_id->field_count;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -109,22 +68,12 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	 *
 	 * Generates an array of column names
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	array
-	 */
-	function list_fields()
-	{
-		$field_names = array();
-		while ($field = mysqli_fetch_field($this->result_id))
-=======
 	 * @return	array
 	 */
 	public function list_fields()
 	{
 		$field_names = array();
 		while ($field = $this->result_id->fetch_field())
->>>>>>> codeigniter/develop
 		{
 			$field_names[] = $field->name;
 		}
@@ -139,29 +88,6 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	 *
 	 * Generates an array of objects containing field meta-data
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @return	array
-	 */
-	function field_data()
-	{
-		$retval = array();
-		while ($field = mysqli_fetch_object($this->result_id))
-		{
-			preg_match('/([a-zA-Z]+)(\(\d+\))?/', $field->Type, $matches);
-
-			$type = (array_key_exists(1, $matches)) ? $matches[1] : NULL;
-			$length = (array_key_exists(2, $matches)) ? preg_replace('/[^\d]/', '', $matches[2]) : NULL;
-
-			$F				= new stdClass();
-			$F->name		= $field->Field;
-			$F->type		= $type;
-			$F->default		= $field->Default;
-			$F->max_length	= $length;
-			$F->primary_key = ( $field->Key == 'PRI' ? 1 : 0 );
-
-			$retval[] = $F;
-=======
 	 * @return	array
 	 */
 	public function field_data()
@@ -176,30 +102,16 @@ class CI_DB_mysqli_result extends CI_DB_result {
 			$retval[$i]->max_length		= $field_data[$i]->max_length;
 			$retval[$i]->primary_key	= (int) ($field_data[$i]->flags & 2);
 			$retval[$i]->default		= '';
->>>>>>> codeigniter/develop
 		}
 
 		return $retval;
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> codeigniter/develop
 	// --------------------------------------------------------------------
 
 	/**
 	 * Free the result
 	 *
-<<<<<<< HEAD
-	 * @return	null
-	 */
-	function free_result()
-	{
-		if (is_object($this->result_id))
-		{
-			mysqli_free_result($this->result_id);
-=======
 	 * @return	void
 	 */
 	public function free_result()
@@ -207,7 +119,6 @@ class CI_DB_mysqli_result extends CI_DB_result {
 		if (is_object($this->result_id))
 		{
 			$this->result_id->free();
->>>>>>> codeigniter/develop
 			$this->result_id = FALSE;
 		}
 	}
@@ -217,18 +128,6 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	/**
 	 * Data Seek
 	 *
-<<<<<<< HEAD
-	 * Moves the internal pointer to the desired offset.  We call
-	 * this internally before fetching results to make sure the
-	 * result set starts at zero
-	 *
-	 * @access	private
-	 * @return	array
-	 */
-	function _data_seek($n = 0)
-	{
-		return mysqli_data_seek($this->result_id, $n);
-=======
 	 * Moves the internal pointer to the desired offset. We call
 	 * this internally before fetching results to make sure the
 	 * result set starts at zero
@@ -238,7 +137,6 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	protected function _data_seek($n = 0)
 	{
 		return $this->result_id->data_seek($n);
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -248,20 +146,11 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	 *
 	 * Returns the result set as an array
 	 *
-<<<<<<< HEAD
-	 * @access	private
-	 * @return	array
-	 */
-	function _fetch_assoc()
-	{
-		return mysqli_fetch_assoc($this->result_id);
-=======
 	 * @return	array
 	 */
 	protected function _fetch_assoc()
 	{
 		return $this->result_id->fetch_assoc();
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -271,28 +160,15 @@ class CI_DB_mysqli_result extends CI_DB_result {
 	 *
 	 * Returns the result set as an object
 	 *
-<<<<<<< HEAD
-	 * @access	private
-	 * @return	object
-	 */
-	function _fetch_object()
-	{
-		return mysqli_fetch_object($this->result_id);
-=======
 	 * @param	string
 	 * @return	object
 	 */
 	protected function _fetch_object($class_name = 'stdClass')
 	{
 		return $this->result_id->fetch_object($class_name);
->>>>>>> codeigniter/develop
 	}
 
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 /* End of file mysqli_result.php */
 /* Location: ./system/database/drivers/mysqli/mysqli_result.php */

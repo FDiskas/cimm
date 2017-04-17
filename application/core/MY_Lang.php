@@ -6,7 +6,7 @@
 
 require APPPATH."third_party/MX/Lang.php";
 
-class MY_Lang extends MX_Lang {
+class MY_Lang extends CI_Lang {
 
 	/**************************************************
 	configuration

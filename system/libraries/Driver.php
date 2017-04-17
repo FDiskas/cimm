@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2006 - 2012, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,17 +20,11 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2006 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * CodeIgniter Driver Library Class
  *
@@ -57,14 +39,6 @@
  */
 class CI_Driver_Library {
 
-<<<<<<< HEAD
-	protected $valid_drivers	= array();
-	protected $lib_name;
-
-	// The first time a child is used it won't exist, so we instantiate it
-	// subsequents calls will go straight to the proper child.
-	function __get($child)
-=======
 	/**
 	 * Array of drivers that are available to use with the driver class
 	 *
@@ -89,7 +63,7 @@ class CI_Driver_Library {
 	 * @return  object  Child class
 	 */
 	public function __get($child)
-	{
+    {
 		// Try to load the driver
 		return $this->load_driver($child);
 	}
@@ -103,7 +77,6 @@ class CI_Driver_Library {
 	 * @return  object  Child class
 	 */
 	public function load_driver($child)
->>>>>>> codeigniter/develop
 	{
 		if ( ! isset($this->lib_name))
 		{
@@ -112,26 +85,19 @@ class CI_Driver_Library {
 
 		// The class will be prefixed with the parent lib
 		$child_class = $this->lib_name.'_'.$child;
-<<<<<<< HEAD
-	
-		// Remove the CI_ prefix and lowercase
-		$lib_name = ucfirst(strtolower(str_replace('CI_', '', $this->lib_name)));
-		$driver_name = strtolower(str_replace('CI_', '', $child_class));
-		
-=======
 
 		// Remove the CI_ prefix and lowercase
 		$lib_name = ucfirst(strtolower(str_replace('CI_', '', $this->lib_name)));
 		$driver_name = strtolower(str_replace('CI_', '', $child_class));
 
->>>>>>> codeigniter/develop
 		if (in_array($driver_name, array_map('strtolower', $this->valid_drivers)))
 		{
 			// check and see if the driver is in a separate file
 			if ( ! class_exists($child_class))
 			{
 				// check application path first
-				foreach (get_instance()->load->get_package_paths(TRUE) as $path)
+				$CI =& get_instance();
+				foreach ($CI->load->get_package_paths(TRUE) as $path)
 				{
 					// loves me some nesting!
 					foreach (array(ucfirst($driver_name), $driver_name) as $class)
@@ -141,11 +107,7 @@ class CI_Driver_Library {
 						if (file_exists($filepath))
 						{
 							include_once $filepath;
-<<<<<<< HEAD
-							break;
-=======
 							break 2;
->>>>>>> codeigniter/develop
 						}
 					}
 				}
@@ -153,13 +115,9 @@ class CI_Driver_Library {
 				// it's a valid driver, but the file simply can't be found
 				if ( ! class_exists($child_class))
 				{
-<<<<<<< HEAD
-					log_message('error', "Unable to load the requested driver: ".$child_class);
-					show_error("Unable to load the requested driver: ".$child_class);
-=======
-					log_message('error', 'Unable to load the requested driver: '.$child_class);
-					show_error('Unable to load the requested driver: '.$child_class);
->>>>>>> codeigniter/develop
+					$msg = 'Unable to load the requested driver: '.$child_class;
+					log_message('error', $msg);
+					show_error($msg);
 				}
 			}
 
@@ -170,25 +128,14 @@ class CI_Driver_Library {
 		}
 
 		// The requested driver isn't valid!
-<<<<<<< HEAD
-		log_message('error', "Invalid driver requested: ".$child_class);
-		show_error("Invalid driver requested: ".$child_class);
-	}
-
-	// --------------------------------------------------------------------
-
-}
-// END CI_Driver_Library CLASS
-
-=======
-		log_message('error', 'Invalid driver requested: '.$child_class);
-		show_error('Invalid driver requested: '.$child_class);
+		$msg = 'Invalid driver requested: '.$child_class;
+		log_message('error', $msg);
+		show_error($msg);
 	}
 
 }
 
 // --------------------------------------------------------------------------
->>>>>>> codeigniter/develop
 
 /**
  * CodeIgniter Driver Class
@@ -203,14 +150,6 @@ class CI_Driver_Library {
  * @link
  */
 class CI_Driver {
-<<<<<<< HEAD
-	protected $parent;
-
-	private $methods = array();
-	private $properties = array();
-
-	private static $reflections = array();
-=======
 
 	/**
 	 * Instance of the parent class
@@ -239,7 +178,6 @@ class CI_Driver {
 	 * @var array
 	 */
 	protected static $_reflections = array();
->>>>>>> codeigniter/develop
 
 	/**
 	 * Decorate
@@ -251,22 +189,14 @@ class CI_Driver {
 	 */
 	public function decorate($parent)
 	{
-<<<<<<< HEAD
-		$this->parent = $parent;
-=======
 		$this->_parent = $parent;
->>>>>>> codeigniter/develop
 
 		// Lock down attributes to what is defined in the class
 		// and speed up references in magic methods
 
 		$class_name = get_class($parent);
 
-<<<<<<< HEAD
-		if ( ! isset(self::$reflections[$class_name]))
-=======
 		if ( ! isset(self::$_reflections[$class_name]))
->>>>>>> codeigniter/develop
 		{
 			$r = new ReflectionObject($parent);
 
@@ -274,11 +204,7 @@ class CI_Driver {
 			{
 				if ($method->isPublic())
 				{
-<<<<<<< HEAD
-					$this->methods[] = $method->getName();
-=======
 					$this->_methods[] = $method->getName();
->>>>>>> codeigniter/develop
 				}
 			}
 
@@ -286,17 +212,6 @@ class CI_Driver {
 			{
 				if ($prop->isPublic())
 				{
-<<<<<<< HEAD
-					$this->properties[] = $prop->getName();
-				}
-			}
-
-			self::$reflections[$class_name] = array($this->methods, $this->properties);
-		}
-		else
-		{
-			list($this->methods, $this->properties) = self::$reflections[$class_name];
-=======
 					$this->_properties[] = $prop->getName();
 				}
 			}
@@ -306,7 +221,6 @@ class CI_Driver {
 		else
 		{
 			list($this->_methods, $this->_properties) = self::$_reflections[$class_name];
->>>>>>> codeigniter/develop
 		}
 	}
 
@@ -317,25 +231,15 @@ class CI_Driver {
 	 *
 	 * Handles access to the parent driver library's methods
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string
 	 * @param	array
 	 * @return	mixed
 	 */
 	public function __call($method, $args = array())
 	{
-<<<<<<< HEAD
-		if (in_array($method, $this->methods))
-		{
-			return call_user_func_array(array($this->parent, $method), $args);
-=======
 		if (in_array($method, $this->_methods))
 		{
 			return call_user_func_array(array($this->_parent, $method), $args);
->>>>>>> codeigniter/develop
 		}
 
 		$trace = debug_backtrace();
@@ -355,15 +259,9 @@ class CI_Driver {
 	 */
 	public function __get($var)
 	{
-<<<<<<< HEAD
-		if (in_array($var, $this->properties))
-		{
-			return $this->parent->$var;
-=======
 		if (in_array($var, $this->_properties))
 		{
 			return $this->_parent->$var;
->>>>>>> codeigniter/develop
 		}
 	}
 
@@ -380,18 +278,6 @@ class CI_Driver {
 	 */
 	public function __set($var, $val)
 	{
-<<<<<<< HEAD
-		if (in_array($var, $this->properties))
-		{
-			$this->parent->$var = $val;
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-}
-// END CI_Driver CLASS
-=======
 		if (in_array($var, $this->_properties))
 		{
 			$this->_parent->$var = $val;
@@ -399,7 +285,6 @@ class CI_Driver {
 	}
 
 }
->>>>>>> codeigniter/develop
 
 /* End of file Driver.php */
 /* Location: ./system/libraries/Driver.php */

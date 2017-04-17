@@ -2,23 +2,6 @@
 /**
  * CodeIgniter
  *
-<<<<<<< HEAD
- * An open source application development framework for PHP 4.3.2 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2006 - 2012 EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://codeigniter.com
- * @since		Version 2.0
- * @filesource	
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * CodeIgniter Caching Class 
-=======
  * An open source application development framework for PHP 5.2.4 or newer
  *
  * NOTICE OF LICENSE
@@ -44,27 +27,10 @@
 
 /**
  * CodeIgniter Caching Class
->>>>>>> codeigniter/develop
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Core
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
- * @link		
- */
-class CI_Cache extends CI_Driver_Library {
-	
-	protected $valid_drivers 	= array(
-		'cache_apc', 'cache_file', 'cache_memcached', 'cache_dummy'
-	);
-
-	protected $_cache_path		= NULL;		// Path of cache files (if file-based cache)
-	protected $_adapter			= 'dummy';
-	protected $_backup_driver;
-	
-	// ------------------------------------------------------------------------
-=======
  * @author		EllisLab Dev Team
  * @link
  */
@@ -104,20 +70,10 @@ class CI_Cache extends CI_Driver_Library {
 	 * @param string
 	 */
 	protected $_backup_driver = 'dummy';
->>>>>>> codeigniter/develop
 
 	/**
 	 * Constructor
 	 *
-<<<<<<< HEAD
-	 * @param array
-	 */
-	public function __construct($config = array())
-	{
-		if ( ! empty($config))
-		{
-			$this->_initialize($config);
-=======
 	 * Initialize class properties based on the configuration array.
 	 *
 	 * @param	array
@@ -162,25 +118,12 @@ class CI_Cache extends CI_Driver_Library {
 				// Backup is supported. Set it to primary.
 				$this->_adapter = $this->_backup_driver;
 			}
->>>>>>> codeigniter/develop
 		}
 	}
 
 	// ------------------------------------------------------------------------
 
 	/**
-<<<<<<< HEAD
-	 * Get 
-	 *
-	 * Look for a value in the cache.  If it exists, return the data 
-	 * if not, return FALSE
-	 *
-	 * @param 	string	
-	 * @return 	mixed		value that is stored/FALSE on failure
-	 */
-	public function get($id)
-	{	
-=======
 	 * Get
 	 *
 	 * Look for a value in the cache. If it exists, return the data
@@ -191,7 +134,6 @@ class CI_Cache extends CI_Driver_Library {
 	 */
 	public function get($id)
 	{
->>>>>>> codeigniter/develop
 		return $this->{$this->_adapter}->get($id);
 	}
 
@@ -200,18 +142,10 @@ class CI_Cache extends CI_Driver_Library {
 	/**
 	 * Cache Save
 	 *
-<<<<<<< HEAD
-	 * @param 	string		Unique Key
-	 * @param 	mixed		Data to store
-	 * @param 	int			Length of time (in seconds) to cache the data
-	 *
-	 * @return 	boolean		true on success/false on failure
-=======
 	 * @param	string	Unique Key
 	 * @param	mixed	Data to store
 	 * @param	int	Length of time (in seconds) to cache the data
 	 * @return	bool	true on success/false on failure
->>>>>>> codeigniter/develop
 	 */
 	public function save($id, $data, $ttl = 60)
 	{
@@ -223,13 +157,8 @@ class CI_Cache extends CI_Driver_Library {
 	/**
 	 * Delete from Cache
 	 *
-<<<<<<< HEAD
-	 * @param 	mixed		unique identifier of the item in the cache
-	 * @return 	boolean		true on success/false on failure
-=======
 	 * @param	mixed	unique identifier of the item in the cache
 	 * @return	bool	true on success/false on failure
->>>>>>> codeigniter/develop
 	 */
 	public function delete($id)
 	{
@@ -241,11 +170,7 @@ class CI_Cache extends CI_Driver_Library {
 	/**
 	 * Clean the cache
 	 *
-<<<<<<< HEAD
-	 * @return 	boolean		false on failure/true on success
-=======
 	 * @return	bool	false on failure/true on success
->>>>>>> codeigniter/develop
 	 */
 	public function clean()
 	{
@@ -257,13 +182,8 @@ class CI_Cache extends CI_Driver_Library {
 	/**
 	 * Cache Info
 	 *
-<<<<<<< HEAD
-	 * @param 	string		user/filehits
-	 * @return 	mixed		array on success, false on failure	
-=======
 	 * @param	string	user/filehits
 	 * @return	mixed	array on success, false on failure
->>>>>>> codeigniter/develop
 	 */
 	public function cache_info($type = 'user')
 	{
@@ -271,78 +191,25 @@ class CI_Cache extends CI_Driver_Library {
 	}
 
 	// ------------------------------------------------------------------------
-<<<<<<< HEAD
-	
-	/**
-	 * Get Cache Metadata
-	 *
-	 * @param 	mixed		key to get cache metadata on
-	 * @return 	mixed		return value from child method
-=======
 
 	/**
 	 * Get Cache Metadata
 	 *
 	 * @param	mixed	key to get cache metadata on
 	 * @return	mixed	return value from child method
->>>>>>> codeigniter/develop
 	 */
 	public function get_metadata($id)
 	{
 		return $this->{$this->_adapter}->get_metadata($id);
 	}
-<<<<<<< HEAD
-	
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Initialize
-	 *
-	 * Initialize class properties based on the configuration array.
-	 *
-	 * @param	array 	
-	 * @return 	void
-	 */
-	private function _initialize($config)
-	{        
-		$default_config = array(
-				'adapter',
-				'memcached'
-			);
-
-		foreach ($default_config as $key)
-		{
-			if (isset($config[$key]))
-			{
-				$param = '_'.$key;
-
-				$this->{$param} = $config[$key];
-			}
-		}
-
-		if (isset($config['backup']))
-		{
-			if (in_array('cache_'.$config['backup'], $this->valid_drivers))
-			{
-				$this->_backup_driver = $config['backup'];
-			}
-		}
-	}
-=======
->>>>>>> codeigniter/develop
 
 	// ------------------------------------------------------------------------
 
 	/**
 	 * Is the requested driver supported in this environment?
 	 *
-<<<<<<< HEAD
-	 * @param 	string	The driver to test.
-	 * @return 	array
-=======
 	 * @param	string	The driver to test.
 	 * @return	array
->>>>>>> codeigniter/develop
 	 */
 	public function is_supported($driver)
 	{
@@ -356,33 +223,7 @@ class CI_Cache extends CI_Driver_Library {
 		return $support[$driver];
 	}
 
-<<<<<<< HEAD
-	// ------------------------------------------------------------------------
-
-	/**
-	 * __get()
-	 *
-	 * @param 	child
-	 * @return 	object
-	 */
-	public function __get($child)
-	{
-		$obj = parent::__get($child);
-
-		if ( ! $this->is_supported($child))
-		{
-			$this->_adapter = $this->_backup_driver;
-		}
-
-		return $obj;
-	}
-	
-	// ------------------------------------------------------------------------
 }
-// End Class
-=======
-}
->>>>>>> codeigniter/develop
 
 /* End of file Cache.php */
 /* Location: ./system/libraries/Cache/Cache.php */

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * Code Igniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,37 +20,11 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-/**
- * Database Utility Class
- *
- * @category	Database
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/database/
- */
-class CI_DB_forge {
-
-	var $fields			= array();
-	var $keys			= array();
-	var $primary_keys	= array();
-	var $db_char_set	=	'';
-
-	/**
-	 * Constructor
-	 *
-	 * Grabs the CI super object instance so we can access it.
-	 *
-	 */
-	function __construct()
-=======
 /**
  * Database Forge Class
  *
@@ -84,16 +46,11 @@ abstract class CI_DB_forge {
 	protected $_rename_table	= 'ALTER TABLE %s RENAME TO %s';
 
 	public function __construct()
->>>>>>> codeigniter/develop
 	{
 		// Assign the main database object to $this->db
 		$CI =& get_instance();
 		$this->db =& $CI->db;
-<<<<<<< HEAD
-		log_message('debug', "Database Forge Class Initialized");
-=======
 		log_message('debug', 'Database Forge Class Initialized');
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -101,22 +58,6 @@ abstract class CI_DB_forge {
 	/**
 	 * Create database
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the database name
-	 * @return	bool
-	 */
-	function create_database($db_name)
-	{
-		$sql = $this->_create_database($db_name);
-
-		if (is_bool($sql))
-		{
-			return $sql;
-		}
-
-		return $this->db->query($sql);
-=======
 	 * @param	string	the database name
 	 * @return	bool
 	 */
@@ -137,7 +78,6 @@ abstract class CI_DB_forge {
 		}
 
 		return TRUE;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -145,22 +85,6 @@ abstract class CI_DB_forge {
 	/**
 	 * Drop database
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the database name
-	 * @return	bool
-	 */
-	function drop_database($db_name)
-	{
-		$sql = $this->_drop_database($db_name);
-
-		if (is_bool($sql))
-		{
-			return $sql;
-		}
-
-		return $this->db->query($sql);
-=======
 	 * @param	string	the database name
 	 * @return	bool
 	 */
@@ -190,7 +114,6 @@ abstract class CI_DB_forge {
 		}
 
 		return TRUE;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -198,20 +121,11 @@ abstract class CI_DB_forge {
 	/**
 	 * Add Key
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	key
-	 * @param	string	type
-	 * @return	void
-	 */
-	function add_key($key = '', $primary = FALSE)
-=======
 	 * @param	string	key
 	 * @param	string	type
 	 * @return	object
 	 */
 	public function add_key($key = '', $primary = FALSE)
->>>>>>> codeigniter/develop
 	{
 		if (is_array($key))
 		{
@@ -223,11 +137,7 @@ abstract class CI_DB_forge {
 			return;
 		}
 
-<<<<<<< HEAD
-		if ($key == '')
-=======
 		if ($key === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('Key information is required for that operation.');
 		}
@@ -240,11 +150,8 @@ abstract class CI_DB_forge {
 		{
 			$this->keys[] = $key;
 		}
-<<<<<<< HEAD
-=======
 
 		return $this;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -252,39 +159,18 @@ abstract class CI_DB_forge {
 	/**
 	 * Add Field
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	collation
-	 * @return	void
-	 */
-	function add_field($field = '')
-	{
-		if ($field == '')
-=======
 	 * @param	string	collation
 	 * @return	object
 	 */
 	public function add_field($field = '')
 	{
 		if ($field === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('Field information is required.');
 		}
 
 		if (is_string($field))
 		{
-<<<<<<< HEAD
-			if ($field == 'id')
-			{
-				$this->add_field(array(
-										'id' => array(
-													'type' => 'INT',
-													'constraint' => 9,
-													'auto_increment' => TRUE
-													)
-								));
-=======
 			if ($field === 'id')
 			{
 				$this->add_field(array(
@@ -294,7 +180,6 @@ abstract class CI_DB_forge {
 						'auto_increment' => TRUE
 					)
 				));
->>>>>>> codeigniter/develop
 				$this->add_key('id', TRUE);
 			}
 			else
@@ -313,10 +198,7 @@ abstract class CI_DB_forge {
 			$this->fields = array_merge($this->fields, $field);
 		}
 
-<<<<<<< HEAD
-=======
 		return $this;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -324,41 +206,22 @@ abstract class CI_DB_forge {
 	/**
 	 * Create Table
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function create_table($table = '', $if_not_exists = FALSE)
-	{
-		if ($table == '')
-=======
 	 * @param	string	the table name
 	 * @return	bool
 	 */
 	public function create_table($table = '', $if_not_exists = FALSE)
 	{
 		if ($table === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('A table name is required for that operation.');
 		}
 
-<<<<<<< HEAD
-		if (count($this->fields) == 0)
-=======
 		if (count($this->fields) === 0)
->>>>>>> codeigniter/develop
 		{
 			show_error('Field information is required.');
 		}
 
 		$sql = $this->_create_table($this->db->dbprefix.$table, $this->fields, $this->primary_keys, $this->keys, $if_not_exists);
-<<<<<<< HEAD
-
-		$this->_reset();
-		return $this->db->query($sql);
-=======
 		$this->_reset();
 
 		if (is_bool($sql))
@@ -372,7 +235,6 @@ abstract class CI_DB_forge {
 		}
 
 		return $result;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -380,22 +242,6 @@ abstract class CI_DB_forge {
 	/**
 	 * Drop Table
 	 *
-<<<<<<< HEAD
-	 * @access	public
-	 * @param	string	the table name
-	 * @return	bool
-	 */
-	function drop_table($table_name)
-	{
-		$sql = $this->_drop_table($this->db->dbprefix.$table_name);
-
-		if (is_bool($sql))
-		{
-			return $sql;
-		}
-
-		return $this->db->query($sql);
-=======
 	 * @param	string	the table name
 	 * @return	bool
 	 */
@@ -423,7 +269,6 @@ abstract class CI_DB_forge {
 		}
 
 		return $result;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -431,25 +276,10 @@ abstract class CI_DB_forge {
 	/**
 	 * Rename Table
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the old table name
 	 * @param	string	the new table name
 	 * @return	bool
 	 */
-<<<<<<< HEAD
-	function rename_table($table_name, $new_table_name)
-	{
-		if ($table_name == '' OR $new_table_name == '')
-		{
-			show_error('A table name is required for that operation.');
-		}
-
-		$sql = $this->_rename_table($this->db->dbprefix.$table_name, $this->db->dbprefix.$new_table_name);
-		return $this->db->query($sql);
-=======
 	public function rename_table($table_name, $new_table_name)
 	{
 		if ($table_name === '' OR $new_table_name === '')
@@ -477,7 +307,6 @@ abstract class CI_DB_forge {
 		}
 
 		return $result;
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -485,53 +314,30 @@ abstract class CI_DB_forge {
 	/**
 	 * Column Add
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the table name
 	 * @param	string	the column name
 	 * @param	string	the column definition
 	 * @return	bool
 	 */
-<<<<<<< HEAD
-	function add_column($table = '', $field = array(), $after_field = '')
-	{
-		if ($table == '')
-=======
 	public function add_column($table = '', $field = array(), $after_field = '')
 	{
 		if ($table === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('A table name is required for that operation.');
 		}
 
 		// add field info into field array, but we can only do one at a time
 		// so we cycle through
-<<<<<<< HEAD
-
-		foreach ($field as $k => $v)
-		{
-			$this->add_field(array($k => $field[$k]));
-
-			if (count($this->fields) == 0)
-=======
 		foreach (array_keys($field) as $k)
 		{
 			$this->add_field(array($k => $field[$k]));
 
 			if (count($this->fields) === 0)
->>>>>>> codeigniter/develop
 			{
 				show_error('Field information is required.');
 			}
 
 			$sql = $this->_alter_table('ADD', $this->db->dbprefix.$table, $this->fields, $after_field);
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 			$this->_reset();
 
 			if ($this->db->query($sql) === FALSE)
@@ -541,10 +347,6 @@ abstract class CI_DB_forge {
 		}
 
 		return TRUE;
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -552,44 +354,23 @@ abstract class CI_DB_forge {
 	/**
 	 * Column Drop
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the table name
 	 * @param	string	the column name
 	 * @return	bool
 	 */
-<<<<<<< HEAD
-	function drop_column($table = '', $column_name = '')
-	{
-
-		if ($table == '')
-=======
 	public function drop_column($table = '', $column_name = '')
 	{
 		if ($table === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('A table name is required for that operation.');
 		}
 
-<<<<<<< HEAD
-		if ($column_name == '')
-=======
 		if ($column_name === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('A column name is required for that operation.');
 		}
 
-<<<<<<< HEAD
-		$sql = $this->_alter_table('DROP', $this->db->dbprefix.$table, $column_name);
-
-		return $this->db->query($sql);
-=======
 		return $this->db->query($this->_alter_table('DROP', $this->db->dbprefix.$table, $column_name));
->>>>>>> codeigniter/develop
 	}
 
 	// --------------------------------------------------------------------
@@ -597,36 +378,21 @@ abstract class CI_DB_forge {
 	/**
 	 * Column Modify
 	 *
-<<<<<<< HEAD
-	 * @access	public
-=======
->>>>>>> codeigniter/develop
 	 * @param	string	the table name
 	 * @param	string	the column name
 	 * @param	string	the column definition
 	 * @return	bool
 	 */
-<<<<<<< HEAD
-	function modify_column($table = '', $field = array())
-	{
-		if ($table == '')
-=======
 	public function modify_column($table = '', $field = array())
 	{
 		if ($table === '')
->>>>>>> codeigniter/develop
 		{
 			show_error('A table name is required for that operation.');
 		}
 
 		// add field info into field array, but we can only do one at a time
 		// so we cycle through
-<<<<<<< HEAD
-
-		foreach ($field as $k => $v)
-=======
 		foreach (array_keys($field) as $k)
->>>>>>> codeigniter/develop
 		{
 			// If no name provided, use the current name
 			if ( ! isset($field[$k]['name']))
@@ -635,21 +401,12 @@ abstract class CI_DB_forge {
 			}
 
 			$this->add_field(array($k => $field[$k]));
-<<<<<<< HEAD
-
-			if (count($this->fields) == 0)
-=======
 			if (count($this->fields) === 0)
->>>>>>> codeigniter/develop
 			{
 				show_error('Field information is required.');
 			}
 
 			$sql = $this->_alter_table('CHANGE', $this->db->dbprefix.$table, $this->fields);
-<<<<<<< HEAD
-
-=======
->>>>>>> codeigniter/develop
 			$this->_reset();
 
 			if ($this->db->query($sql) === FALSE)
@@ -668,22 +425,11 @@ abstract class CI_DB_forge {
 	 *
 	 * Resets table creation vars
 	 *
-<<<<<<< HEAD
-	 * @access	private
-	 * @return	void
-	 */
-	function _reset()
-	{
-		$this->fields		= array();
-		$this->keys			= array();
-		$this->primary_keys	= array();
-=======
 	 * @return	void
 	 */
 	protected function _reset()
 	{
 		$this->fields = $this->keys = $this->primary_keys = array();
->>>>>>> codeigniter/develop
 	}
 
 }

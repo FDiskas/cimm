@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,42 +20,22 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * Logging Class
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Logging
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/general/errors.html
  */
 class CI_Log {
 
-<<<<<<< HEAD
-	protected $_log_path;
-	protected $_threshold	= 1;
-	protected $_date_fmt	= 'Y-m-d H:i:s';
-	protected $_enabled	= TRUE;
-	protected $_levels	= array('ERROR' => '1', 'DEBUG' => '2',  'INFO' => '3', 'ALL' => '4');
-
-	/**
-	 * Constructor
-=======
 	/**
 	 * Path to save log files
 	 *
@@ -80,82 +48,74 @@ class CI_Log {
 	 *
 	 * @var int
 	 */
-	protected $_threshold		= 1;
+	protected $_threshold = 1;
 
 	/**
 	 * Highest level of logging
 	 *
 	 * @var int
 	 */
-	protected $_threshold_max	= 0;
+	protected $_threshold_max = 0;
 
 	/**
 	 * Array of threshold levels to log
 	 *
 	 * @var array
 	 */
-	protected $_threshold_array	= array();
+	protected $_threshold_array = array();
 
 	/**
 	 * Format of timestamp for log files
 	 *
 	 * @var string
 	 */
-	protected $_date_fmt		= 'Y-m-d H:i:s';
+	protected $_date_fmt = 'Y-m-d H:i:s';
 
 	/**
 	 * Whether or not the logger can write to the log files
 	 *
 	 * @var bool
 	 */
-	protected $_enabled		= TRUE;
+	protected $_enabled = TRUE;
 
 	/**
 	 * Predefined logging levels
 	 *
 	 * @var array
 	 */
-	protected $_levels		= array('ERROR' => 1, 'DEBUG' => 2,  'INFO' => 3, 'ALL' => 4);
+	protected $_levels = array('ERROR' => 1, 'DEBUG' => 2, 'INFO' => 3, 'ALL' => 4);
 
 	/**
-	 * Initialize Logging class
+	 * Configure Logging class
+	 *
+	 * This function lets the core object configure logging so it is not
+	 * dependent on CI_Config being loaded before it can be used.
 	 *
 	 * @return	void
->>>>>>> codeigniter/develop
 	 */
-	public function __construct()
+	public function configure($config)
 	{
-		$config =& get_config();
-
-<<<<<<< HEAD
-		$this->_log_path = ($config['log_path'] != '') ? $config['log_path'] : APPPATH.'logs/';
-=======
-		$this->_log_path = ($config['log_path'] !== '') ? $config['log_path'] : APPPATH.'logs/';
->>>>>>> codeigniter/develop
+		$this->_log_path = empty($config['log_path']) ? APPPATH.'logs/' : $config['log_path'];
 
 		if ( ! is_dir($this->_log_path) OR ! is_really_writable($this->_log_path))
 		{
 			$this->_enabled = FALSE;
 		}
 
-		if (is_numeric($config['log_threshold']))
+		if (isset($config['log_threshold']))
 		{
-<<<<<<< HEAD
-			$this->_threshold = $config['log_threshold'];
+			if (is_numeric($config['log_threshold']))
+			{
+				$this->_threshold = (int) $config['log_threshold'];
+			}
+			elseif (is_array($config['log_threshold']))
+			{
+				$this->_threshold = $this->_threshold_max;
+				$this->_threshold_array = array_flip($config['log_threshold']);
+			}
 		}
 
-		if ($config['log_date_format'] != '')
-=======
-			$this->_threshold = (int) $config['log_threshold'];
-		}
-		elseif (is_array($config['log_threshold']))
-		{
-			$this->_threshold = $this->_threshold_max;
-			$this->_threshold_array = array_flip($config['log_threshold']);
-		}
-
-		if ($config['log_date_format'] !== '')
->>>>>>> codeigniter/develop
+		if ( ! empty($config['log_date_format']))
 		{
 			$this->_date_fmt = $config['log_date_format'];
 		}
@@ -168,10 +128,10 @@ class CI_Log {
 	 *
 	 * Generally this function will be called using the global log_message() function
 	 *
-	 * @param	string	the error level
-	 * @param	string	the error message
-	 * @param	bool	whether the error is a native PHP error
-	 * @return	bool
+	 * @param	string	Error level
+	 * @param	string	Error message
+	 * @param	bool	Whether the error is a native PHP error
+	 * @return	bool	TRUE on success, otherwise FALSE
 	 */
 	public function write_log($level = 'error', $msg, $php_error = FALSE)
 	{
@@ -182,66 +142,42 @@ class CI_Log {
 
 		$level = strtoupper($level);
 
-<<<<<<< HEAD
-		if ( ! isset($this->_levels[$level]) OR ($this->_levels[$level] > $this->_threshold))
-=======
 		if (( ! isset($this->_levels[$level]) OR ($this->_levels[$level] > $this->_threshold))
 			&& ! isset($this->_threshold_array[$this->_levels[$level]]))
->>>>>>> codeigniter/develop
 		{
 			return FALSE;
 		}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> codeigniter/develop
 		$filepath = $this->_log_path.'log-'.date('Y-m-d').'.php';
-		$message  = '';
+		$message = '';
 
 		if ( ! file_exists($filepath))
 		{
-<<<<<<< HEAD
-			$message .= "<"."?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?".">\n\n";
-=======
 			$newfile = TRUE;
 			$message .= '<'."?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?".">\n\n";
->>>>>>> codeigniter/develop
 		}
 
-		if ( ! $fp = @fopen($filepath, FOPEN_WRITE_CREATE))
+		if ( ! $fp = @fopen($filepath, 'a+'))
 		{
 			return FALSE;
 		}
 
-<<<<<<< HEAD
-		$message .= $level.' '.(($level == 'INFO') ? ' -' : '-').' '.date($this->_date_fmt). ' --> '.$msg."\n";
-=======
 		$message .= $level.' '.($level === 'INFO' ? ' -' : '-').' '.date($this->_date_fmt).' --> '.$msg."\n";
->>>>>>> codeigniter/develop
 
 		flock($fp, LOCK_EX);
 		fwrite($fp, $message);
 		flock($fp, LOCK_UN);
 		fclose($fp);
 
-<<<<<<< HEAD
-		@chmod($filepath, FILE_WRITE_MODE);
-=======
 		if (isset($newfile) && $newfile === TRUE)
 		{
 			@chmod($filepath, FILE_WRITE_MODE);
 		}
 
->>>>>>> codeigniter/develop
 		return TRUE;
 	}
 
 }
-<<<<<<< HEAD
-// END Log Class
-=======
->>>>>>> codeigniter/develop
 
 /* End of file Log.php */
 /* Location: ./system/libraries/Log.php */

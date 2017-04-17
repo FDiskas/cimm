@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://codeigniter.com
- * @since		Version 1.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -43,38 +24,18 @@
  * @since		Version 1.0
  */
 
->>>>>>> codeigniter/develop
 /**
  * CodeIgniter Form Helpers
  *
  * @package		CodeIgniter
  * @subpackage	Helpers
  * @category	Helpers
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/helpers/form_helper.html
  */
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Declaration
- *
- * Creates the opening portion of the form.
- *
- * @access	public
- * @param	string	the URI segments of the form destination
- * @param	array	a key/value pair of attributes
- * @param	array	a key/value pair hidden data
- * @return	string
- */
-if ( ! function_exists('form_open'))
-{
-=======
 if ( ! function_exists('form_open'))
 {
 	/**
@@ -87,16 +48,11 @@ if ( ! function_exists('form_open'))
 	 * @param	array	a key/value pair hidden data
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_open($action = '', $attributes = '', $hidden = array())
 	{
 		$CI =& get_instance();
 
-<<<<<<< HEAD
-		if ($attributes == '')
-=======
 		if ($attributes === '')
->>>>>>> codeigniter/develop
 		{
 			$attributes = 'method="post"';
 		}
@@ -106,20 +62,6 @@ if ( ! function_exists('form_open'))
 		{
 			$action = $CI->config->site_url($action);
 		}
-<<<<<<< HEAD
-
-		// If no action is provided then set to the current url
-		$action OR $action = $CI->config->site_url($CI->uri->uri_string());
-
-		$form = '<form action="'.$action.'"';
-
-		$form .= _attributes_to_string($attributes, TRUE);
-
-		$form .= '>';
-
-		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites	
-		if ($CI->config->item('csrf_protection') === TRUE AND ! (strpos($action, $CI->config->base_url()) === FALSE OR strpos($form, 'method="get"')))	
-=======
 		elseif ( ! $action)
 		{
 			// If no action is provided then set to the current url
@@ -130,20 +72,13 @@ if ( ! function_exists('form_open'))
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
 		if ($CI->config->item('csrf_protection') === TRUE && ! (strpos($action, $CI->config->base_url()) === FALSE OR strpos($form, 'method="get"')))
->>>>>>> codeigniter/develop
 		{
 			$hidden[$CI->security->get_csrf_token_name()] = $CI->security->get_csrf_hash();
 		}
 
-<<<<<<< HEAD
-		if (is_array($hidden) AND count($hidden) > 0)
-		{
-			$form .= sprintf("<div style=\"display:none\">%s</div>", form_hidden($hidden));
-=======
 		if (is_array($hidden) && count($hidden) > 0)
 		{
 			$form .= '<div style="display:none;">'.form_hidden($hidden).'</div>';
->>>>>>> codeigniter/develop
 		}
 
 		return $form;
@@ -152,21 +87,6 @@ if ( ! function_exists('form_open'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Declaration - Multipart type
- *
- * Creates the opening portion of the form, but with "multipart/form-data".
- *
- * @access	public
- * @param	string	the URI segments of the form destination
- * @param	array	a key/value pair of attributes
- * @param	array	a key/value pair hidden data
- * @return	string
- */
-if ( ! function_exists('form_open_multipart'))
-{
-=======
 if ( ! function_exists('form_open_multipart'))
 {
 	/**
@@ -179,7 +99,6 @@ if ( ! function_exists('form_open_multipart'))
 	 * @param	array	a key/value pair hidden data
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_open_multipart($action = '', $attributes = array(), $hidden = array())
 	{
 		if (is_string($attributes))
@@ -197,21 +116,6 @@ if ( ! function_exists('form_open_multipart'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Hidden Input Field
- *
- * Generates hidden fields.  You can pass a simple key/value string or an associative
- * array with multiple values.
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_hidden'))
-{
-=======
 if ( ! function_exists('form_hidden'))
 {
 	/**
@@ -225,7 +129,6 @@ if ( ! function_exists('form_hidden'))
 	 * @param	bool
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_hidden($name, $value = '', $recursing = FALSE)
 	{
 		static $form;
@@ -246,21 +149,13 @@ if ( ! function_exists('form_hidden'))
 
 		if ( ! is_array($value))
 		{
-<<<<<<< HEAD
-			$form .= '<input type="hidden" name="'.$name.'" value="'.form_prep($value, $name).'" />'."\n";
-=======
 			$form .= '<input type="hidden" name="'.$name.'" value="'.form_prep($value, $name)."\" />\n";
->>>>>>> codeigniter/develop
 		}
 		else
 		{
 			foreach ($value as $k => $v)
 			{
-<<<<<<< HEAD
-				$k = (is_int($k)) ? '' : $k;
-=======
 				$k = is_int($k) ? '' : $k;
->>>>>>> codeigniter/develop
 				form_hidden($name.'['.$k.']', $v, TRUE);
 			}
 		}
@@ -271,24 +166,6 @@ if ( ! function_exists('form_hidden'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Text Input Field
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_input'))
-{
-	function form_input($data = '', $value = '', $extra = '')
-	{
-		$defaults = array('type' => 'text', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-
-		return "<input "._parse_form_attributes($data, $defaults).$extra." />";
-=======
 if ( ! function_exists('form_input'))
 {
 	/**
@@ -304,27 +181,11 @@ if ( ! function_exists('form_input'))
 		$defaults = array('type' => 'text', 'name' => ( ! is_array($data) ? $data : ''), 'value' => $value);
 
 		return '<input '._parse_form_attributes($data, $defaults).$extra." />\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Password Field
- *
- * Identical to the input function but adds the "password" type
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_password'))
-{
-=======
 if ( ! function_exists('form_password'))
 {
 	/**
@@ -337,7 +198,6 @@ if ( ! function_exists('form_password'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_password($data = '', $value = '', $extra = '')
 	{
 		if ( ! is_array($data))
@@ -352,21 +212,6 @@ if ( ! function_exists('form_password'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Upload Field
- *
- * Identical to the input function but adds the "file" type
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_upload'))
-{
-=======
 if ( ! function_exists('form_upload'))
 {
 	/**
@@ -379,7 +224,6 @@ if ( ! function_exists('form_upload'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_upload($data = '', $value = '', $extra = '')
 	{
 		if ( ! is_array($data))
@@ -394,22 +238,6 @@ if ( ! function_exists('form_upload'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Textarea field
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_textarea'))
-{
-	function form_textarea($data = '', $value = '', $extra = '')
-	{
-		$defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'cols' => '40', 'rows' => '10');
-=======
 if ( ! function_exists('form_textarea'))
 {
 	/**
@@ -423,7 +251,6 @@ if ( ! function_exists('form_textarea'))
 	function form_textarea($data = '', $value = '', $extra = '')
 	{
 		$defaults = array('name' => ( ! is_array($data) ? $data : ''), 'cols' => '40', 'rows' => '10');
->>>>>>> codeigniter/develop
 
 		if ( ! is_array($data) OR ! isset($data['value']))
 		{
@@ -435,32 +262,13 @@ if ( ! function_exists('form_textarea'))
 			unset($data['value']); // textareas don't use the value attribute
 		}
 
-<<<<<<< HEAD
-		$name = (is_array($data)) ? $data['name'] : $data;
-		return "<textarea "._parse_form_attributes($data, $defaults).$extra.">".form_prep($val, $name)."</textarea>";
-=======
 		$name = is_array($data) ? $data['name'] : $data;
 		return '<textarea '._parse_form_attributes($data, $defaults).$extra.'>'.form_prep($val, $name)."</textarea>\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Multi-select menu
- *
- * @access	public
- * @param	string
- * @param	array
- * @param	mixed
- * @param	string
- * @return	type
- */
-if ( ! function_exists('form_multiselect'))
-{
-=======
 if ( ! function_exists('form_multiselect'))
 {
 	/**
@@ -472,7 +280,6 @@ if ( ! function_exists('form_multiselect'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_multiselect($name = '', $options = array(), $selected = array(), $extra = '')
 	{
 		if ( ! strpos($extra, 'multiple'))
@@ -486,22 +293,6 @@ if ( ! function_exists('form_multiselect'))
 
 // --------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Drop-down Menu
- *
- * @access	public
- * @param	string
- * @param	array
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_dropdown'))
-{
-	function form_dropdown($name = '', $options = array(), $selected = array(), $extra = '')
-	{
-=======
 if ( ! function_exists('form_dropdown'))
 {
 	/**
@@ -525,25 +316,12 @@ if ( ! function_exists('form_dropdown'))
 			return form_dropdown($name['name'], $name['options'], $name['selected'], $name['extra']);
 		}
 
->>>>>>> codeigniter/develop
 		if ( ! is_array($selected))
 		{
 			$selected = array($selected);
 		}
 
 		// If no selected state was submitted we will attempt to set it automatically
-<<<<<<< HEAD
-		if (count($selected) === 0)
-		{
-			// If the form name appears in the $_POST array we have a winner!
-			if (isset($_POST[$name]))
-			{
-				$selected = array($_POST[$name]);
-			}
-		}
-
-		if ($extra != '') $extra = ' '.$extra;
-=======
 		if (count($selected) === 0 && isset($_POST[$name]))
 		{
 			$selected = array($_POST[$name]);
@@ -553,7 +331,6 @@ if ( ! function_exists('form_dropdown'))
 		{
 			$extra = ' '.$extra;
 		}
->>>>>>> codeigniter/develop
 
 		$multiple = (count($selected) > 1 && strpos($extra, 'multiple') === FALSE) ? ' multiple="multiple"' : '';
 
@@ -563,32 +340,6 @@ if ( ! function_exists('form_dropdown'))
 		{
 			$key = (string) $key;
 
-<<<<<<< HEAD
-			if (is_array($val) && ! empty($val))
-			{
-				$form .= '<optgroup label="'.$key.'">'."\n";
-
-				foreach ($val as $optgroup_key => $optgroup_val)
-				{
-					$sel = (in_array($optgroup_key, $selected)) ? ' selected="selected"' : '';
-
-					$form .= '<option value="'.$optgroup_key.'"'.$sel.'>'.(string) $optgroup_val."</option>\n";
-				}
-
-				$form .= '</optgroup>'."\n";
-			}
-			else
-			{
-				$sel = (in_array($key, $selected)) ? ' selected="selected"' : '';
-
-				$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
-			}
-		}
-
-		$form .= '</select>';
-
-		return $form;
-=======
 			if (is_array($val))
 			{
 				if (empty($val))
@@ -613,31 +364,11 @@ if ( ! function_exists('form_dropdown'))
 		}
 
 		return $form."</select>\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Checkbox Field
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	bool
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_checkbox'))
-{
-	function form_checkbox($data = '', $value = '', $checked = FALSE, $extra = '')
-	{
-		$defaults = array('type' => 'checkbox', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-
-		if (is_array($data) AND array_key_exists('checked', $data))
-=======
 if ( ! function_exists('form_checkbox'))
 {
 	/**
@@ -654,7 +385,6 @@ if ( ! function_exists('form_checkbox'))
 		$defaults = array('type' => 'checkbox', 'name' => ( ! is_array($data) ? $data : ''), 'value' => $value);
 
 		if (is_array($data) && array_key_exists('checked', $data))
->>>>>>> codeigniter/develop
 		{
 			$checked = $data['checked'];
 
@@ -677,30 +407,12 @@ if ( ! function_exists('form_checkbox'))
 			unset($defaults['checked']);
 		}
 
-<<<<<<< HEAD
-		return "<input "._parse_form_attributes($data, $defaults).$extra." />";
-=======
 		return '<input '._parse_form_attributes($data, $defaults).$extra." />\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Radio Button
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	bool
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_radio'))
-{
-=======
 if ( ! function_exists('form_radio'))
 {
 	/**
@@ -712,7 +424,6 @@ if ( ! function_exists('form_radio'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_radio($data = '', $value = '', $checked = FALSE, $extra = '')
 	{
 		if ( ! is_array($data))
@@ -727,24 +438,6 @@ if ( ! function_exists('form_radio'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Submit Button
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_submit'))
-{
-	function form_submit($data = '', $value = '', $extra = '')
-	{
-		$defaults = array('type' => 'submit', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-
-		return "<input "._parse_form_attributes($data, $defaults).$extra." />";
-=======
 if ( ! function_exists('form_submit'))
 {
 	/**
@@ -759,30 +452,11 @@ if ( ! function_exists('form_submit'))
 	{
 		$defaults = array('type' => 'submit', 'name' => ( ! is_array($data) ? $data : ''), 'value' => $value);
 		return '<input '._parse_form_attributes($data, $defaults).$extra." />\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Reset Button
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_reset'))
-{
-	function form_reset($data = '', $value = '', $extra = '')
-	{
-		$defaults = array('type' => 'reset', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-
-		return "<input "._parse_form_attributes($data, $defaults).$extra." />";
-=======
 if ( ! function_exists('form_reset'))
 {
 	/**
@@ -797,30 +471,11 @@ if ( ! function_exists('form_reset'))
 	{
 		$defaults = array('type' => 'reset', 'name' => ( ! is_array($data) ? $data : ''), 'value' => $value);
 		return '<input '._parse_form_attributes($data, $defaults).$extra." />\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Button
- *
- * @access	public
- * @param	mixed
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_button'))
-{
-	function form_button($data = '', $content = '', $extra = '')
-	{
-		$defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'type' => 'button');
-
-		if ( is_array($data) AND isset($data['content']))
-=======
 if ( ! function_exists('form_button'))
 {
 	/**
@@ -835,35 +490,17 @@ if ( ! function_exists('form_button'))
 	{
 		$defaults = array('name' => ( ! is_array($data) ? $data : ''), 'type' => 'button');
 		if (is_array($data) && isset($data['content']))
->>>>>>> codeigniter/develop
 		{
 			$content = $data['content'];
 			unset($data['content']); // content is not an attribute
 		}
 
-<<<<<<< HEAD
-		return "<button "._parse_form_attributes($data, $defaults).$extra.">".$content."</button>";
-=======
 		return '<button '._parse_form_attributes($data, $defaults).$extra.'>'.$content."</button>\n";
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Label Tag
- *
- * @access	public
- * @param	string	The text to appear onscreen
- * @param	string	The id the label applies to
- * @param	string	Additional attributes
- * @return	string
- */
-if ( ! function_exists('form_label'))
-{
-=======
 if ( ! function_exists('form_label'))
 {
 	/**
@@ -874,27 +511,17 @@ if ( ! function_exists('form_label'))
 	 * @param	string	Additional attributes
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_label($label_text = '', $id = '', $attributes = array())
 	{
 
 		$label = '<label';
 
-<<<<<<< HEAD
-		if ($id != '')
-		{
-			$label .= " for=\"$id\"";
-		}
-
-		if (is_array($attributes) AND count($attributes) > 0)
-=======
 		if ($id !== '')
 		{
 			$label .= ' for="'.$id.'"';
 		}
 
 		if (is_array($attributes) && count($attributes) > 0)
->>>>>>> codeigniter/develop
 		{
 			foreach ($attributes as $key => $val)
 			{
@@ -902,43 +529,11 @@ if ( ! function_exists('form_label'))
 			}
 		}
 
-<<<<<<< HEAD
-		$label .= ">$label_text</label>";
-
-		return $label;
-=======
 		return $label.'>'.$label_text.'</label>';
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
-<<<<<<< HEAD
-/**
- * Fieldset Tag
- *
- * Used to produce <fieldset><legend>text</legend>.  To close fieldset
- * use form_fieldset_close()
- *
- * @access	public
- * @param	string	The legend text
- * @param	string	Additional attributes
- * @return	string
- */
-if ( ! function_exists('form_fieldset'))
-{
-	function form_fieldset($legend_text = '', $attributes = array())
-	{
-		$fieldset = "<fieldset";
-
-		$fieldset .= _attributes_to_string($attributes, FALSE);
-
-		$fieldset .= ">\n";
-
-		if ($legend_text != '')
-		{
-			$fieldset .= "<legend>$legend_text</legend>\n";
-=======
 
 if ( ! function_exists('form_fieldset'))
 {
@@ -958,7 +553,6 @@ if ( ! function_exists('form_fieldset'))
 		if ($legend_text !== '')
 		{
 			return $fieldset.'<legend>'.$legend_text."</legend>\n";
->>>>>>> codeigniter/develop
 		}
 
 		return $fieldset;
@@ -967,20 +561,6 @@ if ( ! function_exists('form_fieldset'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Fieldset Close Tag
- *
- * @access	public
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_fieldset_close'))
-{
-	function form_fieldset_close($extra = '')
-	{
-		return "</fieldset>".$extra;
-=======
 if ( ! function_exists('form_fieldset_close'))
 {
 	/**
@@ -992,26 +572,11 @@ if ( ! function_exists('form_fieldset_close'))
 	function form_fieldset_close($extra = '')
 	{
 		return '</fieldset>'.$extra;
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Close Tag
- *
- * @access	public
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_close'))
-{
-	function form_close($extra = '')
-	{
-		return "</form>".$extra;
-=======
 if ( ! function_exists('form_close'))
 {
 	/**
@@ -1023,25 +588,11 @@ if ( ! function_exists('form_close'))
 	function form_close($extra = '')
 	{
 		return '</form>'.$extra;
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Prep
- *
- * Formats text so that it can be safely placed in a form field in the event it has HTML tags.
- *
- * @access	public
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_prep'))
-{
-=======
 if ( ! function_exists('form_prep'))
 {
 	/**
@@ -1053,7 +604,6 @@ if ( ! function_exists('form_prep'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_prep($str = '', $field_name = '')
 	{
 		static $prepped_fields = array();
@@ -1083,45 +633,17 @@ if ( ! function_exists('form_prep'))
 			return $str;
 		}
 
-<<<<<<< HEAD
-		$str = htmlspecialchars($str);
-
-		// In case htmlspecialchars misses these.
-		$str = str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);
-
-		if ($field_name != '')
-=======
 		if ($field_name !== '')
->>>>>>> codeigniter/develop
 		{
 			$prepped_fields[$field_name] = $field_name;
 		}
 
-<<<<<<< HEAD
-		return $str;
-=======
 		return html_escape($str);
->>>>>>> codeigniter/develop
 	}
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Value
- *
- * Grabs a value from the POST array for the specified field so you can
- * re-populate an input field or textarea.  If Form Validation
- * is active it retrieves the info from the validation class
- *
- * @access	public
- * @param	string
- * @return	mixed
- */
-if ( ! function_exists('set_value'))
-{
-=======
 if ( ! function_exists('set_value'))
 {
 	/**
@@ -1135,7 +657,6 @@ if ( ! function_exists('set_value'))
 	 * @param	string
 	 * @return	mixed
 	 */
->>>>>>> codeigniter/develop
 	function set_value($field = '', $default = '')
 	{
 		if (FALSE === ($OBJ =& _get_validation_object()))
@@ -1154,22 +675,6 @@ if ( ! function_exists('set_value'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Set Select
- *
- * Let's you set the selected value of a <select> menu via data in the POST array.
- * If Form Validation is active it retrieves the info from the validation class
- *
- * @access	public
- * @param	string
- * @param	string
- * @param	bool
- * @return	string
- */
-if ( ! function_exists('set_select'))
-{
-=======
 if ( ! function_exists('set_select'))
 {
 	/**
@@ -1183,7 +688,6 @@ if ( ! function_exists('set_select'))
 	 * @param	bool
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function set_select($field = '', $value = '', $default = FALSE)
 	{
 		$OBJ =& _get_validation_object();
@@ -1192,11 +696,7 @@ if ( ! function_exists('set_select'))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-<<<<<<< HEAD
-				if (count($_POST) === 0 AND $default == TRUE)
-=======
 				if (count($_POST) === 0 && $default === TRUE)
->>>>>>> codeigniter/develop
 				{
 					return ' selected="selected"';
 				}
@@ -1212,18 +712,9 @@ if ( ! function_exists('set_select'))
 					return '';
 				}
 			}
-<<<<<<< HEAD
-			else
-			{
-				if (($field == '' OR $value == '') OR ($field != $value))
-				{
-					return '';
-				}
-=======
 			elseif (($field == '' OR $value == '') OR $field !== $value)
 			{
 				return '';
->>>>>>> codeigniter/develop
 			}
 
 			return ' selected="selected"';
@@ -1235,22 +726,6 @@ if ( ! function_exists('set_select'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Set Checkbox
- *
- * Let's you set the selected value of a checkbox via the value in the POST array.
- * If Form Validation is active it retrieves the info from the validation class
- *
- * @access	public
- * @param	string
- * @param	string
- * @param	bool
- * @return	string
- */
-if ( ! function_exists('set_checkbox'))
-{
-=======
 if ( ! function_exists('set_checkbox'))
 {
 	/**
@@ -1264,7 +739,6 @@ if ( ! function_exists('set_checkbox'))
 	 * @param	bool
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function set_checkbox($field = '', $value = '', $default = FALSE)
 	{
 		$OBJ =& _get_validation_object();
@@ -1273,11 +747,7 @@ if ( ! function_exists('set_checkbox'))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-<<<<<<< HEAD
-				if (count($_POST) === 0 AND $default == TRUE)
-=======
 				if (count($_POST) === 0 && $default === TRUE)
->>>>>>> codeigniter/develop
 				{
 					return ' checked="checked"';
 				}
@@ -1293,18 +763,9 @@ if ( ! function_exists('set_checkbox'))
 					return '';
 				}
 			}
-<<<<<<< HEAD
-			else
-			{
-				if (($field == '' OR $value == '') OR ($field != $value))
-				{
-					return '';
-				}
-=======
 			elseif (($field == '' OR $value == '') OR $field !== $value)
 			{
 				return '';
->>>>>>> codeigniter/develop
 			}
 
 			return ' checked="checked"';
@@ -1316,22 +777,6 @@ if ( ! function_exists('set_checkbox'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Set Radio
- *
- * Let's you set the selected value of a radio field via info in the POST array.
- * If Form Validation is active it retrieves the info from the validation class
- *
- * @access	public
- * @param	string
- * @param	string
- * @param	bool
- * @return	string
- */
-if ( ! function_exists('set_radio'))
-{
-=======
 if ( ! function_exists('set_radio'))
 {
 	/**
@@ -1345,7 +790,6 @@ if ( ! function_exists('set_radio'))
 	 * @param	bool
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function set_radio($field = '', $value = '', $default = FALSE)
 	{
 		$OBJ =& _get_validation_object();
@@ -1354,11 +798,7 @@ if ( ! function_exists('set_radio'))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-<<<<<<< HEAD
-				if (count($_POST) === 0 AND $default == TRUE)
-=======
 				if (count($_POST) === 0 && $default === TRUE)
->>>>>>> codeigniter/develop
 				{
 					return ' checked="checked"';
 				}
@@ -1376,11 +816,7 @@ if ( ! function_exists('set_radio'))
 			}
 			else
 			{
-<<<<<<< HEAD
-				if (($field == '' OR $value == '') OR ($field != $value))
-=======
 				if (($field == '' OR $value == '') OR $field !== $value)
->>>>>>> codeigniter/develop
 				{
 					return '';
 				}
@@ -1395,22 +831,6 @@ if ( ! function_exists('set_radio'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Form Error
- *
- * Returns the error for a specific form field.  This is a helper for the
- * form validation class.
- *
- * @access	public
- * @param	string
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('form_error'))
-{
-=======
 
 if ( ! function_exists('form_error'))
 {
@@ -1425,7 +845,6 @@ if ( ! function_exists('form_error'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function form_error($field = '', $prefix = '', $suffix = '')
 	{
 		if (FALSE === ($OBJ =& _get_validation_object()))
@@ -1439,21 +858,6 @@ if ( ! function_exists('form_error'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Validation Error String
- *
- * Returns all the errors associated with a form submission.  This is a helper
- * function for the form validation class.
- *
- * @access	public
- * @param	string
- * @param	string
- * @return	string
- */
-if ( ! function_exists('validation_errors'))
-{
-=======
 if ( ! function_exists('validation_errors'))
 {
 	/**
@@ -1466,7 +870,6 @@ if ( ! function_exists('validation_errors'))
 	 * @param	string
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function validation_errors($prefix = '', $suffix = '')
 	{
 		if (FALSE === ($OBJ =& _get_validation_object()))
@@ -1480,20 +883,6 @@ if ( ! function_exists('validation_errors'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Parse the form attributes
- *
- * Helper function used by some of the form helpers
- *
- * @access	private
- * @param	array
- * @param	array
- * @return	string
- */
-if ( ! function_exists('_parse_form_attributes'))
-{
-=======
 if ( ! function_exists('_parse_form_attributes'))
 {
 	/**
@@ -1505,7 +894,6 @@ if ( ! function_exists('_parse_form_attributes'))
 	 * @param	array
 	 * @return	string
 	 */
->>>>>>> codeigniter/develop
 	function _parse_form_attributes($attributes, $default)
 	{
 		if (is_array($attributes))
@@ -1529,20 +917,12 @@ if ( ! function_exists('_parse_form_attributes'))
 
 		foreach ($default as $key => $val)
 		{
-<<<<<<< HEAD
-			if ($key == 'value')
-=======
 			if ($key === 'value')
->>>>>>> codeigniter/develop
 			{
 				$val = form_prep($val, $default['name']);
 			}
 
-<<<<<<< HEAD
-			$att .= $key . '="' . $val . '" ';
-=======
 			$att .= $key.'="'.$val.'" ';
->>>>>>> codeigniter/develop
 		}
 
 		return $att;
@@ -1551,25 +931,6 @@ if ( ! function_exists('_parse_form_attributes'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Attributes To String
- *
- * Helper function used by some of the form helpers
- *
- * @access	private
- * @param	mixed
- * @param	bool
- * @return	string
- */
-if ( ! function_exists('_attributes_to_string'))
-{
-	function _attributes_to_string($attributes, $formtag = FALSE)
-	{
-		if (is_string($attributes) AND strlen($attributes) > 0)
-		{
-			if ($formtag == TRUE AND strpos($attributes, 'method=') === FALSE)
-=======
 if ( ! function_exists('_attributes_to_string'))
 {
 	/**
@@ -1586,35 +947,15 @@ if ( ! function_exists('_attributes_to_string'))
 		if (is_string($attributes) && strlen($attributes) > 0)
 		{
 			if ($formtag === TRUE && strpos($attributes, 'method=') === FALSE)
->>>>>>> codeigniter/develop
 			{
 				$attributes .= ' method="post"';
 			}
 
-<<<<<<< HEAD
-			if ($formtag == TRUE AND strpos($attributes, 'accept-charset=') === FALSE)
-=======
 			if ($formtag === TRUE && strpos($attributes, 'accept-charset=') === FALSE)
->>>>>>> codeigniter/develop
 			{
 				$attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
 			}
 
-<<<<<<< HEAD
-		return ' '.$attributes;
-		}
-
-		if (is_object($attributes) AND count($attributes) > 0)
-		{
-			$attributes = (array)$attributes;
-		}
-
-		if (is_array($attributes) AND count($attributes) > 0)
-		{
-			$atts = '';
-
-			if ( ! isset($attributes['method']) AND $formtag === TRUE)
-=======
 			return ' '.$attributes;
 		}
 
@@ -1628,16 +969,11 @@ if ( ! function_exists('_attributes_to_string'))
 			$atts = '';
 
 			if ( ! isset($attributes['method']) && $formtag === TRUE)
->>>>>>> codeigniter/develop
 			{
 				$atts .= ' method="post"';
 			}
 
-<<<<<<< HEAD
-			if ( ! isset($attributes['accept-charset']) AND $formtag === TRUE)
-=======
 			if ( ! isset($attributes['accept-charset']) && $formtag === TRUE)
->>>>>>> codeigniter/develop
 			{
 				$atts .= ' accept-charset="'.strtolower(config_item('charset')).'"';
 			}
@@ -1654,19 +990,6 @@ if ( ! function_exists('_attributes_to_string'))
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
-/**
- * Validation Object
- *
- * Determines what the form validation class was instantiated as, fetches
- * the object and returns it.
- *
- * @access	private
- * @return	mixed
- */
-if ( ! function_exists('_get_validation_object'))
-{
-=======
 if ( ! function_exists('_get_validation_object'))
 {
 	/**
@@ -1677,44 +1000,26 @@ if ( ! function_exists('_get_validation_object'))
 	 *
 	 * @return	mixed
 	 */
->>>>>>> codeigniter/develop
 	function &_get_validation_object()
 	{
 		$CI =& get_instance();
 
 		// We set this as a variable since we're returning by reference.
 		$return = FALSE;
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> codeigniter/develop
 		if (FALSE !== ($object = $CI->load->is_loaded('form_validation')))
 		{
 			if ( ! isset($CI->$object) OR ! is_object($CI->$object))
 			{
 				return $return;
 			}
-<<<<<<< HEAD
-			
-			return $CI->$object;
-		}
-		
-=======
 
 			return $CI->$object;
 		}
 
->>>>>>> codeigniter/develop
 		return $return;
 	}
 }
 
-<<<<<<< HEAD
-
 /* End of file form_helper.php */
 /* Location: ./system/helpers/form_helper.php */
-=======
-/* End of file form_helper.php */
-/* Location: ./system/helpers/form_helper.php */
->>>>>>> codeigniter/develop

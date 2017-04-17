@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://codeigniter.com
- * @since		Version 1.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -44,75 +25,15 @@
  * @filesource
  */
 
->>>>>>> codeigniter/develop
 /**
  * SQLSRV Utility Class
  *
  * @category	Database
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlsrv_utility extends CI_DB_utility {
 
-<<<<<<< HEAD
-	/**
-	 * List databases
-	 *
-	 * @access	private
-	 * @return	bool
-	 */
-	function _list_databases()
-	{
-		return "EXEC sp_helpdb"; // Can also be: EXEC sp_databases
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Optimize table query
-	 *
-	 * Generates a platform-specific query so that a table can be optimized
-	 *
-	 * @access	private
-	 * @param	string	the table name
-	 * @return	object
-	 */
-	function _optimize_table($table)
-	{
-		return FALSE; // Is this supported in MS SQL?
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Repair table query
-	 *
-	 * Generates a platform-specific query so that a table can be repaired
-	 *
-	 * @access	private
-	 * @param	string	the table name
-	 * @return	object
-	 */
-	function _repair_table($table)
-	{
-		return FALSE; // Is this supported in MS SQL?
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * MSSQL Export
-	 *
-	 * @access	private
-	 * @param	array	Preferences
-	 * @return	mixed
-	 */
-	function _backup($params = array())
-=======
 	protected $_list_databases	= 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
 	protected $_optimize_table	= 'ALTER INDEX all ON %s REORGANIZE';
 
@@ -123,7 +44,6 @@ class CI_DB_sqlsrv_utility extends CI_DB_utility {
 	 * @return	bool
 	 */
 	protected function _backup($params = array())
->>>>>>> codeigniter/develop
 	{
 		// Currently unsupported
 		return $this->db->display_error('db_unsuported_feature');
@@ -131,10 +51,5 @@ class CI_DB_sqlsrv_utility extends CI_DB_utility {
 
 }
 
-<<<<<<< HEAD
-/* End of file mssql_utility.php */
-/* Location: ./system/database/drivers/mssql/mssql_utility.php */
-=======
 /* End of file sqlsrv_utility.php */
 /* Location: ./system/database/drivers/sqlsrv/sqlsrv_utility.php */
->>>>>>> codeigniter/develop

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
-=======
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
@@ -32,100 +20,83 @@
  * @author		EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-<<<<<<< HEAD
-// ------------------------------------------------------------------------
-
-=======
->>>>>>> codeigniter/develop
 /**
  * CodeIgniter Application Controller Class
  *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
+ * This class object is the base class that connects each controller to the root object
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Libraries
-<<<<<<< HEAD
- * @author		ExpressionEngine Dev Team
-=======
  * @author		EllisLab Dev Team
->>>>>>> codeigniter/develop
  * @link		http://codeigniter.com/user_guide/general/controllers.html
  */
 class CI_Controller {
 
-<<<<<<< HEAD
-	private static $instance;
-
-	/**
-	 * Constructor
-=======
 	/**
 	 * Reference to the global CI instance
 	 *
 	 * @var	object
 	 */
-	private static $instance;
+	protected $CI = NULL;
 
 	/**
 	 * Set up controller properties and methods
 	 *
 	 * @return	void
->>>>>>> codeigniter/develop
 	 */
 	public function __construct()
 	{
-		self::$instance =& $this;
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> codeigniter/develop
-		// Assign all the class objects that were instantiated by the
-		// bootstrap file (CodeIgniter.php) to local class variables
-		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class)
-		{
-			$this->$var =& load_class($class);
-		}
-
-		$this->load =& load_class('Loader', 'core');
-<<<<<<< HEAD
-
-		$this->load->initialize();
-		
-		log_message('debug', "Controller Class Initialized");
-	}
-
-=======
-		$this->load->initialize();
+		$this->CI = get_instance();
 		log_message('debug', 'Controller Class Initialized');
+	}
+		
+	/**
+	 * Get magic method
+	 *
+	 * Exposes root object members
+	 * @param	string	member name
+	 * @return	mixed
+	 */
+	public function __get($key)
+	{
+		if (isset($this->CI->$key))
+		{
+			return $this->CI->$key;
+		}
 	}
 
 	/**
-	 * Return the CI object
+	 * Isset magic method
 	 *
-	 * @return	object
+	 * Tests root object member existence
+	 * @param	string	member name
+	 * @return	boolean
 	 */
->>>>>>> codeigniter/develop
-	public static function &get_instance()
+	public function __isset($key)
 	{
-		return self::$instance;
+		return isset($this->CI->$key);
 	}
-<<<<<<< HEAD
-}
-// END Controller class
-=======
+
+	/**
+	 * Get instance
+	 *
+	 * Returns reference to root object
+	 *
+	 * @return object	Root instance
+	 */
+	public static function &instance()
+	{
+		// Return root instance
+		return get_instance();
+	}
 
 }
->>>>>>> codeigniter/develop
 
 /* End of file Controller.php */
 /* Location: ./system/core/Controller.php */
